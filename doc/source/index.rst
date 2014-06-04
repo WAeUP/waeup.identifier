@@ -11,6 +11,9 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
+'WAeUP Identifier' is a software for scanning and verifying
+fingerprints stored on a WAeUP Kofa portal. It is designed to work as
+a graphical application even on Raspberry PIs.
 
 
 Indices and tables
