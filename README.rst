@@ -3,6 +3,9 @@ waeup.identifier
 
 Identify WAeUP students biometrically.
 
+.. image:: https://travis-ci.org/ulif/waeup.identifier.svg?branch=master
+      :target: https://travis-ci.org/ulif/waeup.identifier
+
 Provides a package that helps with fingerprint scanning/verifying,
 which are stored in WAeUP student portals.
 
