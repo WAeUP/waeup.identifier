@@ -1,0 +1,8 @@
+graft doc
+prune doc/build
+graft waeup
+graft tests
+include *.rst *.cfg *.ini *.txt *.html *.sh htaccess
+global-exclude *.pyc
+global-exclude *.pyo
+global-exclude __pycache__
