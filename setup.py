@@ -55,7 +55,9 @@ setup(name='waeup.identifier',
               'pytest-xdist',
               'pytest-cov',
               ],
-          docs = ['Sphinx',
+          docs = [
+              'Sphinx',
+              'sphinx_rtd_theme',
                   ]
           ),
       cmdclass = {'test': PyTest},
