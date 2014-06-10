@@ -59,6 +59,7 @@ class FPScanApplication(Frame):
         self.entry_feet.focus()
         self.create_menubar()
         self.master.bind('<Return>', self.calculate)
+        self.pack()
 
     def cmd_file(self):
         print("CMD FILE clicked")
