@@ -10,6 +10,11 @@ before_install:
   # https://github.com/travis-ci/travis-cookbooks/issues/155
   - sudo rm -rf /dev/shm
   - sudo ln -s /run/shm /dev/shm
+  # start a headless X
+  # http://docs.travis-ci.com/user/gui-and-headless-browsers/
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+
 # command to install dependencies
 install:
   - python setup.py dev
