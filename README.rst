@@ -15,10 +15,13 @@ User Install
 
 For people that only want to simply use the software::
 
-  $ pip install waeup.identifier
+  $ sudo pip install waeup.identifier
 
 Afterwards the commandline tool (`waeup_identifier`) should be
 available.
+
+..note:: The user install will be available after first release. Until
+         then, please use developer install (see below).
 
 
 Developer Install
@@ -35,7 +38,14 @@ Get the sources::
   (py32) $ git clone https://github.com/ulif/waeup.identifier.git
   (py32) $ cd waeup.identifier
 
-Install packages for testing::
+Install local ``waeup_identifier`` script::
+
+  (py32) $ python setup.py install
+
+Afterwards a script ``waeup_identifier`` (with underscore) should be
+executable in your path.
+
+Install packages for testing/developing::
 
   (py32) $ python setup.py dev
 
