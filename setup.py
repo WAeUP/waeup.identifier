@@ -63,6 +63,6 @@ setup(name='waeup.identifier',
       cmdclass = {'test': PyTest},
       entry_points="""
       [console_scripts]
-      waeup_identifier = waeup.identifer:main
+      waeup_identifier = waeup.identifier:main
       """,
       )
