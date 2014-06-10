@@ -16,8 +16,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 from tkinter import (
-    ttk, Tk, N, W, S, E, StringVar, Frame, Button, Label, Entry, Menu,
+    N, W, S, E, StringVar, Frame, Button, Label, Entry, Menu,
     )
+
 
 class FPScanApplication(Frame):
 

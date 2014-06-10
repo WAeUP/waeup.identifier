@@ -17,6 +17,7 @@
 #
 from waeup.identifier.app import FPScanApplication
 
+
 def main():
     myapp = FPScanApplication()
     myapp.master.title('My Application')
