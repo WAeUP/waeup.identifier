@@ -21,6 +21,3 @@ def main():
     myapp = FPScanApplication()
     myapp.master.title('My Application')
     myapp.mainloop()
-
-if __name__ == '__main__':
-    main()
