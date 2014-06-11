@@ -1,13 +1,38 @@
 import unittest
+from tkinter import Menu
 from waeup.identifier.app import FPScanApplication
+
+#
+# Some infos about testing tk GUI stuff:
+#
+# buttons can be 'clicked' via 'invoke()'
+#
 
 class AppTests(unittest.TestCase):
 
+    def setUp(self):
+        self.app = FPScanApplication()
+        #self.app.wait_visibility()
+
+    def tearDown(self):
+        self.app.destroy()
+
     def test_create(self):
         # we can create app instances
-        app = FPScanApplication()
+        assert self.app is not None
 
     def test_size(self):
         # The app will have four cols and five rows
-        app = FPScanApplication()
-        self.assertEqual(app.size(), (4,5))
+        self.assertEqual(self.app.size(), (4,5))
+
+    def test_menubar_exists(self):
+        # we have (exactly) 1 menubar
+        menus = [x for x in self.app.children.values()
+                 if isinstance(x, Menu)]
+        assert len(menus) == 1
+
+    def test_menubar_hasquit(self):
+        # the menubar has a quit-item
+        menubar = [x for x in self.app.children.values()
+                   if isinstance(x, Menu)][0]
+        filemenu = [x for x in menubar.children.values()][0]
