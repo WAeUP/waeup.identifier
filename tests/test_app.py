@@ -33,6 +33,9 @@ class AppTests(unittest.TestCase):
 
     def test_menubar_hasquit(self):
         # the menubar has a quit-item
-        menubar = [x for x in self.app.children.values()
-                   if isinstance(x, Menu)][0]
+        menubar = self.app.menubar
         filemenu = [x for x in menubar.children.values()][0]
+        assert self.app.winfo_exists()
+        filemenu.invoke('Quit')  # must not raise any error
+        # XXX: is there a possibility to make sure the window has been
+        #      closed?
