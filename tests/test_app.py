@@ -37,5 +37,9 @@ class AppTests(unittest.TestCase):
         filemenu = [x for x in menubar.children.values()][0]
         assert self.app.winfo_exists()
         filemenu.invoke('Quit')  # must not raise any error
-        # XXX: is there a possibility to make sure the window has been
-        #      closed?
+
+    def test_menubar_cmd1(self):
+        # we can click the My Cmd in menubar
+        menubar = self.app.menubar
+        filemenu = [x for x in menubar.children.values()][0]
+        filemenu.invoke('My Cmd 1')  # must not raise any error
