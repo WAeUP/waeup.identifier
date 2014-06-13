@@ -18,10 +18,10 @@
 from waeup.identifier.app import FPScanApplication
 
 
-def main():
+def main():                              # pragma: no cover
     myapp = FPScanApplication()
     myapp.master.title('My Application')
     myapp.mainloop()
 
-if __name__ == '__main__':
+if __name__ == '__main__':               # pragma: no cover
     main()
