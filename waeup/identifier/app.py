@@ -65,11 +65,14 @@ class FPScanApplication(Frame):
     def cmd_file(self):
         print("CMD FILE clicked")
 
+    def cmd_quit(self):
+        return self.master.quit()
+
     def create_menubar(self):
         self.menubar = Menu(self)
         self.master['menu'] = self.menubar
         menu_file = Menu(self.menubar, tearoff=0)
         menu_file.add_command(label="My Cmd 1", command=self.cmd_file)
-        menu_file.add_command(label="Quit", command=self.master.quit)
+        menu_file.add_command(label="Quit", command=self.cmd_quit)
         self.menubar.add_cascade(label="File", menu=menu_file)
         self.master.config(menu=self.menubar)
