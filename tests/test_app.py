@@ -43,3 +43,15 @@ class AppTests(unittest.TestCase):
         menubar = self.app.menubar
         filemenu = [x for x in menubar.children.values()][0]
         filemenu.invoke('My Cmd 1')  # must not raise any error
+
+    def test_btn_calc(self):
+        # we can invoke the calc button
+        self.app.feet.set('12.12')
+        self.assertEqual(self.app.meters.get(), '')
+        self.app.btn_calc.invoke()
+        self.assertEqual(self.app.meters.get(), '3.694226')
+
+    def test_btn_calc_invalid_value(self):
+        # invalid values are ignored
+        self.app.feet.set('not-a-numeric-value')
+        self.app.btn_calc.invoke()
