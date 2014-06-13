@@ -39,16 +39,13 @@ Get the sources::
   (py32) $ git clone https://github.com/ulif/waeup.identifier.git
   (py32) $ cd waeup.identifier
 
-Install local ``waeup_identifier`` script::
-
-  (py32) $ python setup.py install
-
-Afterwards a script ``waeup_identifier`` (with underscore) should be
-executable in your path.
-
 Install packages for testing/developing::
 
   (py32) $ python setup.py dev
+
+This will also install the ``waeup_identifier`` script in your virtual
+environment ``bin/`` dir (do *not* use the ``install`` command of
+``setup.py`` for this; it will break your devel environment).
 
 Running tests::
 
