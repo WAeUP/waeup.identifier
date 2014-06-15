@@ -16,7 +16,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 from tkinter import (
-    N, W, S, E, StringVar, Frame, Button, Label, Entry, Menu,
+    N, W, S, E, StringVar, Frame, Button, Label, Entry, Menu, SUNKEN
     )
 
 
@@ -53,6 +53,10 @@ class FPScanApplication(Frame):
         self.lbl_equiv.grid(column=1, row=3, sticky=E)
         self.lbl_meters2 = Label(self, text="meters")
         self.lbl_meters2.grid(column=3, row=3, sticky=W)
+        self.footer_bar = Label(
+            self, text="ready.", relief=SUNKEN, anchor="nw")
+        self.footer_bar.grid(column=0, row=5, sticky=(E, W), columnspan=4,
+                           padx=0, pady=0)
 
         for child in self.winfo_children():
             child.grid_configure(padx=5, pady=5)

@@ -23,7 +23,7 @@ class AppTests(unittest.TestCase):
 
     def test_size(self):
         # The app will have four cols and five rows
-        self.assertEqual(self.app.size(), (4,5))
+        self.assertEqual(self.app.size(), (4,6))
 
     def test_menubar_exists(self):
         # we have (exactly) 1 menubar
@@ -55,3 +55,9 @@ class AppTests(unittest.TestCase):
         # invalid values are ignored
         self.app.feet.set('not-a-numeric-value')
         self.app.btn_calc.invoke()
+
+    def test_footer_bar(self):
+        # we can set text of the footer bar
+        self.app.footer_bar['text'] = 'My Message.'
+        self.assertEqual(
+            self.app.footer_bar['text'], 'My Message.')
