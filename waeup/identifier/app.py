@@ -64,19 +64,31 @@ class FPScanApplication(Frame):
         self.entry_feet.focus()
         self.create_menubar()
         self.master.bind('<Return>', self.calculate)
+        self.master.bind('<Control-q>', self.cmd_quit)
         self.pack()
 
     def cmd_file(self):
         print("CMD FILE clicked")
 
-    def cmd_quit(self):
+    def cmd_quit(self, event=None):
+        print("QUIT QUIT")
         return self.master.quit()
+
+    def cmd_about(self):
+        return
 
     def create_menubar(self):
         self.menubar = Menu(self)
         self.master['menu'] = self.menubar
-        menu_file = Menu(self.menubar, tearoff=0)
-        menu_file.add_command(label="My Cmd 1", command=self.cmd_file)
-        menu_file.add_command(label="Quit", command=self.cmd_quit)
-        self.menubar.add_cascade(label="File", menu=menu_file)
+        # file menu
+        self.menu_file = Menu(self.menubar, tearoff=0)
+        self.menu_file.add_command(label="My Cmd 1", command=self.cmd_file)
+        self.menu_file.add_command(label="Quit", command=self.cmd_quit,
+                                   underline=0, accelerator="Ctrl+Q")
+        self.menubar.add_cascade(label="File", menu=self.menu_file, underline=0)
+        # help menu
+        self.menu_help = Menu(self.menubar, tearoff=0, name='help')
+        self.menu_help.add_command(label="About WAeUP Identifier",
+                                   command=self.cmd_about)
+        self.menubar.add_cascade(label="Help", menu=self.menu_help, underline=0)
         self.master.config(menu=self.menubar)

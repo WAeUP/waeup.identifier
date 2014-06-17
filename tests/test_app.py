@@ -34,15 +34,14 @@ class AppTests(unittest.TestCase):
     def test_menubar_hasquit(self):
         # the menubar has a quit-item
         menubar = self.app.menubar
-        filemenu = [x for x in menubar.children.values()][0]
-        assert self.app.winfo_exists()
+        filemenu = self.app.menu_file
         filemenu.invoke('Quit')  # must not raise any error
 
-    def test_menubar_cmd1(self):
-        # we can click the My Cmd in menubar
+    def test_menubar_hasabout(self):
+        # the menubar has an help-item
         menubar = self.app.menubar
-        filemenu = [x for x in menubar.children.values()][0]
-        filemenu.invoke('My Cmd 1')  # must not raise any error
+        helpmenu = self.app.menu_help
+        helpmenu.invoke('About WAeUP Identifier')  # must not raise any error
 
     def test_btn_calc(self):
         # we can invoke the calc button
