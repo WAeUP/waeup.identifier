@@ -37,8 +37,10 @@ class AppTests(unittest.TestCase):
         filemenu = self.app.menu_file
         filemenu.invoke('Quit')  # must not raise any error
 
-    def test_menubar_hasabout(self):
+    def DISABLED_test_menubar_hasabout(self):
         # the menubar has an help-item
+        # XXX: Currently disabled as 'about' generates a modal dialog we
+        #      cannot stop from here.
         menubar = self.app.menubar
         helpmenu = self.app.menu_help
         helpmenu.invoke('About WAeUP Identifier')  # must not raise any error
