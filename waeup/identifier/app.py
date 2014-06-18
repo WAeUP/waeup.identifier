@@ -68,11 +68,9 @@ class FPScanApplication(Frame):
         self.pack()
 
     def cmd_file(self):
-        print("CMD FILE clicked")
+        return
 
     def cmd_quit(self, event=None):
-        print("QUIT QUIT")
-        #self.master.destroy()
         return self.master.quit()
 
     def cmd_about(self):
