@@ -16,7 +16,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 from tkinter import (
-    N, W, S, E, StringVar, Frame, Button, Label, Entry, Menu, SUNKEN
+    N, W, S, E, StringVar, Frame, Button, Label, Entry, Menu, SUNKEN,
+    messagebox,
     )
 
 
@@ -74,6 +75,8 @@ class FPScanApplication(Frame):
         return self.master.quit()
 
     def cmd_about(self):
+        messagebox.showinfo("About WAeUP Identifier",
+                            "WAeUP Identifier, (c) 2014 WAeUP Germany")
         return
 
     def cmd_prefs(self):
