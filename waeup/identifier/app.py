@@ -88,17 +88,21 @@ class FPScanApplication(Frame):
         # file menu
         self.menu_file = Menu(self.menubar, tearoff=0)
         self.menu_file.add_command(label="My Cmd 1", command=self.cmd_file)
-        self.menu_file.add_command(label="Quit", command=self.cmd_quit,
-                                   underline=0, accelerator="Ctrl+Q")
-        self.menubar.add_cascade(label="File", menu=self.menu_file, underline=0)
+        self.menu_file.add_command(
+            label="Quit", command=self.cmd_quit, underline=0,
+            accelerator="Ctrl+Q")
+        self.menubar.add_cascade(
+            label="File", menu=self.menu_file, underline=0)
         # edit menu
         self.menu_edit = Menu(self.menubar, tearoff=0)
-        self.menu_edit.add_command(label="Preferences", command=self.cmd_prefs,
-                                   underline=0)
-        self.menubar.add_cascade(label="Edit", menu=self.menu_edit, underline=0)
+        self.menu_edit.add_command(
+            label="Preferences", command=self.cmd_prefs, underline=0)
+        self.menubar.add_cascade(
+            label="Edit", menu=self.menu_edit, underline=0)
         # help menu
         self.menu_help = Menu(self.menubar, tearoff=0, name='help')
-        self.menu_help.add_command(label="About WAeUP Identifier",
-                                   command=self.cmd_about)
-        self.menubar.add_cascade(label="Help", menu=self.menu_help, underline=0)
+        self.menu_help.add_command(
+            label="About WAeUP Identifier", command=self.cmd_about)
+        self.menubar.add_cascade(
+            label="Help", menu=self.menu_help, underline=0)
         self.master.config(menu=self.menubar)
