@@ -72,9 +72,13 @@ class FPScanApplication(Frame):
 
     def cmd_quit(self, event=None):
         print("QUIT QUIT")
+        #self.master.destroy()
         return self.master.quit()
 
     def cmd_about(self):
+        return
+
+    def cmd_prefs(self):
         return
 
     def create_menubar(self):
@@ -86,6 +90,11 @@ class FPScanApplication(Frame):
         self.menu_file.add_command(label="Quit", command=self.cmd_quit,
                                    underline=0, accelerator="Ctrl+Q")
         self.menubar.add_cascade(label="File", menu=self.menu_file, underline=0)
+        # edit menu
+        self.menu_edit = Menu(self.menubar, tearoff=0)
+        self.menu_edit.add_command(label="Preferences", command=self.cmd_prefs,
+                                   underline=0)
+        self.menubar.add_cascade(label="Edit", menu=self.menu_edit, underline=0)
         # help menu
         self.menu_help = Menu(self.menubar, tearoff=0, name='help')
         self.menu_help.add_command(label="About WAeUP Identifier",
