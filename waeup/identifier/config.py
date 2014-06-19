@@ -17,3 +17,17 @@
 #
 import os
 from configparser import ConfigParser
+
+
+def get_conffile_locations():
+    """Get a list of paths where we lookup config files.
+
+    Most general files come first (system-wide), most specific last
+    (local).
+    """
+    system_loc = os.path.abspath(
+        os.path.join("/etc", "waeupident.ini")
+        )
+    home_loc = os.path.expanduser("~/.waeupident.ini")
+    local_loc = os.path.abspath("waeupident.ini")
+    return [system_loc, home_loc, local_loc]
