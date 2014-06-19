@@ -87,7 +87,6 @@ class FPScanApplication(Frame):
         self.master['menu'] = self.menubar
         # file menu
         self.menu_file = Menu(self.menubar, tearoff=0)
-        self.menu_file.add_command(label="My Cmd 1", command=self.cmd_file)
         self.menu_file.add_command(
             label="Quit", command=self.cmd_quit, underline=0,
             accelerator="Ctrl+Q")
