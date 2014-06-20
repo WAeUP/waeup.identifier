@@ -43,3 +43,9 @@ class ConfigTests(unittest.TestCase):
     def test_find_fpscan_binary_no_binary(self):
         # we get None if there is no binary.
         assert find_fpscan_binary() is None
+
+    def test_find_fpscan_binary(self):
+        # we get a path if a fpscan binary is in $PATH
+        fake_fpscan = os.path.join(self.path_dir, 'fpscan')
+        open(fake_fpscan, 'w').write('Just a fake script.')
+        assert find_fpscan_binary() == fake_fpscan

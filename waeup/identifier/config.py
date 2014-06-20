@@ -35,7 +35,15 @@ def get_conffile_locations():
 
 def find_fpscan_binary():
     """Find the path to an fpscan binary.
+
+    We search the paths in $PATH and look for a script called
+    ``fpscan``.
     """
+    paths = os.environ.get('PATH', '').split(':')
+    for path in paths:
+        bin_path = os.path.join(path, 'fpscan')
+        if os.path.exists(bin_path):
+            return bin_path
     return None
 
 
