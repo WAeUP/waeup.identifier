@@ -31,3 +31,22 @@ def get_conffile_locations():
     home_loc = os.path.expanduser("~/.waeupident.ini")
     local_loc = os.path.abspath("waeupident.ini")
     return [system_loc, home_loc, local_loc]
+
+
+def find_fpscan_binary():
+    """Find the path to an fpscan binary.
+    """
+    return None
+
+
+def get_config():
+    """Get a configuration.
+    """
+    conf = ConfigParser()
+    conf['DEFAULT'] = {
+        'waeup_user': 'grok',
+        'waeup_passwd': 'grok',
+        'save_passwd': '0',
+        'waeup_url': None,
+        }
+    return conf
