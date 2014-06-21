@@ -49,3 +49,20 @@ class ConfigTests(unittest.TestCase):
         fake_fpscan = os.path.join(self.path_dir, 'fpscan')
         open(fake_fpscan, 'w').write('Just a fake script.')
         assert find_fpscan_binary() == fake_fpscan
+
+    def test_find_fpscan_binary_valid_custom(self):
+        # we accept proposed paths if given and valid
+        fake_fpscan_path = os.path.join(self.home_dir, 'fpscan')
+        open(fake_fpscan_path, 'w').write('Just a fake')
+        assert find_fpscan_binary(fake_fpscan_path) == fake_fpscan_path
+
+    def test_find_fpscan_binary_invalid(self):
+        # we get None if given paths are invalid
+        assert find_fpscan_binary('iNvAlIdPaTh') is None
+
+    def test_find_fpscan_binary_fallback(self):
+        # we find fpscans paths in $PATH if custom ones are invalid
+        fake_fpscan = os.path.join(self.path_dir, 'fpscan')
+        open(fake_fpscan, 'w').write('Just a fake script.')
+        assert find_fpscan_binary('invalid_path') == fake_fpscan
+
