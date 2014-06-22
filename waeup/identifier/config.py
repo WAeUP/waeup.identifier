@@ -51,14 +51,16 @@ def find_fpscan_binary(path=None):
     return None
 
 
-def get_config():
+def get_config(fpscan_path=None):
     """Get a configuration.
     """
     conf = ConfigParser()
+    fpscan_path = find_fpscan_binary(path=fpscan_path)
     conf['DEFAULT'] = {
         'waeup_user': 'grok',
         'waeup_passwd': 'grok',
         'save_passwd': '0',
-        'waeup_url': None,
         }
+    if fpscan_path is not None:
+        conf['DEFAULT'].update(fpscan_path=fpscan_path)
     return conf

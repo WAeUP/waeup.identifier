@@ -4,7 +4,7 @@ import shutil
 import tempfile
 import unittest
 from waeup.identifier.config import (
-    get_conffile_locations, find_fpscan_binary,
+    get_conffile_locations, find_fpscan_binary, get_config,
     )
 
 
@@ -66,3 +66,8 @@ class ConfigTests(unittest.TestCase):
         open(fake_fpscan, 'w').write('Just a fake script.')
         assert find_fpscan_binary('invalid_path') == fake_fpscan
 
+    def test_get_config(self):
+        # we can get valid configs
+        conf = get_config()
+        assert conf.get('DEFAULT', 'waeup_user') == 'grok'
+        assert conf.get('DEFAULT', 'waeup_passwd') == 'grok'
