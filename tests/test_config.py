@@ -71,3 +71,10 @@ class ConfigTests(unittest.TestCase):
         conf = get_config()
         assert conf.get('DEFAULT', 'waeup_user') == 'grok'
         assert conf.get('DEFAULT', 'waeup_passwd') == 'grok'
+
+    def test_get_config_fpscan_path(self):
+        # we get a valid fpscan path if avail.
+        fake_fpscan = os.path.join(self.path_dir, 'fpscan')
+        open(fake_fpscan, 'w').write('Just a fake script.')
+        conf = get_config()
+        assert conf.get('DEFAULT', 'fpscan_path') == fake_fpscan
