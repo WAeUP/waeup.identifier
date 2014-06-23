@@ -37,7 +37,7 @@ class ConfigTests(unittest.TestCase):
         # we can get a list of accepted config file locations
         result = get_conffile_locations()
         assert result[0] == '/etc/waeupident.ini'
-        assert result[1].endswith('.waeupident.ini')
+        assert result[1] == os.path.join(self.home_dir, '.waeupident.ini')
         assert result[2].startswith(os.getcwd())
 
     def test_find_fpscan_binary_no_binary(self):
@@ -78,3 +78,14 @@ class ConfigTests(unittest.TestCase):
         open(fake_fpscan, 'w').write('Just a fake script.')
         conf = get_config()
         assert conf.get('DEFAULT', 'fpscan_path') == fake_fpscan
+
+    def test_get_config_two_files(self):
+        # configs can be read from two or more files
+        conf1 = os.path.join(self.home_dir, 'conf1.cfg')
+        conf2 = os.path.join(self.home_dir, 'conf2.cfg')
+        open(conf1, 'w').write('[DEFAULT]\nwaeup_user=user1\n')
+        open(conf2, 'w').write('[DEFAULT]\nwaeup_user=user2\n')
+        conf = get_config(paths=[conf1, conf2])
+        assert conf.get('DEFAULT', 'waeup_user') == 'user2'
+        conf = get_config(paths=[conf2, conf1])
+        assert conf.get('DEFAULT', 'waeup_user') == 'user1'

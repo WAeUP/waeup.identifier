@@ -51,8 +51,11 @@ def find_fpscan_binary(path=None):
     return None
 
 
-def get_config():
+def get_config(paths=None):
     """Get a configuration.
+
+    The paths, where config files are searched can be given in
+    `paths`, a list of paths.
     """
     conf = ConfigParser()
     fpscan_path = find_fpscan_binary()
@@ -63,4 +66,9 @@ def get_config():
         }
     if fpscan_path is not None:
         conf['DEFAULT'].update(fpscan_path=fpscan_path)
+    if paths is not None:
+        conffile_locations = paths
+    else:
+        conffile_locations = get_conffile_locations()
+    conf.read(conffile_locations)
     return conf
