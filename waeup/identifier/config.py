@@ -54,8 +54,11 @@ def find_fpscan_binary(path=None):
 def get_config(paths=None):
     """Get a configuration.
 
-    The paths, where config files are searched can be given in
-    `paths`, a list of paths.
+    The paths, where config files are searched, can be given in
+    `paths`, a list of paths. If no such argument is passed in, we use
+    results from :func:`get_conffile_locations`.
+
+    Returns a `configparser.ConfigParser` instance.
     """
     conf = ConfigParser()
     fpscan_path = find_fpscan_binary()
