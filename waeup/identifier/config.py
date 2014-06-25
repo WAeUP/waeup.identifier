@@ -65,6 +65,7 @@ def get_config(paths=None):
     conf['DEFAULT'] = {
         'waeup_user': 'grok',
         'waeup_passwd': 'grok',
+        'waeup_url': 'localhost:8080',
         'save_passwd': '0',
         }
     if fpscan_path is not None:

@@ -71,6 +71,7 @@ class ConfigTests(unittest.TestCase):
         conf = get_config()
         assert conf.get('DEFAULT', 'waeup_user') == 'grok'
         assert conf.get('DEFAULT', 'waeup_passwd') == 'grok'
+        assert conf.get('DEFAULT', 'waeup_url') == 'localhost:8080'
 
     def test_get_config_fpscan_path(self):
         # we get a valid fpscan path if avail.
