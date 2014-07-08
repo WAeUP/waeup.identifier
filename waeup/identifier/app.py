@@ -102,6 +102,7 @@ class FPScanApplication(Frame):
         self.create_menubar()
         self.master.bind('<Return>', self.calculate)
         self.master.bind('<Control-q>', self.cmd_quit)
+        self.master.title('WAeUP Identifier')
         self.pack()
 
     def cmd_file(self):
