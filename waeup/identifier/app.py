@@ -24,6 +24,15 @@ from tkinter.simpledialog import Dialog
 
 class PreferencesDialog(Dialog):
 
+    def __init__(self, parent, title=None):
+        """Initialize a preferences dialog.
+
+        `parent` -- a parent window (the application window)
+        `title` -- the dialog title.
+        """
+        super(PreferencesDialog, self).__init__(parent, title)
+
+
     def buttonbox(self):
         """Override standard button box.
         """
