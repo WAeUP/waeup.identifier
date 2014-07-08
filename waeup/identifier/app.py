@@ -17,8 +17,44 @@
 #
 from tkinter import (
     N, W, S, E, StringVar, Frame, Button, Label, Entry, Menu, SUNKEN,
-    messagebox,
+    messagebox, simpledialog, ACTIVE, LEFT,
     )
+from tkinter.simpledialog import Dialog
+
+
+class PreferencesDialog(Dialog):
+
+    def buttonbox(self):
+        """Override standard button box.
+        """
+        box = Frame(self)
+        w = Button(box, text="Save", width=10, command=self.ok, default=ACTIVE)
+        w.pack(side=LEFT, padx=5, pady=5)
+        w = Button(box, text="Cancel", width=10, command=self.cancel)
+        w.pack(side=LEFT, padx=5, pady=5)
+
+        self.bind("<Return>", self.ok)
+        self.bind("<Escape>", self.cancel)
+
+        box.pack()
+
+    def validate(self):
+        '''validate the data
+
+        This method is called automatically to validate the data
+        before the dialog is destroyed. By default, it always
+        validates OK.
+        '''
+
+        return 1  # override
+
+    def apply(self):
+        '''process the data
+
+        This method is called automatically to process the data,
+        *after* the dialog is destroyed. By default, it does nothing.
+        '''
+        pass  # override
 
 
 class FPScanApplication(Frame):
@@ -80,6 +116,9 @@ class FPScanApplication(Frame):
         return
 
     def cmd_prefs(self):
+        result = PreferencesDialog(
+        # result = simpledialog.Dialog(
+            self, title='Preferences')
         return
 
     def create_menubar(self):
