@@ -24,13 +24,18 @@ from tkinter.simpledialog import Dialog
 
 class PreferencesDialog(Dialog):
 
-    def __init__(self, parent, title=None):
+    def __init__(self, parent, title=None, values={}):
         """Initialize a preferences dialog.
 
         `parent` -- a parent window (the application window)
+
         `title` -- the dialog title.
+
+        `values` -- a dict of values to store in preferences. Use this
+                    dict to get/set values.
         """
         super(PreferencesDialog, self).__init__(parent, title)
+        self.values = values
 
 
     def buttonbox(self):
