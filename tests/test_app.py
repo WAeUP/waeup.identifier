@@ -25,6 +25,10 @@ class AppTests(unittest.TestCase):
         # The app will have four cols and five rows
         self.assertEqual(self.app.size(), (4,6))
 
+    def test_title(self):
+        # The app will have a certain title
+        self.assertEqual(self.app.master.title(), 'WAeUP Identifier')
+
     def test_menubar_exists(self):
         # we have (exactly) 1 menubar
         menus = [x for x in self.app.children.values()
