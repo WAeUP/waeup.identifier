@@ -17,7 +17,7 @@
 #
 from tkinter import (
     N, W, S, E, StringVar, Frame, Button, Label, Entry, Menu, SUNKEN,
-    messagebox, simpledialog, ACTIVE, LEFT,
+    messagebox, simpledialog, ACTIVE, LEFT, BOTH, LabelFrame, X, Y
     )
 from tkinter.simpledialog import Dialog
 
@@ -34,9 +34,41 @@ class PreferencesDialog(Dialog):
         `values` -- a dict of values to store in preferences. Use this
                     dict to get/set values.
         """
-        super(PreferencesDialog, self).__init__(parent, title)
+        self.val_fpscan_path = StringVar()
+        self.val_waeup_url = StringVar()
+        self.val_waeup_user = StringVar()
+        self.val_waeup_passwd = StringVar()
         self.values = values
+        super(PreferencesDialog, self).__init__(parent, title)
 
+    def body(self, master):
+        """Override body creation.
+        """
+        body = Frame(master)
+
+        base_box = LabelFrame(
+            body, text="Basic Options", padx=5, pady=5, takefocus=1)
+        Label(base_box, text="Path to fpscan:  ").grid(sticky=W)
+        w = Entry(base_box, width=30, textvariable=self.val_fpscan_path)
+        w.grid(row=0, column=1, sticky=E)
+
+        waeup_box = LabelFrame(
+            body, text="WAeUP Portal", padx=5, pady=5, takefocus=1)
+        Label(waeup_box, text="URL of WAeUP Portal:  ").grid(sticky=W)
+        w = Entry(waeup_box, width=30, textvariable=self.val_waeup_url)
+        w.grid(row=0, column=1, sticky=E+W, pady=2)
+        Label(waeup_box, text="WAeUP Username: ").grid(sticky=W, row=1)
+        w = Entry(waeup_box, width=15, textvariable=self.val_waeup_user)
+        w.grid(row=1, column=1, sticky=E+W, pady=2)
+        Label(waeup_box, text="Portal Password: ").grid(sticky=W, row=2)
+        w = Entry(waeup_box, width=20, textvariable=self.val_waeup_passwd)
+        w.grid(row=2, column=1, sticky=E+W, pady=2)
+
+
+        base_box.pack(fill=BOTH, expand=1)
+        waeup_box.pack(fill=BOTH, expand=1)
+        body.pack(fill=BOTH, expand=1)
+        return body
 
     def buttonbox(self):
         """Override standard button box.
@@ -50,7 +82,7 @@ class PreferencesDialog(Dialog):
         self.bind("<Return>", self.ok)
         self.bind("<Escape>", self.cancel)
 
-        box.pack()
+        box.pack(fill=BOTH, expand=1)
 
     def validate(self):
         '''validate the data
@@ -117,7 +149,6 @@ class FPScanApplication(Frame):
         self.master.bind('<Return>', self.calculate)
         self.master.bind('<Control-q>', self.cmd_quit)
         self.master.title('WAeUP Identifier')
-        self.pack()
 
     def cmd_file(self):
         return
