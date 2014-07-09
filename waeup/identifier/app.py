@@ -17,7 +17,7 @@
 #
 from tkinter import (
     N, W, S, E, StringVar, Frame, Button, Label, Entry, Menu, SUNKEN,
-    messagebox, simpledialog, ACTIVE, LEFT, BOTH, LabelFrame, X, Y, BOTTOM
+    messagebox, ACTIVE, LEFT, BOTH, LabelFrame, X, BOTTOM
     )
 from tkinter.simpledialog import Dialog
 
@@ -56,14 +56,13 @@ class PreferencesDialog(Dialog):
             body, text="WAeUP Portal", padx=5, pady=5, takefocus=1)
         Label(waeup_box, text="URL of WAeUP Portal:  ").grid(sticky=W)
         w = Entry(waeup_box, width=30, textvariable=self.val_waeup_url)
-        w.grid(row=0, column=1, sticky=E+W, pady=2)
+        w.grid(row=0, column=1, sticky=E + W, pady=2)
         Label(waeup_box, text="WAeUP Username: ").grid(sticky=W, row=1)
         w = Entry(waeup_box, width=15, textvariable=self.val_waeup_user)
-        w.grid(row=1, column=1, sticky=E+W, pady=2)
+        w.grid(row=1, column=1, sticky=E + W, pady=2)
         Label(waeup_box, text="Portal Password: ").grid(sticky=W, row=2)
         w = Entry(waeup_box, width=20, textvariable=self.val_waeup_passwd)
-        w.grid(row=2, column=1, sticky=E+W, pady=2)
-
+        w.grid(row=2, column=1, sticky=E + W, pady=2)
 
         base_box.pack(fill=BOTH, expand=1)
         waeup_box.pack(fill=BOTH, expand=1)
@@ -139,8 +138,7 @@ class FPScanApplication(Frame):
     def cmd_prefs(self):
         """Command called when a (modal) preference dialog should appear.
         """
-        result = PreferencesDialog(
-            self, title='Preferences')
+        PreferencesDialog(self, title='Preferences')
         return
 
     def create_menubar(self):
