@@ -21,10 +21,6 @@ class AppTests(unittest.TestCase):
         # we can create app instances
         assert self.app is not None
 
-    def test_size(self):
-        # The app will have four cols and five rows
-        self.assertEqual(self.app.size(), (4,6))
-
     def test_title(self):
         # The app will have a certain title
         self.assertEqual(self.app.master.title(), 'WAeUP Identifier')
@@ -48,18 +44,6 @@ class AppTests(unittest.TestCase):
         menubar = self.app.menubar
         helpmenu = self.app.menu_help
         helpmenu.invoke('About WAeUP Identifier')  # must not raise any error
-
-    def test_btn_calc(self):
-        # we can invoke the calc button
-        self.app.feet.set('12.12')
-        self.assertEqual(self.app.meters.get(), '')
-        self.app.btn_calc.invoke()
-        self.assertEqual(self.app.meters.get(), '3.694226')
-
-    def test_btn_calc_invalid_value(self):
-        # invalid values are ignored
-        self.app.feet.set('not-a-numeric-value')
-        self.app.btn_calc.invoke()
 
     def test_footer_bar(self):
         # we can set text of the footer bar
