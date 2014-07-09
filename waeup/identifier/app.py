@@ -17,7 +17,7 @@
 #
 from tkinter import (
     N, W, S, E, StringVar, Frame, Button, Label, Entry, Menu, SUNKEN,
-    messagebox, simpledialog, ACTIVE, LEFT, BOTH, LabelFrame, X, Y
+    messagebox, simpledialog, ACTIVE, LEFT, BOTH, LabelFrame, X, Y, BOTTOM
     )
 from tkinter.simpledialog import Dialog
 
@@ -105,50 +105,25 @@ class PreferencesDialog(Dialog):
 
 class FPScanApplication(Frame):
 
-    def calculate(self, *args):
-        try:
-            value = float(self.feet.get())
-            self.meters.set((0.3048 * value * 10000.0 + 0.5) / 10000.0)
-        except ValueError:
-            pass
-
     def __init__(self, master=None):
         Frame.__init__(self, master)
-        self.grid(column=0, row=0, sticky=(N, W, E, S))
-        self.columnconfigure(0, weight=1)
-        self.rowconfigure(0, weight=1)
 
-        self.feet = StringVar()
-        self.meters = StringVar()
+        self.body = Frame(self)
+        Label(self.body, text="WAeUP Identifier", anchor="nw").pack(
+            fill=X, expand=1, padx=5, pady=5, ipadx=0, ipady=0)
+        Label(self.body, text="12 ").pack(fill=BOTH, expand=1)
+        self.body.pack(expand=1, fill=BOTH, pady=0)
 
-        self.entry_feet = Entry(self, width=7, textvariable=self.feet)
-        self.entry_feet.grid(column=2, row=2, sticky=(W, E))
-
-        self.lbl_meters = Label(self, textvariable=self.meters)
-        self.lbl_meters.grid(column=2, row=3, sticky=(W, E))
-
-        self.btn_calc = Button(self, text="Calculate", command=self.calculate)
-        self.btn_calc.grid(column=3, row=4, sticky=W)
-
-        self.lbl_feet = Label(self, text="feet")
-        self.lbl_feet.grid(column=3, row=2, sticky=W)
-        self.lbl_equiv = Label(self, text="is equivalent to")
-        self.lbl_equiv.grid(column=1, row=3, sticky=E)
-        self.lbl_meters2 = Label(self, text="meters")
-        self.lbl_meters2.grid(column=3, row=3, sticky=W)
         self.footer_bar = Label(
-            self, text="ready.", relief=SUNKEN, anchor="nw")
-        self.footer_bar.grid(column=0, row=5, sticky=(E, W), columnspan=4,
-                           padx=0, pady=0)
+            self, text="ready.", relief=SUNKEN, anchor="sw", height=1)
+        self.footer_bar.pack(
+            expand=1, fill=X, pady=2, padx=1, side=BOTTOM, anchor="sw")
 
-        for child in self.winfo_children():
-            child.grid_configure(padx=5, pady=5)
-
-        self.entry_feet.focus()
         self.create_menubar()
-        self.master.bind('<Return>', self.calculate)
+        #self.master.bind('<Return>', self.calculate)
         self.master.bind('<Control-q>', self.cmd_quit)
         self.master.title('WAeUP Identifier')
+        self.pack(expand=1, fill=BOTH)
 
     def cmd_file(self):
         return
@@ -162,8 +137,9 @@ class FPScanApplication(Frame):
         return
 
     def cmd_prefs(self):
+        """Command called when a (modal) preference dialog should appear.
+        """
         result = PreferencesDialog(
-        # result = simpledialog.Dialog(
             self, title='Preferences')
         return
 
