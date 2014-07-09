@@ -20,6 +20,7 @@ from tkinter import (
     messagebox, ACTIVE, LEFT, BOTH, LabelFrame, X, BOTTOM
     )
 from tkinter.simpledialog import Dialog
+from tkinter.ttk import Notebook
 
 
 class PreferencesDialog(Dialog):
@@ -107,16 +108,22 @@ class FPScanApplication(Frame):
     def __init__(self, master=None):
         Frame.__init__(self, master)
 
-        self.body = Frame(self)
-        Label(self.body, text="WAeUP Identifier", anchor="nw").pack(
+        self.body = Notebook(self, name="body")
+        self.body.enable_traversal()
+        self.page_hardware = Frame(self.body)
+        Label(
+            self.page_hardware, text="Detecting, please wait...",
+            anchor="nw").pack(
             fill=X, expand=1, padx=5, pady=5, ipadx=0, ipady=0)
-        Label(self.body, text="12 ").pack(fill=BOTH, expand=1)
+        self.body.add(
+            self.page_hardware, text="Hardware", underline=0, padding=2)
         self.body.pack(expand=1, fill=BOTH, pady=0)
 
         self.footer_bar = Label(
             self, text="ready.", relief=SUNKEN, anchor="sw", height=1)
         self.footer_bar.pack(
             expand=1, fill=X, pady=2, padx=1, side=BOTTOM, anchor="sw")
+        self.footer_bar['text'] = "Detecting fingerprint scanner devices..."
 
         self.create_menubar()
         #self.master.bind('<Return>', self.calculate)
