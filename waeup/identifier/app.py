@@ -121,22 +121,6 @@ class FPScanApplication(Frame):
 
         self.page_hardware = Frame(self.body)
         self.page_hardware_body = Frame(self.page_hardware)
-        self.lbl_detect = Label(
-            self.page_hardware_body,
-            text="Detecting fingerprint scanners, please wait...",
-            anchor="nw")
-        self.lbl_detect.pack(
-            fill=X, expand=1, padx=5, pady=5, ipadx=0, ipady=0)
-        pb1 = Progressbar(
-            self.page_hardware_body, mode="indeterminate")
-        pb1.pack()
-        pb1.start()
-
-        detect_cancel = Button(
-            self.page_hardware_body,
-            text="Cancel", command=lambda: self.cmd_abort_detect())
-        detect_cancel.pack(pady=5)
-        self.page_hardware_body.pack()
 
         self.body.add(
             self.page_scan,
@@ -154,13 +138,33 @@ class FPScanApplication(Frame):
             self, text="ready.", relief=SUNKEN, anchor="sw", height=1)
         self.footer_bar.pack(
             expand=1, fill=X, pady=2, padx=1, side=BOTTOM, anchor="sw")
-        self.footer_bar['text'] = "Detecting scanners..."
 
+        self.draw_hardware_detect_page()
         self.create_menubar()
         #self.master.bind('<Return>', self.calculate)
         self.master.bind('<Control-q>', self.cmd_quit)
         self.master.title('WAeUP Identifier')
         self.pack(expand=1, fill=BOTH)
+
+    def draw_hardware_detect_page(self):
+        self.page_hardware_body.destroy()  # remove old body
+        self.page_hardware_body = Frame(self.page_hardware)
+        Label(
+            self.page_hardware_body,
+            text="Detecting fingerprint scanners, please wait...",
+            anchor="nw").pack(
+            fill=X, expand=1, padx=5, pady=5, ipadx=0, ipady=0)
+        pb1 = Progressbar(
+            self.page_hardware_body, mode="indeterminate")
+        pb1.pack()
+        pb1.start()
+
+        detect_cancel = Button(
+            self.page_hardware_body,
+            text="Cancel", command=lambda: self.cmd_abort_detect())
+        detect_cancel.pack(pady=5)
+        self.page_hardware_body.pack()
+        self.footer_bar['text'] = "Detecting scanners..."
 
     def cmd_abort_detect(self):
         self.footer_bar['text'] = "Ready."
