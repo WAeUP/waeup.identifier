@@ -20,7 +20,7 @@ from tkinter import (
     messagebox, ACTIVE, LEFT, BOTH, LabelFrame, X, BOTTOM
     )
 from tkinter.simpledialog import Dialog
-from tkinter.ttk import Notebook
+from tkinter.ttk import Notebook, Progressbar, Button
 
 
 class PreferencesDialog(Dialog):
@@ -105,31 +105,68 @@ class PreferencesDialog(Dialog):
 
 class FPScanApplication(Frame):
 
+    detected_scanners = []
+
     def __init__(self, master=None):
         Frame.__init__(self, master)
 
         self.body = Notebook(self, name="body")
         self.body.enable_traversal()
+
+        self.page_scan = Frame(self.body)
+        self.page_scan_body = Frame(self.page_scan)
+
+        self.page_identify = Frame(self.body)
+        self.page_identify_body = Frame(self.page_identify)
+
         self.page_hardware = Frame(self.body)
-        Label(
-            self.page_hardware, text="Detecting, please wait...",
-            anchor="nw").pack(
+        self.page_hardware_body = Frame(self.page_hardware)
+        self.lbl_detect = Label(
+            self.page_hardware_body,
+            text="Detecting fingerprint scanners, please wait...",
+            anchor="nw")
+        self.lbl_detect.pack(
             fill=X, expand=1, padx=5, pady=5, ipadx=0, ipady=0)
+        pb1 = Progressbar(
+            self.page_hardware_body, mode="indeterminate")
+        pb1.pack()
+        pb1.start()
+
+        detect_cancel = Button(
+            self.page_hardware_body,
+            text="Cancel", command=lambda: self.cmd_abort_detect())
+        detect_cancel.pack(pady=5)
+        self.page_hardware_body.pack()
+
         self.body.add(
-            self.page_hardware, text="Hardware", underline=0, padding=2)
+            self.page_scan,
+            text="Create fingerprints", underline=0, padding=2)
+        self.body.add(
+            self.page_identify,
+            text="Identify Persons", underline=0, padding=2)
+        self.body.add(
+            self.page_hardware,
+            text="Hardware", underline=0, padding=2)
         self.body.pack(expand=1, fill=BOTH, pady=0)
+        self.body.select(2)
 
         self.footer_bar = Label(
             self, text="ready.", relief=SUNKEN, anchor="sw", height=1)
         self.footer_bar.pack(
             expand=1, fill=X, pady=2, padx=1, side=BOTTOM, anchor="sw")
-        self.footer_bar['text'] = "Detecting fingerprint scanner devices..."
+        self.footer_bar['text'] = "Detecting scanners..."
 
         self.create_menubar()
         #self.master.bind('<Return>', self.calculate)
         self.master.bind('<Control-q>', self.cmd_quit)
         self.master.title('WAeUP Identifier')
         self.pack(expand=1, fill=BOTH)
+
+    def cmd_abort_detect(self):
+        self.footer_bar['text'] = "Ready."
+
+        print("Abort detection.")
+        return
 
     def cmd_file(self):
         return
