@@ -108,7 +108,7 @@ class FPScanApplication(Frame):
     detected_scanners = []
 
     def __init__(self, master=None):
-        Frame.__init__(self, master)
+        Frame.__init__(self, master, width=400, height=240)
 
         self.body = Notebook(self, name="body")
         self.body.enable_traversal()
@@ -127,7 +127,7 @@ class FPScanApplication(Frame):
             text="Create fingerprints", underline=0, padding=2)
         self.body.add(
             self.page_identify,
-            text="Identify Persons", underline=0, padding=2)
+            text="Identify persons", underline=0, padding=2)
         self.body.add(
             self.page_hardware,
             text="Hardware", underline=0, padding=2)
@@ -145,15 +145,16 @@ class FPScanApplication(Frame):
         self.master.bind('<Control-q>', self.cmd_quit)
         self.master.title('WAeUP Identifier')
         self.pack(expand=1, fill=BOTH)
+        self.pack_propagate(0)
 
     def draw_hardware_detect_page(self):
+        self.page_hardware_body.pack_forget()
         self.page_hardware_body.destroy()  # remove old body
         self.page_hardware_body = Frame(self.page_hardware)
         Label(
             self.page_hardware_body,
             text="Detecting fingerprint scanners, please wait...",
-            anchor="nw").pack(
-            fill=X, expand=1, padx=5, pady=5, ipadx=0, ipady=0)
+            anchor="nw").pack()
         pb1 = Progressbar(
             self.page_hardware_body, mode="indeterminate")
         pb1.pack()
@@ -166,9 +167,28 @@ class FPScanApplication(Frame):
         self.page_hardware_body.pack()
         self.footer_bar['text'] = "Detecting scanners..."
 
-    def cmd_abort_detect(self):
+    def draw_hardware_list_page(self):
+        self.page_hardware_body.pack_forget()
+        self.page_hardware_body.destroy()  # remove old body
+        self.page_hardware_body = Frame(self.page_hardware)
+        Label(
+            self.page_hardware_body,
+            text="Fingerprint scanners found:",
+            anchor="nw").pack()
+
+        btn = Button(
+            self.page_hardware_body,
+            text="Rescan",
+            command=lambda: self.draw_hardware_detect_page()
+            )
+        btn.pack()
+        self.page_hardware_body.pack()
         self.footer_bar['text'] = "Ready."
 
+
+    def cmd_abort_detect(self):
+        self.footer_bar['text'] = "Ready."
+        self.draw_hardware_list_page()
         print("Abort detection.")
         return
 
