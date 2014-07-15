@@ -154,7 +154,7 @@ class FPScanApplication(Frame):
         Label(
             self.page_hardware_body,
             text="Detecting fingerprint scanners, please wait...",
-            anchor="nw").pack()
+            anchor="nw").pack(pady=15)
         pb1 = Progressbar(
             self.page_hardware_body, mode="indeterminate")
         pb1.pack()
@@ -163,7 +163,7 @@ class FPScanApplication(Frame):
         detect_cancel = Button(
             self.page_hardware_body,
             text="Cancel", command=lambda: self.cmd_abort_detect())
-        detect_cancel.pack(pady=5)
+        detect_cancel.pack(pady=15)
         self.page_hardware_body.pack()
         self.footer_bar['text'] = "Detecting scanners..."
 
@@ -174,17 +174,16 @@ class FPScanApplication(Frame):
         Label(
             self.page_hardware_body,
             text="Fingerprint scanners found:",
-            anchor="nw").pack()
+            anchor="nw").pack(pady=15)
 
         btn = Button(
             self.page_hardware_body,
             text="Rescan",
             command=lambda: self.draw_hardware_detect_page()
             )
-        btn.pack()
+        btn.pack(pady=15)
         self.page_hardware_body.pack()
         self.footer_bar['text'] = "Ready."
-
 
     def cmd_abort_detect(self):
         self.footer_bar['text'] = "Ready."
