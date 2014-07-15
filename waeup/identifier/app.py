@@ -21,6 +21,7 @@ from tkinter import (
     )
 from tkinter.simpledialog import Dialog
 from tkinter.ttk import Notebook, Progressbar, Button
+from waeup.identifier.config import get_config
 
 
 class PreferencesDialog(Dialog):
@@ -109,6 +110,7 @@ class FPScanApplication(Frame):
 
     def __init__(self, master=None):
         Frame.__init__(self, master, width=400, height=240)
+        self.config = get_config()
 
         self.body = Notebook(self, name="body")
         self.body.enable_traversal()
@@ -146,6 +148,13 @@ class FPScanApplication(Frame):
         self.master.title('WAeUP Identifier')
         self.pack(expand=1, fill=BOTH)
         self.pack_propagate(0)
+        if self.config['DEFAULT'].get('fpscan_path', None) is None:
+            messagebox.showwarning(
+                "fpscan binary missing",
+                "Cannot find 'fpscan'.\n\nThis programme is needed. Please "
+                "install it and set the path in preferences.")
+            self.draw_hardware_list_page()
+
 
     def draw_hardware_detect_page(self):
         self.page_hardware_body.pack_forget()
