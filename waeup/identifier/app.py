@@ -137,7 +137,7 @@ class FPScanApplication(Frame):
         self.footer_bar = Label(
             self, text="ready.", relief=SUNKEN, anchor="sw", height=1)
         self.footer_bar.pack(
-            expand=1, fill=X, pady=2, padx=1, side=BOTTOM, anchor="sw")
+            expand=0, fill=X, pady=2, padx=1, side=BOTTOM, anchor="sw")
 
         self.draw_hardware_detect_page()
         self.create_menubar()
