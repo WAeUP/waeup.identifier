@@ -6,32 +6,16 @@ import unittest
 from waeup.identifier.config import (
     get_conffile_locations, find_fpscan_binary, get_config,
     )
+from waeup.identifier.testing import VirtualHomeProvider
 
 
-class ConfigTests(unittest.TestCase):
-
-    _orig_vars = {}
+class ConfigTests(unittest.TestCase, VirtualHomeProvider):
 
     def setUp(self):
-        # setup virtual $HOME, $PATH and tempdirs.
-        self.path_dir = tempfile.mkdtemp()
-        self.home_dir = tempfile.mkdtemp()
-        for var_name in ['PATH', 'HOME']:
-            self._orig_vars[var_name] = os.environ.get(var_name)
-        os.environ['PATH'] = self.path_dir
-        os.environ['HOME'] = self.home_dir
+        self.setup_virtual_home()
 
     def tearDown(self):
-        # restore $HOME, $PATH and remove tempdirs
-        for var_name in ['PATH', 'HOME']:
-            if self._orig_vars[var_name] is None:
-                del os.environ[var_name]
-            else:
-                os.environ[var_name] = self._orig_vars[var_name]
-        if os.path.exists(self.path_dir):
-            shutil.rmtree(self.path_dir)
-        if os.path.exists(self.home_dir):
-            shutil.rmtree(self.home_dir)
+        self.teardown_virtual_home()
 
     def test_get_conffile_locations(self):
         # we can get a list of accepted config file locations
