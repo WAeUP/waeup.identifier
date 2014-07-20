@@ -15,3 +15,36 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+import os
+import shutil
+import tempfile
+import unittest
+
+
+class VirtualHomeProvider(object):
+    """A unittest mixin for tests where a virtual home is needed.
+    """
+    _orig_vars = {}
+
+    def setup_virtual_home(self):
+        """Setup virtual $HOME, $PATH and tempdirs.
+        """
+        self.path_dir = tempfile.mkdtemp()
+        self.home_dir = tempfile.mkdtemp()
+        for var_name in ['PATH', 'HOME']:
+            self._orig_vars[var_name] = os.environ.get(var_name)
+        os.environ['PATH'] = self.path_dir
+        os.environ['HOME'] = self.home_dir
+
+    def teardown_virtual_home(self):
+        """Restore $HOME, $PATH and remove tempdirs.
+        """
+        for var_name in ['PATH', 'HOME']:
+            if self._orig_vars[var_name] is None:
+                del os.environ[var_name]
+            else:
+                os.environ[var_name] = self._orig_vars[var_name]
+        if os.path.exists(self.path_dir):
+            shutil.rmtree(self.path_dir)
+        if os.path.exists(self.home_dir):
+            shutil.rmtree(self.home_dir)
