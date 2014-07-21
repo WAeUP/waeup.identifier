@@ -41,6 +41,10 @@ class PreferencesDialog(Dialog):
         self.val_waeup_user = StringVar()
         self.val_waeup_passwd = StringVar()
         self.values = values
+        self.val_fpscan_path.set(values.get('fpscan_path', ''))
+        self.val_waeup_url.set(values.get('waeup_url', ''))
+        self.val_waeup_user.set(values.get('waeup_user', ''))
+        self.val_waeup_user.set(values.get('waeup_passwd', ''))
         super(PreferencesDialog, self).__init__(parent, title)
 
     def body(self, master):
@@ -214,7 +218,11 @@ class FPScanApplication(Frame):
     def cmd_prefs(self):
         """Command called when a (modal) preference dialog should appear.
         """
-        PreferencesDialog(self, title='Preferences')
+        values = dict()
+        for conf_key in [
+            'fpscan_path', 'waeup_url', 'waeup_user', 'waeup_passwd']:
+            values[conf_key] = self.config['DEFAULT'].get(conf_key, '')
+        PreferencesDialog(self, title='Preferences', values=values)
         return
 
     def create_menubar(self):
