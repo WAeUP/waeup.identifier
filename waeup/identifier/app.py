@@ -236,7 +236,7 @@ class FPScanApplication(Frame):
         # edit menu
         self.menu_edit = Menu(self.menubar, tearoff=0)
         self.menu_edit.add_command(
-            label="Preferences", command=self.cmd_prefs, underline=0)
+            label="Preferences", command=self.cmd_prefs)
         self.menubar.add_cascade(
             label="Edit", menu=self.menu_edit, underline=0)
         # help menu
