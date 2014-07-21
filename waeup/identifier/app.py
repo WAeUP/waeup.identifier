@@ -96,7 +96,6 @@ class PreferencesDialog(Dialog):
         before the dialog is destroyed. By default, it always
         validates OK.
         '''
-
         return 1  # override
 
     def apply(self):
@@ -158,7 +157,6 @@ class FPScanApplication(Frame):
                 "Cannot find 'fpscan'.\n\nThis programme is needed. Please "
                 "install it and set the path in preferences.")
             self.draw_hardware_list_page()
-
 
     def draw_hardware_detect_page(self):
         self.page_hardware_body.pack_forget()
