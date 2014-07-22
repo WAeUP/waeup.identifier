@@ -36,15 +36,12 @@ class PreferencesDialog(Dialog):
         `values` -- a dict of values to store in preferences. Use this
                     dict to get/set values.
         """
-        self.val_fpscan_path = StringVar()
-        self.val_waeup_url = StringVar()
-        self.val_waeup_user = StringVar()
-        self.val_waeup_passwd = StringVar()
         self.values = values
-        self.val_fpscan_path.set(values.get('fpscan_path', ''))
-        self.val_waeup_url.set(values.get('waeup_url', ''))
-        self.val_waeup_user.set(values.get('waeup_user', ''))
-        self.val_waeup_user.set(values.get('waeup_passwd', ''))
+        self._values = dict()
+        for key in ['fpscan_path', 'waeup_url', 'waeup_user',
+                    'waeup_passwd']:
+            self._values[key] = StringVar()
+            self._values[key].set(values.get(key, ''))
         super(PreferencesDialog, self).__init__(parent, title)
 
     def body(self, master):
@@ -55,20 +52,21 @@ class PreferencesDialog(Dialog):
         base_box = LabelFrame(
             body, text="Basic Options", padx=5, pady=5, takefocus=1)
         Label(base_box, text="Path to fpscan:  ").grid(sticky=W)
-        w = Entry(base_box, width=30, textvariable=self.val_fpscan_path)
+        w = Entry(base_box, width=30, textvariable=self._values['fpscan_path'])
         w.grid(row=0, column=1, sticky=E)
 
         waeup_box = LabelFrame(
             body, text="WAeUP Portal", padx=5, pady=5, takefocus=1)
         Label(waeup_box, text="URL of WAeUP Portal:  ").grid(sticky=W)
-        w = Entry(waeup_box, width=30, textvariable=self.val_waeup_url)
+        w = Entry(waeup_box, width=30, textvariable=self._values['waeup_url'])
         w.grid(row=0, column=1, sticky=E + W, pady=2)
         Label(waeup_box, text="WAeUP Username: ").grid(sticky=W, row=1)
-        w = Entry(waeup_box, width=15, textvariable=self.val_waeup_user)
+        w = Entry(waeup_box, width=15, textvariable=self._values['waeup_user'])
         w.grid(row=1, column=1, sticky=E + W, pady=2)
         Label(waeup_box, text="Portal Password: ").grid(sticky=W, row=2)
         w = Entry(
-            waeup_box, width=20, textvariable=self.val_waeup_passwd, show='*')
+            waeup_box, width=20, textvariable=self._values['waeup_passwd'],
+            show='*')
         w.grid(row=2, column=1, sticky=E + W, pady=2)
 
         base_box.pack(fill=BOTH, expand=1)
@@ -105,7 +103,9 @@ class PreferencesDialog(Dialog):
         This method is called automatically to process the data,
         *after* the dialog is destroyed. By default, it does nothing.
         '''
-        pass  # override
+        for key in ['fpscan_path', 'waeup_url', 'waeup_user',
+                    'waeup_passwd']:
+            self.values[key] = self._values[key].get()
 
 
 class FPScanApplication(Frame):
