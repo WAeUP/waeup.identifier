@@ -19,6 +19,11 @@ import os
 from configparser import ConfigParser
 
 
+#: A list of valid configuration keys.
+CONF_KEYS = ['fpscan_path', 'waeup_url', 'waeup_user',
+             'waeup_passwd']
+
+
 def get_conffile_locations():
     """Get a list of paths where we lookup config files.
 
