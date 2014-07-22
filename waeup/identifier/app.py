@@ -221,7 +221,7 @@ class FPScanApplication(Frame):
         for conf_key in [
             'fpscan_path', 'waeup_url', 'waeup_user', 'waeup_passwd']:
             values[conf_key] = self.config['DEFAULT'].get(conf_key, '')
-        PreferencesDialog(self, title='Preferences', values=values)
+        dialog = PreferencesDialog(self, title='Preferences', values=values)
         return
 
     def create_menubar(self):
