@@ -4,7 +4,7 @@ import shutil
 import tempfile
 import unittest
 from waeup.identifier.config import (
-    get_conffile_locations, find_fpscan_binary, get_config,
+    get_conffile_locations, find_fpscan_binary, get_config, CONF_KEYS,
     )
 from waeup.identifier.testing import VirtualHomeProvider
 
@@ -82,3 +82,14 @@ class ConfigTests(unittest.TestCase, VirtualHomeProvider):
         assert conf.get('DEFAULT', 'waeup_user') == 'user2'
         conf = get_config(paths=[conf2, conf1])
         assert conf.get('DEFAULT', 'waeup_user') == 'user1'
+
+    def test_all_conf_keys_appear(self):
+        # make sure that normally CONF_KEYS appear in default config
+        not_found = object()
+        conf = get_config()
+        conf_dict = dict(conf.defaults())
+        for key in CONF_KEYS:
+            # some keys are not neccessarily available...
+            if key in ['fpscan_path',]:
+                continue
+            assert key in conf_dict
