@@ -128,13 +128,13 @@ class FPScanApplication(Frame):
 
         self.body.add(
             self.page_scan,
-            text="Create fingerprints", underline=0, padding=2)
+            text="New Fingerprint", underline=-1, padding=4)
         self.body.add(
             self.page_identify,
-            text="Identify persons", underline=0, padding=2)
+            text="Identify Person", underline=-1, padding=4)
         self.body.add(
             self.page_hardware,
-            text="Hardware", underline=0, padding=2)
+            text="Hardware", underline=-1, padding=4)
         self.body.pack(expand=1, fill=BOTH, pady=0)
         self.body.select(2)
 
