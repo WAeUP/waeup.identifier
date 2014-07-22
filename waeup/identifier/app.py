@@ -67,7 +67,8 @@ class PreferencesDialog(Dialog):
         w = Entry(waeup_box, width=15, textvariable=self.val_waeup_user)
         w.grid(row=1, column=1, sticky=E + W, pady=2)
         Label(waeup_box, text="Portal Password: ").grid(sticky=W, row=2)
-        w = Entry(waeup_box, width=20, textvariable=self.val_waeup_passwd)
+        w = Entry(
+            waeup_box, width=20, textvariable=self.val_waeup_passwd, show='*')
         w.grid(row=2, column=1, sticky=E + W, pady=2)
 
         base_box.pack(fill=BOTH, expand=1)
