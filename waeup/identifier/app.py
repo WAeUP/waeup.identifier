@@ -21,7 +21,7 @@ from tkinter import (
     )
 from tkinter.simpledialog import Dialog
 from tkinter.ttk import Notebook, Progressbar, Button
-from waeup.identifier.config import get_config
+from waeup.identifier.config import get_config, CONF_KEYS
 
 
 class PreferencesDialog(Dialog):
@@ -38,8 +38,7 @@ class PreferencesDialog(Dialog):
         """
         self.values = values
         self._values = dict()
-        for key in ['fpscan_path', 'waeup_url', 'waeup_user',
-                    'waeup_passwd']:
+        for key in CONF_KEYS:
             self._values[key] = StringVar()
             self._values[key].set(values.get(key, ''))
         super(PreferencesDialog, self).__init__(parent, title)
@@ -103,8 +102,7 @@ class PreferencesDialog(Dialog):
         This method is called automatically to process the data,
         *after* the dialog is destroyed. By default, it does nothing.
         '''
-        for key in ['fpscan_path', 'waeup_url', 'waeup_user',
-                    'waeup_passwd']:
+        for key in CONF_KEYS:
             self.values[key] = self._values[key].get()
 
 
