@@ -16,6 +16,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 import os
+try:
+    from shlex import quote  # Python 3.3+
+except ImportError:
+    from pipes import quote  # Python 3.2-
 from tkinter import (
     N, W, S, E, StringVar, Frame, Button, Label, Entry, Menu, SUNKEN,
     messagebox, ACTIVE, LEFT, BOTH, LabelFrame, X, BOTTOM
@@ -31,10 +35,10 @@ def detect_scanners(fpscan_path):
     We use `fpscan` to find and work with available fingerprint
     scanners.
     """
-    fpscan_path = os.path.abspath(fpscan_path)
-    if not os.path.isfile(fpscan_path) and os.access(fpscan_path, os.X_OK):
+    fpscan_path = quote(os.path.abspath(fpscan_path))
+    if not (os.path.isfile(fpscan_path) and os.access(fpscan_path, os.X_OK)):
         return []
-    return []
+    return False  # XXX: just for tests, while function not finished
 
 
 class PreferencesDialog(Dialog):
