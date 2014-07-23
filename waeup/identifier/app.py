@@ -216,8 +216,7 @@ class FPScanApplication(Frame):
         """Command called when a (modal) preference dialog should appear.
         """
         values = dict()
-        for conf_key in [
-            'fpscan_path', 'waeup_url', 'waeup_user', 'waeup_passwd']:
+        for conf_key in CONF_KEYS:
             values[conf_key] = self.config['DEFAULT'].get(conf_key, '')
         dialog = PreferencesDialog(self, title='Preferences', values=values)
         return
