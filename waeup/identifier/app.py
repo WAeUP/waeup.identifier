@@ -15,6 +15,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+import os
 from tkinter import (
     N, W, S, E, StringVar, Frame, Button, Label, Entry, Menu, SUNKEN,
     messagebox, ACTIVE, LEFT, BOTH, LabelFrame, X, BOTTOM
@@ -22,6 +23,18 @@ from tkinter import (
 from tkinter.simpledialog import Dialog
 from tkinter.ttk import Notebook, Progressbar, Button
 from waeup.identifier.config import get_config, CONF_KEYS
+
+
+def detect_scanners(fpscan_path):
+    """Detect available fingerprint scanners with `fpscan`.
+
+    We use `fpscan` to find and work with available fingerprint
+    scanners.
+    """
+    fpscan_path = os.path.abspath(fpscan_path)
+    if not os.path.isfile(fpscan_path) and os.access(fpscan_path, os.X_OK):
+        return []
+    return []
 
 
 class PreferencesDialog(Dialog):
@@ -159,6 +172,9 @@ class FPScanApplication(Frame):
                 "Cannot find 'fpscan'.\n\nThis programme is needed. Please "
                 "install it and set the path in preferences.")
             self.draw_hardware_list_page()
+        else:
+            result = detect_scanners(
+                self.config['DEFAULT'].get('fpscan_path'))
 
     def draw_hardware_detect_page(self):
         self.page_hardware_body.pack_forget()
