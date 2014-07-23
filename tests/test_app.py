@@ -3,7 +3,7 @@ import shutil
 import tempfile
 import unittest
 from tkinter import Menu
-from waeup.identifier.app import FPScanApplication
+from waeup.identifier.app import FPScanApplication, detect_scanners
 from waeup.identifier.testing import VirtualHomeProvider
 
 #
@@ -11,6 +11,19 @@ from waeup.identifier.testing import VirtualHomeProvider
 #
 # buttons can be 'clicked' via 'invoke()'
 #
+
+class HelperTests(unittest.TestCase, VirtualHomeProvider):
+
+    def setUp(self):
+        self.setup_virtual_home()
+
+    def tearDown(self):
+        self.teardown_virtual_home()
+
+    def test_detect_scanners_no_fpscan(self):
+        # w/o fpscan we will not find any scanner
+        assert detect_scanners('invalid_path') == []
+
 
 class AppTests(unittest.TestCase, VirtualHomeProvider):
 
