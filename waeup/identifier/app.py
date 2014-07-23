@@ -111,6 +111,10 @@ class FPScanApplication(Frame):
     detected_scanners = []
 
     def __init__(self, master=None):
+        """The main application.
+
+        `master` is a parent widget, normally ``None``.
+        """
         Frame.__init__(self, master, width=400, height=240)
         self.config = get_config()
 
@@ -145,7 +149,6 @@ class FPScanApplication(Frame):
 
         self.draw_hardware_detect_page()
         self.create_menubar()
-        #self.master.bind('<Return>', self.calculate)
         self.master.bind('<Control-q>', self.cmd_quit)
         self.master.title('WAeUP Identifier')
         self.pack(expand=1, fill=BOTH)
@@ -224,6 +227,8 @@ class FPScanApplication(Frame):
         return
 
     def create_menubar(self):
+        """Create a menubar.
+        """
         self.menubar = Menu(self)
         self.master['menu'] = self.menubar
         # file menu
