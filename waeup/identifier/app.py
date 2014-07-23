@@ -219,6 +219,8 @@ class FPScanApplication(Frame):
         for conf_key in CONF_KEYS:
             values[conf_key] = self.config['DEFAULT'].get(conf_key, '')
         dialog = PreferencesDialog(self, title='Preferences', values=values)
+        for conf_key in CONF_KEYS:
+            self.config['DEFAULT'][conf_key] = dialog.values[conf_key]
         return
 
     def create_menubar(self):
