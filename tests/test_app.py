@@ -30,6 +30,12 @@ class HelperTests(unittest.TestCase, VirtualHomeProvider):
         open(fake_fpscan, 'w').write('not an executable')
         assert detect_scanners(fake_fpscan) == []
 
+    def test_detect_scanners_illegal_filenames(self):
+        # dangerous paths are rejected
+        fake_fpscan = os.path.join(self.path_dir, 'fpscan')
+        open(fake_fpscan, 'w').write('exit 0')
+        assert detect_scanners(fake_fpscan + '; rm -rf /') == []
+
 
 class AppTests(unittest.TestCase, VirtualHomeProvider):
 
