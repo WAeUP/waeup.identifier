@@ -54,7 +54,6 @@ class HelperTests(unittest.TestCase, VirtualHomeProvider):
         os.chmod(path, os.stat(path).st_mode | stat.S_IEXEC)
         self.assertRaises(ValueError, check_path, path)
 
-
     def test_check_path_empty_filename(self):
         # filenames must have at least one char.
         self.assertRaises(ValueError, check_path, '')
@@ -62,6 +61,10 @@ class HelperTests(unittest.TestCase, VirtualHomeProvider):
     def test_check_path_directory(self):
         # directories are not accepted.
         self.assertRaises(ValueError, check_path, self.path_dir)
+
+    def test_check_path_none(self):
+        # we cope with `None` values
+        self.assertRaises(ValueError, check_path, None)
 
     def test_detect_scanners_no_fpscan(self):
         # w/o fpscan we will not find any scanner
