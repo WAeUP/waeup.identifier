@@ -1,9 +1,12 @@
 import os
 import shutil
+import stat
 import tempfile
 import unittest
 from tkinter import Menu
-from waeup.identifier.app import FPScanApplication, detect_scanners
+from waeup.identifier.app import (
+    FPScanApplication, detect_scanners, check_path, quote
+    )
 from waeup.identifier.testing import VirtualHomeProvider
 
 #
@@ -19,6 +22,46 @@ class HelperTests(unittest.TestCase, VirtualHomeProvider):
 
     def tearDown(self):
         self.teardown_virtual_home()
+
+    def test_check_path_not_existing(self):
+        # the path given must exist
+        self.assertRaises(ValueError, check_path, 'not-existing-path')
+
+    def test_check_path_not_executable(self):
+        # the path given must be an executable
+        path = os.path.join(self.path_dir, 'some_exe')
+        open(path, 'w').write('not an executable')
+        self.assertRaises(ValueError, check_path, path)
+
+    def test_check_path_with_shell_commands(self):
+        # evil shell commands in path are quoted
+        path = os.path.join(self.path_dir, 'exe; echo "Hi"')
+        open(path, 'w').write('my executable')
+        os.chmod(path, os.stat(path).st_mode | stat.S_IEXEC)
+        self.assertRaises(ValueError, check_path, path)
+
+    def test_check_path(self):
+        # valid paths are returned unchanged
+        path = os.path.join(self.path_dir, 'my.exe')
+        open(path, 'w').write('my script')
+        os.chmod(path, os.stat(path).st_mode | stat.S_IEXEC)
+        assert check_path(path) == path
+
+    def test_check_path_irregular_chars(self):
+        # unusual chars in filenames are handled
+        path = os.path.join(self.path_dir, 'my"special".exe')
+        open(path, 'w').write('my script')
+        os.chmod(path, os.stat(path).st_mode | stat.S_IEXEC)
+        self.assertRaises(ValueError, check_path, path)
+
+
+    def test_check_path_empty_filename(self):
+        # filenames must have at least one char.
+        self.assertRaises(ValueError, check_path, '')
+
+    def test_check_path_directory(self):
+        # directories are not accepted.
+        self.assertRaises(ValueError, check_path, self.path_dir)
 
     def test_detect_scanners_no_fpscan(self):
         # w/o fpscan we will not find any scanner
