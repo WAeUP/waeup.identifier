@@ -16,6 +16,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 import os
+import re
 try:
     from shlex import quote  # Python 3.3+
 except ImportError:
@@ -28,6 +29,30 @@ from tkinter.simpledialog import Dialog
 from tkinter.ttk import Notebook, Progressbar, Button
 from waeup.identifier.config import get_config, CONF_KEYS
 
+
+#: The set of chars allowed in filenames we handle.
+#: Last char must not be slash.
+VALID_FILENAME = re.compile('^[a-zA-Z0-9/\._\-]+$')
+
+
+def check_path(path):
+    """Check a given path.
+
+    `path` must exist, be valid, and be executable. The returned path
+    will be a 'normalized' with illegal chars stripped.
+
+    Illegal chars are considered all except ``[a-zA-Z0-9_.-]`` as
+    written in the `VALID_FILENAME` regular expression.
+
+    If the path does not exist, contains illegal chars, or is not
+    executable, a `ValueError` is raised.
+    """
+    path = os.path.abspath(path)
+    if not VALID_FILENAME.match(path):
+        raise ValueError("Path contains illegal chars: %s" % path)
+    if not (os.path.isfile(path) and os.access(path, os.X_OK)):
+        raise ValueError("Not a valid executable path: %s" % path)
+    return path
 
 def detect_scanners(fpscan_path):
     """Detect available fingerprint scanners with `fpscan`.
