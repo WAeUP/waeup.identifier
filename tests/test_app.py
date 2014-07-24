@@ -68,19 +68,7 @@ class HelperTests(unittest.TestCase, VirtualHomeProvider):
 
     def test_detect_scanners_no_fpscan(self):
         # w/o fpscan we will not find any scanner
-        assert detect_scanners('invalid_path') == []
-
-    def test_detect_scanners_non_executable(self):
-        # the given file must exists and be executable
-        fake_fpscan = os.path.join(self.path_dir, 'fpscan')
-        open(fake_fpscan, 'w').write('not an executable')
-        assert detect_scanners(fake_fpscan) == []
-
-    def test_detect_scanners_illegal_filenames(self):
-        # dangerous paths are rejected
-        fake_fpscan = os.path.join(self.path_dir, 'fpscan')
-        open(fake_fpscan, 'w').write('exit 0')
-        assert detect_scanners(fake_fpscan + '; rm -rf /') == []
+        self.assertRaises(ValueError, detect_scanners, 'invalid_path')
 
 
 class AppTests(unittest.TestCase, VirtualHomeProvider):
