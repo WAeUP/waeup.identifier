@@ -47,6 +47,8 @@ def check_path(path):
     If the path does not exist, contains illegal chars, or is not
     executable, a `ValueError` is raised.
     """
+    if path is None:
+        raise ValueError("Path must be a string, not None.")
     path = os.path.abspath(path)
     if not VALID_FILENAME.match(path):
         raise ValueError("Path contains illegal chars: %s" % path)
@@ -60,10 +62,10 @@ def detect_scanners(fpscan_path):
     We use `fpscan` to find and work with available fingerprint
     scanners.
     """
-    fpscan_path = quote(os.path.abspath(fpscan_path))
-    if not (os.path.isfile(fpscan_path) and os.access(fpscan_path, os.X_OK)):
+    try:
+        path = check_path(fpscan_path)
+    except ValueError:
         return []
-    return False  # XXX: just for tests, while function not finished
 
 
 class PreferencesDialog(Dialog):
@@ -195,15 +197,14 @@ class FPScanApplication(Frame):
         self.master.title('WAeUP Identifier')
         self.pack(expand=1, fill=BOTH)
         self.pack_propagate(0)
-        if self.config['DEFAULT'].get('fpscan_path', None) is None:
+        try:
+            detect_scanners(self.config['DEFAULT'].get('fpscan_path'))
+        except ValueError:
             messagebox.showwarning(
                 "fpscan binary missing",
                 "Cannot find 'fpscan'.\n\nThis programme is needed. Please "
                 "install it and set the path in preferences.")
-            self.draw_hardware_list_page()
-        else:
-            result = detect_scanners(
-                self.config['DEFAULT'].get('fpscan_path'))
+        self.draw_hardware_list_page()
 
     def draw_hardware_detect_page(self):
         self.page_hardware_body.pack_forget()
