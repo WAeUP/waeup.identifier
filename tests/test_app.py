@@ -7,7 +7,9 @@ from tkinter import Menu
 from waeup.identifier.app import (
     FPScanApplication, detect_scanners, check_path
     )
-from waeup.identifier.testing import VirtualHomeProvider
+from waeup.identifier.testing import (
+    VirtualHomeProvider, VirtualHomingTestCase,
+    )
 
 #
 # Some infos about testing tk GUI stuff:
@@ -15,13 +17,7 @@ from waeup.identifier.testing import VirtualHomeProvider
 # buttons can be 'clicked' via 'invoke()'
 #
 
-class HelperTests(unittest.TestCase, VirtualHomeProvider):
-
-    def setUp(self):
-        self.setup_virtual_home()
-
-    def tearDown(self):
-        self.teardown_virtual_home()
+class HelperTests(VirtualHomingTestCase):
 
     def test_check_path_not_existing(self):
         # the path given must exist

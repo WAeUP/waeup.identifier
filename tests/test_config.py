@@ -6,16 +6,10 @@ import unittest
 from waeup.identifier.config import (
     get_conffile_locations, find_fpscan_binary, get_config, CONF_KEYS,
     )
-from waeup.identifier.testing import VirtualHomeProvider
+from waeup.identifier.testing import VirtualHomingTestCase
 
 
-class ConfigTests(unittest.TestCase, VirtualHomeProvider):
-
-    def setUp(self):
-        self.setup_virtual_home()
-
-    def tearDown(self):
-        self.teardown_virtual_home()
+class ConfigTests(VirtualHomingTestCase):
 
     def test_get_conffile_locations(self):
         # we can get a list of accepted config file locations
