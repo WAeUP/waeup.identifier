@@ -77,6 +77,7 @@ class AppTests(unittest.TestCase, VirtualHomeProvider):
         self.setup_virtual_home()
         fake_fpscan = os.path.join(self.path_dir, 'fpscan')
         open(fake_fpscan, 'w').write('Just a fake script.')
+        os.chmod(fake_fpscan, os.stat(fake_fpscan).st_mode | stat.S_IEXEC)
         self.app = FPScanApplication()
         #self.app.wait_visibility()
 
