@@ -70,6 +70,13 @@ class HelperTests(unittest.TestCase, VirtualHomeProvider):
         # w/o fpscan we will not find any scanner
         self.assertRaises(ValueError, detect_scanners, 'invalid_path')
 
+    def test_detect_scanners_no_scanners(self):
+        # with no scanners avail. we will get an empty list
+        path = os.path.join(self.path_dir, 'fpscan')
+        open(path, 'w').write('#!/usr/bin/python\nprint("0")\n')
+        os.chmod(path, os.stat(path).st_mode | stat.S_IEXEC)
+        assert detect_scanners(path) == []
+
 
 class AppTests(unittest.TestCase, VirtualHomeProvider):
 
