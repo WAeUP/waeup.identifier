@@ -84,6 +84,6 @@ class ConfigTests(VirtualHomingTestCase):
         conf_dict = dict(conf.defaults())
         for key in CONF_KEYS:
             # some keys are not neccessarily available...
-            if key in ['fpscan_path',]:
+            if key in ['fpscan_path', ]:
                 continue
             assert key in conf_dict

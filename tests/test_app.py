@@ -17,6 +17,7 @@ from waeup.identifier.testing import (
 # buttons can be 'clicked' via 'invoke()'
 #
 
+
 class HelperTests(VirtualHomingTestCase):
 
     def test_check_path_not_existing(self):
