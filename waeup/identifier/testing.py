@@ -18,6 +18,7 @@
 import os
 import shutil
 import tempfile
+import unittest
 
 
 class VirtualHomeProvider(object):
@@ -47,3 +48,15 @@ class VirtualHomeProvider(object):
             shutil.rmtree(self.path_dir)
         if os.path.exists(self.home_dir):
             shutil.rmtree(self.home_dir)
+
+class VirtualHomingTestCase(unittest.TestCase, VirtualHomeProvider):
+    """A unittest test case that sets up virtual homes.
+
+    Provides `self.path_dir` and `self.home_dir` pointing to temporary
+    directories set in ``$PATH`` and ``$HOME`` respectively.
+    """
+    def setUp(self):
+        self.setup_virtual_home()
+
+    def tearDown(self):
+        self.teardown_virtual_home()
