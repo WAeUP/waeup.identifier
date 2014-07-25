@@ -5,7 +5,7 @@ import tempfile
 import unittest
 from tkinter import Menu
 from waeup.identifier.app import (
-    FPScanApplication, detect_scanners, check_path, quote
+    FPScanApplication, detect_scanners, check_path
     )
 from waeup.identifier.testing import VirtualHomeProvider
 

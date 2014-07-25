@@ -17,10 +17,6 @@
 #
 import os
 import re
-try:
-    from shlex import quote  # Python 3.3+
-except ImportError:
-    from pipes import quote  # Python 3.2-
 from tkinter import (
     N, W, S, E, StringVar, Frame, Button, Label, Entry, Menu, SUNKEN,
     messagebox, ACTIVE, LEFT, BOTH, LabelFrame, X, BOTTOM
@@ -55,6 +51,7 @@ def check_path(path):
     if not (os.path.isfile(path) and os.access(path, os.X_OK)):
         raise ValueError("Not a valid executable path: %s" % path)
     return path
+
 
 def detect_scanners(fpscan_path):
     """Detect available fingerprint scanners with `fpscan`.
