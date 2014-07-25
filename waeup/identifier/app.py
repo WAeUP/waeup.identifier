@@ -62,10 +62,8 @@ def detect_scanners(fpscan_path):
     We use `fpscan` to find and work with available fingerprint
     scanners.
     """
-    try:
-        path = check_path(fpscan_path)
-    except ValueError:
-        return []
+    path = check_path(fpscan_path)
+    return []
 
 
 class PreferencesDialog(Dialog):
