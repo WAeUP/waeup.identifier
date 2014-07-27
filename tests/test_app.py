@@ -18,7 +18,7 @@ from waeup.identifier.testing import (
 #
 
 
-class HelperTests(VirtualHomingTestCase):
+class CheckPathTests(VirtualHomingTestCase):
 
     def test_check_path_not_existing(self):
         # the path given must exist
@@ -62,6 +62,9 @@ class HelperTests(VirtualHomingTestCase):
     def test_check_path_none(self):
         # we cope with `None` values
         self.assertRaises(ValueError, check_path, None)
+
+
+class DetectScannersTests(VirtualHomingTestCase):
 
     def test_detect_scanners_no_fpscan(self):
         # w/o fpscan we will not find any scanner
