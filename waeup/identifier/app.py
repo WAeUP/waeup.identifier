@@ -17,6 +17,7 @@
 #
 import os
 import re
+from subprocess import Popen, PIPE
 from tkinter import (
     N, W, S, E, StringVar, Frame, Button, Label, Entry, Menu, SUNKEN,
     messagebox, ACTIVE, LEFT, BOTH, LabelFrame, X, BOTTOM
@@ -51,6 +52,15 @@ def check_path(path):
     if not (os.path.isfile(path) and os.access(path, os.X_OK)):
         raise ValueError("Not a valid executable path: %s" % path)
     return path
+
+
+def fpscan(path, args=[]):
+    """Call fpscan binary in `path` and return output.
+    """
+    cmd = [path] + args
+    p = Popen(cmd, stdout=PIPE, stderr=PIPE)
+    out, err = p.communicate()
+    return p.returncode, out, err
 
 
 def detect_scanners(fpscan_path):
