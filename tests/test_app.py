@@ -3,7 +3,7 @@ import stat
 import unittest
 from tkinter import Menu
 from waeup.identifier.app import (
-    FPScanApplication, detect_scanners, check_path
+    FPScanApplication, detect_scanners, check_path, fpscan
     )
 from waeup.identifier.testing import (
     VirtualHomeProvider, VirtualHomingTestCase,
@@ -60,6 +60,19 @@ class CheckPathTests(VirtualHomingTestCase):
     def test_check_path_none(self):
         # we cope with `None` values
         self.assertRaises(ValueError, check_path, None)
+
+
+class FPScanTests(VirtualHomingTestCase):
+
+    def test_fpscan_no_args(self):
+        # we can call the given path
+        path = os.path.join(self.path_dir, 'fpscan')
+        open(path, 'w').write('#!/usr/bin/python\nprint("Hello\\nworld")\n')
+        os.chmod(path, os.stat(path).st_mode | stat.S_IEXEC)
+        status, out, err = fpscan(path)
+        assert out == b'Hello\nworld\n'
+        assert status == 0
+        assert err == b''
 
 
 class DetectScannersTests(VirtualHomingTestCase):
