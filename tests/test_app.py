@@ -1,7 +1,5 @@
 import os
-import shutil
 import stat
-import tempfile
 import unittest
 from tkinter import Menu
 from waeup.identifier.app import (
