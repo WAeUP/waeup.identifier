@@ -1,8 +1,5 @@
 # Tests for config module
 import os
-import shutil
-import tempfile
-import unittest
 from waeup.identifier.config import (
     get_conffile_locations, find_fpscan_binary, get_config, CONF_KEYS,
     )
