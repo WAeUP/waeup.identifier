@@ -1,5 +1,6 @@
 import os
 import stat
+import sys
 import unittest
 from tkinter import Menu
 from waeup.identifier.app import (
@@ -72,7 +73,7 @@ class FPScanTests(VirtualHomingTestCase):
 
     def test_fpscan_no_args(self):
         # we can call the given path
-        prog = '#!/usr/bin/python\nprint("Hello\\nworld")\n'
+        prog = '#!%s\nprint("Hello\\nworld")\n' % sys.executable
         path = self.write_prog(prog)
         status, out, err = fpscan(path)
         assert out == b'Hello\nworld\n'
@@ -81,10 +82,26 @@ class FPScanTests(VirtualHomingTestCase):
 
     def test_fpscan_args(self):
         # we can call 'fpscan' with args
-        prog = '#!/usr/bin/python\nimport sys\nprint(sys.argv[1:])\n'
+        prog = '#!%s\nimport sys\nprint(sys.argv[1:])\n' % sys.executable
         path = self.write_prog(prog)
-        status, out, err = fpscan(path, ['-v',])
+        status, out, err = fpscan(path, ['-v', ])
         assert out == b"['-v']\n"
+
+    def test_fpscan_err(self):
+        # we can get stderr output
+        prog = '#!%s\nimport sys\n' % sys.executable
+        prog += 'sys.stdout.write("stdout")\nsys.stderr.write("stderr")\n'
+        path = self.write_prog(prog)
+        status, out, err = fpscan(path)
+        assert out == b'stdout'
+        assert err == b'stderr'
+
+    def test_fpscan_returncode(self):
+        # we can get the proper returncode
+        prog = '#!%s\nimport sys\nsys.exit(1)' % sys.executable
+        path = self.write_prog(prog)
+        status, out, err = fpscan(path)
+        assert status == 1
 
 
 class DetectScannersTests(VirtualHomingTestCase):
