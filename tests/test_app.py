@@ -113,7 +113,7 @@ class DetectScannersTests(VirtualHomingTestCase):
     def test_detect_scanners_no_scanners(self):
         # with no scanners avail. we will get an empty list
         path = os.path.join(self.path_dir, 'fpscan')
-        open(path, 'w').write('#!/usr/bin/python\nprint("0")\n')
+        open(path, 'w').write('#!%s\nprint("0")\n' % sys.executable)
         os.chmod(path, os.stat(path).st_mode | stat.S_IEXEC)
         assert detect_scanners(path) == []
 
@@ -123,7 +123,7 @@ class AppTests(unittest.TestCase, VirtualHomeProvider):
     def setUp(self):
         self.setup_virtual_home()
         fake_fpscan = os.path.join(self.path_dir, 'fpscan')
-        open(fake_fpscan, 'w').write('Just a fake script.')
+        open(fake_fpscan, 'w').write('#!%s\nprint("0")\n' % sys.executable)
         os.chmod(fake_fpscan, os.stat(fake_fpscan).st_mode | stat.S_IEXEC)
         self.app = FPScanApplication()
         #self.app.wait_visibility()
