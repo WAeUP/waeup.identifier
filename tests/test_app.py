@@ -64,15 +64,27 @@ class CheckPathTests(VirtualHomingTestCase):
 
 class FPScanTests(VirtualHomingTestCase):
 
+    def write_prog(self, prog):
+        path = os.path.join(self.path_dir, 'fpscan')
+        open(path, 'w').write(prog)
+        os.chmod(path, os.stat(path).st_mode | stat.S_IEXEC)
+        return path
+
     def test_fpscan_no_args(self):
         # we can call the given path
-        path = os.path.join(self.path_dir, 'fpscan')
-        open(path, 'w').write('#!/usr/bin/python\nprint("Hello\\nworld")\n')
-        os.chmod(path, os.stat(path).st_mode | stat.S_IEXEC)
+        prog = '#!/usr/bin/python\nprint("Hello\\nworld")\n'
+        path = self.write_prog(prog)
         status, out, err = fpscan(path)
         assert out == b'Hello\nworld\n'
         assert status == 0
         assert err == b''
+
+    def test_fpscan_args(self):
+        # we can call 'fpscan' with args
+        prog = '#!/usr/bin/python\nimport sys\nprint(sys.argv[1:])\n'
+        path = self.write_prog(prog)
+        status, out, err = fpscan(path, ['-v',])
+        assert out == b"['-v']\n"
 
 
 class DetectScannersTests(VirtualHomingTestCase):
