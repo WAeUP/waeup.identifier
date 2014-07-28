@@ -56,6 +56,8 @@ def check_path(path):
 
 def fpscan(path, args=[]):
     """Call fpscan binary in `path` and return output.
+
+    `args` gives the arguments to be passed to the executable `path`.
     """
     cmd = [path] + args
     p = Popen(cmd, stdout=PIPE, stderr=PIPE)
