@@ -49,6 +49,7 @@ class VirtualHomeProvider(object):
         if os.path.exists(self.home_dir):
             shutil.rmtree(self.home_dir)
 
+
 class VirtualHomingTestCase(unittest.TestCase, VirtualHomeProvider):
     """A unittest test case that sets up virtual homes.
 
