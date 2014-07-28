@@ -211,14 +211,7 @@ class FPScanApplication(Frame):
         self.master.title('WAeUP Identifier')
         self.pack(expand=1, fill=BOTH)
         self.pack_propagate(0)
-        try:
-            detect_scanners(self.config['DEFAULT'].get('fpscan_path'))
-        except ValueError:
-            messagebox.showwarning(
-                "fpscan binary missing",
-                "Cannot find 'fpscan'.\n\nThis programme is needed. Please "
-                "install it and set the path in preferences.")
-        self.draw_hardware_list_page()
+        self.cmd_start_detect()
 
     def draw_hardware_detect_page(self):
         self.page_hardware_body.pack_forget()
@@ -244,19 +237,35 @@ class FPScanApplication(Frame):
         self.page_hardware_body.pack_forget()
         self.page_hardware_body.destroy()  # remove old body
         self.page_hardware_body = Frame(self.page_hardware)
+        text = "Fingerprint scanners found:\n"
+        for scanner in self.detected_scanners:
+            text += "%s\n" % scanner
         Label(
             self.page_hardware_body,
-            text="Fingerprint scanners found:",
+            text=text,
             anchor="nw").pack(pady=15)
 
         btn = Button(
             self.page_hardware_body,
             text="Rescan",
-            command=lambda: self.draw_hardware_detect_page()
+            command=lambda: self.cmd_start_detect()
             )
         btn.pack(pady=15)
         self.page_hardware_body.pack()
         self.footer_bar['text'] = "Ready."
+
+    def cmd_start_detect(self):
+        self.draw_hardware_detect_page()
+        try:
+            self.detected_scanners = detect_scanners(
+                self.config['DEFAULT'].get('fpscan_path'))
+        except ValueError:
+            messagebox.showwarning(
+                "fpscan binary missing",
+                "Cannot find 'fpscan'.\n\nThis programme is needed. Please "
+                "install it and set the path in preferences.")
+        self.draw_hardware_list_page()
+        return
 
     def cmd_abort_detect(self):
         self.footer_bar['text'] = "Ready."
