@@ -72,7 +72,14 @@ def detect_scanners(fpscan_path):
     scanners.
     """
     path = check_path(fpscan_path)
-    return []
+    status, out, err = fpscan(path)
+    if status != 0:   # detection failed
+        return []
+    elif out == b'0\n':  # detection worked but no scanners found
+        return []
+    result = [x for x in out.split(b'\n')
+              if len(x) and not x.startswith(b' ')]
+    return result
 
 
 class PreferencesDialog(Dialog):

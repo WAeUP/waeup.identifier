@@ -117,6 +117,18 @@ class DetectScannersTests(VirtualHomingTestCase):
         os.chmod(path, os.stat(path).st_mode | stat.S_IEXEC)
         assert detect_scanners(path) == []
 
+    def test_detect_scanners_single(self):
+        # with scanners available we will get a single entry
+        path = os.path.join(self.path_dir, 'fpscan')
+        scanner_name = 'Digital Persona U.are.U 4000/4000B/4500\\n'
+        scanner_values = '  2 0 1 0 1 384 290\\n'
+        open(path, 'w').write('#!%s\nprint("%s%s")\n' % (
+            sys.executable, scanner_name, scanner_values))
+        os.chmod(path, os.stat(path).st_mode | stat.S_IEXEC)
+        assert detect_scanners(path) == [
+            b'Digital Persona U.are.U 4000/4000B/4500',
+            ]
+
 
 class AppTests(unittest.TestCase, VirtualHomeProvider):
 
