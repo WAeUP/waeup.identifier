@@ -19,11 +19,11 @@ import os
 import re
 from subprocess import Popen, PIPE
 from tkinter import (
-    N, W, S, E, StringVar, Frame, Label, Entry, Menu, SUNKEN,
+    N, W, S, E, StringVar, IntVar, Frame, Label, Entry, Menu, SUNKEN,
     messagebox, ACTIVE, LEFT, BOTH, LabelFrame, X, BOTTOM
     )
 from tkinter.simpledialog import Dialog
-from tkinter.ttk import Notebook, Progressbar, Button
+from tkinter.ttk import Notebook, Progressbar, Button, Radiobutton
 from waeup.identifier.config import get_config, CONF_KEYS
 
 
@@ -174,6 +174,7 @@ class PreferencesDialog(Dialog):
 class FPScanApplication(Frame):
 
     detected_scanners = []
+    chosen_scanner = None #IntVar(-1)
 
     def __init__(self, master=None):
         """The main application.
@@ -182,6 +183,7 @@ class FPScanApplication(Frame):
         """
         Frame.__init__(self, master, width=400, height=240)
         self.config = get_config()
+        self.chosen_scanner = IntVar()
 
         self.body = Notebook(self, name="body")
         self.body.enable_traversal()
@@ -244,14 +246,19 @@ class FPScanApplication(Frame):
         self.page_hardware_body.pack_forget()
         self.page_hardware_body.destroy()  # remove old body
         self.page_hardware_body = Frame(self.page_hardware)
-        text = "Fingerprint scanners found:\n"
-        for scanner in self.detected_scanners:
-            text += "%s\n" % scanner
+        text = "Fingerprint scanners found:"
+        if not self.detected_scanners:
+            text += " None\n"
         Label(
             self.page_hardware_body,
             text=text,
             anchor="nw").pack(pady=15)
-
+        for num, scanner in enumerate(self.detected_scanners):
+            line = Frame(self.page_hardware_body)
+            Radiobutton(
+                line, text=scanner, variable=self.chosen_scanner, value=num
+                ).pack(anchor=W)
+            line.pack()
         btn = Button(
             self.page_hardware_body,
             text="Rescan",
