@@ -76,16 +76,16 @@ class FPScanTests(VirtualHomingTestCase):
         prog = '#!%s\nprint("Hello\\nworld")\n' % sys.executable
         path = self.write_prog(prog)
         status, out, err = fpscan(path)
-        assert out == b'Hello\nworld\n'
+        assert out == 'Hello\nworld\n'
         assert status == 0
-        assert err == b''
+        assert err == ''
 
     def test_fpscan_args(self):
         # we can call 'fpscan' with args
         prog = '#!%s\nimport sys\nprint(sys.argv[1:])\n' % sys.executable
         path = self.write_prog(prog)
         status, out, err = fpscan(path, ['-v', ])
-        assert out == b"['-v']\n"
+        assert out == "['-v']\n"
 
     def test_fpscan_err(self):
         # we can get stderr output
@@ -93,8 +93,8 @@ class FPScanTests(VirtualHomingTestCase):
         prog += 'sys.stdout.write("stdout")\nsys.stderr.write("stderr")\n'
         path = self.write_prog(prog)
         status, out, err = fpscan(path)
-        assert out == b'stdout'
-        assert err == b'stderr'
+        assert out == 'stdout'
+        assert err == 'stderr'
 
     def test_fpscan_returncode(self):
         # we can get the proper returncode
@@ -126,7 +126,7 @@ class DetectScannersTests(VirtualHomingTestCase):
             sys.executable, scanner_name, scanner_values))
         os.chmod(path, os.stat(path).st_mode | stat.S_IEXEC)
         assert detect_scanners(path) == [
-            b'Digital Persona U.are.U 4000/4000B/4500',
+            'Digital Persona U.are.U 4000/4000B/4500',
             ]
 
 

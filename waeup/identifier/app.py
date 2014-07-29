@@ -58,11 +58,18 @@ def fpscan(path, args=[]):
     """Call fpscan binary in `path` and return output.
 
     `args` gives the arguments to be passed to the executable `path`.
+
+    Returns tuple ``(<RETURNCODE>, <OUT_DATA>, <ERR_DATA>)`` whith
+    ``<RETURNCODE>`` being the subprocess return code, while
+    ``<OUT_DATA>`` and ``<ERR_DATA>`` contain the subprocess output on
+    stdout and stderr repsectively.
+
+    Both, ``<OUT_DATA>`` and ``<ERR_DATA>`` are UTF-8 encoded strings.
     """
     cmd = [path] + args
     p = Popen(cmd, stdout=PIPE, stderr=PIPE)
     out, err = p.communicate()
-    return p.returncode, out, err
+    return p.returncode, out.decode('utf-8'), err.decode('utf-8')
 
 
 def detect_scanners(fpscan_path):
@@ -75,10 +82,10 @@ def detect_scanners(fpscan_path):
     status, out, err = fpscan(path)
     if status != 0:   # detection failed
         return []
-    elif out == b'0\n':  # detection worked but no scanners found
+    elif out == '0\n':  # detection worked but no scanners found
         return []
-    result = [x for x in out.split(b'\n')
-              if len(x) and not x.startswith(b' ')]
+    result = [x for x in out.split('\n')
+              if len(x) and not x.startswith(' ')]
     return result
 
 
