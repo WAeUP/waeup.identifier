@@ -19,7 +19,7 @@ import os
 import re
 from subprocess import Popen, PIPE
 from tkinter import (
-    N, W, S, E, StringVar, Frame, Button, Label, Entry, Menu, SUNKEN,
+    N, W, S, E, StringVar, Frame, Label, Entry, Menu, SUNKEN,
     messagebox, ACTIVE, LEFT, BOTH, LabelFrame, X, BOTTOM
     )
 from tkinter.simpledialog import Dialog
