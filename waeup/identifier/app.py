@@ -198,22 +198,23 @@ class FPScanApplication(Frame):
         self.page_hardware_body = Frame(self.page_hardware)
 
         self.body.add(
+            self.page_hardware,
+            text="Hardware", underline=-1, padding=4)
+        self.body.add(
             self.page_scan,
             text="New Fingerprint", underline=-1, padding=4)
         self.body.add(
             self.page_identify,
             text="Identify Person", underline=-1, padding=4)
-        self.body.add(
-            self.page_hardware,
-            text="Hardware", underline=-1, padding=4)
         self.body.pack(expand=1, fill=BOTH, pady=0)
-        self.body.select(2)
+        #self.body.select(2)
 
         self.footer_bar = Label(
             self, text="ready.", relief=SUNKEN, anchor="sw", height=1)
         self.footer_bar.pack(
             expand=0, fill=X, pady=2, padx=1, side=BOTTOM, anchor="sw")
 
+        self.draw_scan_page()
         self.draw_hardware_detect_page()
         self.create_menubar()
         self.master.bind('<Control-q>', self.cmd_quit)
@@ -221,6 +222,22 @@ class FPScanApplication(Frame):
         self.pack(expand=1, fill=BOTH)
         self.pack_propagate(0)
         self.cmd_start_detect()
+
+    def draw_scan_page(self):
+        self.page_scan_body.pack_forget()
+        self.page_scan_body.destroy()  # remove old body
+        self.page_scan_body = Frame(self.page_scan)
+        Label(
+            self.page_scan_body,
+            text="Scan Fingerprint",
+            anchor="nw").pack()
+        btn = Button(
+            self.page_scan_body,
+            text="Start Scan",
+            command=lambda: self.cmd_start_scan()
+            )
+        btn.pack(pady=15)
+        self.page_scan_body.pack()
 
     def draw_hardware_detect_page(self):
         self.page_hardware_body.pack_forget()
@@ -285,6 +302,10 @@ class FPScanApplication(Frame):
         self.footer_bar['text'] = "Ready."
         self.draw_hardware_list_page()
         print("Abort detection.")
+        return
+
+    def cmd_start_scan(self):
+        print("Start FP scan")
         return
 
     def cmd_file(self):
