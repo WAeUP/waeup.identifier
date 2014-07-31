@@ -185,6 +185,7 @@ class FPScanApplication(Frame):
         self.config = get_config()
         self.chosen_scanner = IntVar()
         self.chosen_scanner.set(-1)
+        self.chosen_scanner.trace("w", self.evt_scanner_chosen)
 
         self.body = Notebook(self, name="body")
         self.body.enable_traversal()
@@ -223,6 +224,10 @@ class FPScanApplication(Frame):
         self.pack(expand=1, fill=BOTH)
         self.pack_propagate(0)
         self.cmd_start_detect()
+
+    def evt_scanner_chosen(self, *args):
+        if self.chosen_scanner.get() > -1:
+            self.draw_scan_page()
 
     def draw_scan_page(self):
         self.page_scan_body.pack_forget()
@@ -292,6 +297,7 @@ class FPScanApplication(Frame):
 
     def cmd_start_detect(self):
         self.draw_hardware_detect_page()
+        self.chosen_scanner.set(-1)
         try:
             self.detected_scanners = detect_scanners(
                 self.config['DEFAULT'].get('fpscan_path'))
