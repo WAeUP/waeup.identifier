@@ -226,8 +226,7 @@ class FPScanApplication(Frame):
         self.cmd_start_detect()
 
     def evt_scanner_chosen(self, *args):
-        if self.chosen_scanner.get() > -1:
-            self.draw_scan_page()
+        self.draw_scan_page()
 
     def draw_scan_page(self):
         self.page_scan_body.pack_forget()
