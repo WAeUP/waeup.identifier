@@ -20,7 +20,7 @@ import re
 from subprocess import Popen, PIPE
 from tkinter import (
     N, W, S, E, StringVar, IntVar, Frame, Label, Entry, Menu, SUNKEN,
-    messagebox, ACTIVE, LEFT, BOTH, LabelFrame, X, BOTTOM
+    messagebox, ACTIVE, LEFT, BOTH, LabelFrame, X, BOTTOM, NORMAL, DISABLED,
     )
 from tkinter.simpledialog import Dialog
 from tkinter.ttk import Notebook, Progressbar, Button, Radiobutton
@@ -184,6 +184,7 @@ class FPScanApplication(Frame):
         Frame.__init__(self, master, width=400, height=240)
         self.config = get_config()
         self.chosen_scanner = IntVar()
+        self.chosen_scanner.set(-1)
 
         self.body = Notebook(self, name="body")
         self.body.enable_traversal()
@@ -227,6 +228,9 @@ class FPScanApplication(Frame):
         self.page_scan_body.pack_forget()
         self.page_scan_body.destroy()  # remove old body
         self.page_scan_body = Frame(self.page_scan)
+        state = NORMAL
+        if self.chosen_scanner.get() < 0:
+            state = DISABLED
         Label(
             self.page_scan_body,
             text="Scan Fingerprint",
@@ -234,7 +238,8 @@ class FPScanApplication(Frame):
         btn = Button(
             self.page_scan_body,
             text="Start Scan",
-            command=lambda: self.cmd_start_scan()
+            command=lambda: self.cmd_start_scan(),
+            state=state,
             )
         btn.pack(pady=15)
         self.page_scan_body.pack()
