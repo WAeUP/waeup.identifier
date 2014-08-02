@@ -7,7 +7,7 @@ from waeup.identifier.app import (
     FPScanApplication, detect_scanners, check_path, fpscan, scan
     )
 from waeup.identifier.testing import (
-    VirtualHomeProvider, VirtualHomingTestCase,
+    VirtualHomeProvider, VirtualHomingTestCase, create_fpscan
     )
 
 #
@@ -135,6 +135,12 @@ class ScanTests(VirtualHomingTestCase):
     def test_scan_no_fpscan(self):
         # without fpscan we cannot scan anything
         self.assertRaises(ValueError, scan, 'invalid_path', 0)
+
+    def test_scan_invalid_dev(self):
+        # we do not accept invalid dev numbers
+        output = "Invalid device number: 2.\\n"
+        path = create_fpscan(self.path_dir, output, ret_code=1)
+        self.assertRaises(ValueError, scan, path, 2)
 
 
 class AppTests(unittest.TestCase, VirtualHomeProvider):
