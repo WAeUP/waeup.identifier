@@ -4,7 +4,7 @@ import sys
 import unittest
 from tkinter import Menu
 from waeup.identifier.app import (
-    FPScanApplication, detect_scanners, check_path, fpscan
+    FPScanApplication, detect_scanners, check_path, fpscan, scan
     )
 from waeup.identifier.testing import (
     VirtualHomeProvider, VirtualHomingTestCase,
@@ -128,6 +128,13 @@ class DetectScannersTests(VirtualHomingTestCase):
         assert detect_scanners(path) == [
             'Digital Persona U.are.U 4000/4000B/4500',
             ]
+
+
+class ScanTests(VirtualHomingTestCase):
+
+    def test_scan_no_fpscan(self):
+        # without fpscan we cannot scan anything
+        self.assertRaises(ValueError, scan, 'invalid_path', 0)
 
 
 class AppTests(unittest.TestCase, VirtualHomeProvider):

@@ -92,6 +92,7 @@ def detect_scanners(fpscan_path):
 def scan(fpscan_path, device):
     """Perform a fingerprint scan.
     """
+    path = check_path(fpscan_path)
     return
 
 
