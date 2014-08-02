@@ -93,6 +93,9 @@ def scan(fpscan_path, device):
     """Perform a fingerprint scan.
     """
     path = check_path(fpscan_path)
+    status, out, err = fpscan(path, ['-s', '-d', str(device)])
+    if status != 0:  # scan failed
+        raise ValueError('Scan failed: %s' % err)
     return
 
 
@@ -181,7 +184,7 @@ class PreferencesDialog(Dialog):
 class FPScanApplication(Frame):
 
     detected_scanners = []
-    chosen_scanner = None #IntVar(-1)
+    chosen_scanner = None
 
     def __init__(self, master=None):
         """The main application.
