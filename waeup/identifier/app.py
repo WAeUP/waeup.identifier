@@ -89,6 +89,12 @@ def detect_scanners(fpscan_path):
     return result
 
 
+def scan(fpscan_path, device):
+    """Perform a fingerprint scan.
+    """
+    return
+
+
 class PreferencesDialog(Dialog):
 
     def __init__(self, parent, title=None, values={}):
