@@ -31,6 +31,19 @@ def create_executable(path, content):
     return
 
 
+def create_python_script(path, commands, ret_code=0):
+    """Create a python script that executes `commands` and returns
+    `ret_code`.
+    """
+    content = (
+        '#!%s\n'
+        'import sys\n'
+        '%s\n'
+        'sys.exit(%s)\n' % (
+            sys.executable, commands, ret_code))
+    create_executable(path, content)
+
+
 def create_fpscan(path_dir, output, ret_code=0):
     """Helper to create a fake 'fpscan' binary.
 
@@ -44,13 +57,8 @@ def create_fpscan(path_dir, output, ret_code=0):
     It can be used to fake real `fpscan` calls.
     """
     path = os.path.join(path_dir, 'fpscan')
-    content = (
-        '#!%s\n'
-        'import sys\n'
-        'print("%s")\n'
-        'sys.exit(%s)\n' % (
-            sys.executable, output, ret_code))
-    create_executable(path, content)
+    commands = 'print("%s")' % output
+    create_python_script(path, commands, ret_code)
     return path
 
 
