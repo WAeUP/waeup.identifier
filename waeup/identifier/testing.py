@@ -23,6 +23,14 @@ import tempfile
 import unittest
 
 
+def create_executable(path, content):
+    """Create an executable in `path` with `content` as content.
+    """
+    open(path, 'w').write(content)
+    os.chmod(path, os.stat(path).st_mode | stat.S_IEXEC)
+    return
+
+
 def create_fpscan(path_dir, output, ret_code=0):
     """Helper to create a fake 'fpscan' binary.
 
@@ -36,13 +44,13 @@ def create_fpscan(path_dir, output, ret_code=0):
     It can be used to fake real `fpscan` calls.
     """
     path = os.path.join(path_dir, 'fpscan')
-    open(path, 'w').write(
+    content = (
         '#!%s\n'
         'import sys\n'
         'print("%s")\n'
         'sys.exit(%s)\n' % (
             sys.executable, output, ret_code))
-    os.chmod(path, os.stat(path).st_mode | stat.S_IEXEC)
+    create_executable(path, content)
     return path
 
 
