@@ -99,6 +99,31 @@ def scan(fpscan_path, device):
     return
 
 
+# -----------------------------------------------
+import subprocess as sub
+import threading
+
+class BackgroundCommand(threading.Thread):
+    def __init__(self, cmd, timeout=None):
+        threading.Thread.__init__(self)
+        self.cmd = cmd
+        self.timeout = timeout
+
+    def run(self):
+        # override base
+        self.p = sub.Popen(self.cmd)
+        self.p.wait()
+
+    def Run(self):
+        self.start()
+        self.join(self.timeout)
+
+        if self.is_alive():
+            self.p.terminate()  # use self.p.kill() if process needs a kill -9
+            self.join()
+
+#RunCmd(["./someProg", "arg1"], 60).Run()
+
 class PreferencesDialog(Dialog):
 
     def __init__(self, parent, title=None, values={}):

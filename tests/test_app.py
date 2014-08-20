@@ -4,10 +4,12 @@ import sys
 import unittest
 from tkinter import Menu
 from waeup.identifier.app import (
-    FPScanApplication, detect_scanners, check_path, fpscan, scan
+    FPScanApplication, detect_scanners, check_path, fpscan, scan,
+    BackgroundCommand,
     )
 from waeup.identifier.testing import (
-    VirtualHomeProvider, VirtualHomingTestCase, create_fpscan
+    VirtualHomeProvider, VirtualHomingTestCase, create_fpscan,
+    create_executable, create_python_script
     )
 
 #
@@ -190,3 +192,22 @@ class AppTests(unittest.TestCase, VirtualHomeProvider):
         self.app.footer_bar['text'] = 'My Message.'
         self.assertEqual(
             self.app.footer_bar['text'], 'My Message.')
+
+
+class BackgroundCommandTests(unittest.TestCase, VirtualHomeProvider):
+
+    def setUp(self):
+        self.setup_virtual_home()
+
+    def tearDown(self):
+        self.teardown_virtual_home()
+
+    def test_startable(self):
+        # we can start executables
+        path = os.path.join(self.path_dir, 'myscript')
+        stamp_file = os.path.join(self.path_dir, 'i_was_here')
+        pysrc = 'open("%s", "w").write("I was here")' % stamp_file
+        create_python_script(path, pysrc)
+        cmd = BackgroundCommand(path)
+        cmd.run()
+        assert os.path.isfile(stamp_file)
