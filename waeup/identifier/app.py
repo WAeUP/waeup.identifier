@@ -114,7 +114,12 @@ class BackgroundCommand(threading.Thread):
         self.p = sub.Popen(self.cmd)
         self.p.wait()
 
-    def Run(self):
+    def execute(self):
+        """Execute the given command, respecting timeouts.
+
+        Run the command given on init and terminate it when `timeout`
+        lapsed.
+        """
         self.start()
         self.join(self.timeout)
 
