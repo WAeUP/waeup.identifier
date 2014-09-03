@@ -211,6 +211,7 @@ class BackgroundCommandTests(unittest.TestCase, VirtualHomeProvider):
         create_python_script(path, pysrc)
         cmd = BackgroundCommand(path)
         cmd.run()
+        cmd.wait()
         assert os.path.isfile(stamp_file)
 
     def test_args(self):
@@ -221,6 +222,7 @@ class BackgroundCommandTests(unittest.TestCase, VirtualHomeProvider):
         create_python_script(path, pysrc)
         cmd = BackgroundCommand([path, 'myarg'])
         cmd.run()
+        cmd.wait()
         assert open(stamp_file, 'r').read() == 'myarg'
 
     def test_timeout(self):

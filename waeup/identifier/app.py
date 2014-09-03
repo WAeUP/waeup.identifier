@@ -112,7 +112,6 @@ class BackgroundCommand(threading.Thread):
     def run(self):
         # override base
         self.p = subprocess.Popen(self.cmd)
-        self.p.wait()
 
     def execute(self):
         """Execute the given command, respecting timeouts.
@@ -126,6 +125,15 @@ class BackgroundCommand(threading.Thread):
         if self.is_alive():
             self.p.terminate()  # use self.p.kill() if process needs a kill -9
             self.join()
+
+    def wait(self):
+        """Wait until command terminates.
+
+        Returns returncode, stdout data, and stderr data as a tuple.
+        """
+        stdout_data, stderr_data = self.p.communicate()
+        return self.p.returncode, stdout_data, stderr_data
+
 
 #RunCmd(["./someProg", "arg1"], 60).Run()
 
