@@ -203,6 +203,38 @@ class BackgroundCommandTests(unittest.TestCase, VirtualHomeProvider):
     def tearDown(self):
         self.teardown_virtual_home()
 
+    def test_wait_returncode(self):
+        # we get the returncode
+        path = os.path.join(self.path_dir, 'myscript')
+        pysrc = 'sys.exit(42)'
+        create_python_script(path, pysrc)
+        cmd = BackgroundCommand(path)
+        cmd.run()
+        ret_code, stdout, stderr = cmd.wait()
+        assert ret_code == 42
+
+    def test_wait_stdout(self):
+        # we can get the stdout output when wait()-ing
+        path = os.path.join(self.path_dir, 'myscript')
+        pysrc = 'print("Hello from myscript")'
+        create_python_script(path, pysrc)
+        cmd = BackgroundCommand(path)
+        cmd.run()
+        ret_code, stdout, stderr = cmd.wait()
+        assert stdout == b'Hello from myscript\n'
+
+    def test_wait_stdout(self):
+        # we can get the stdout output when wait()-ing
+        path = os.path.join(self.path_dir, 'myscript')
+        pysrc = 'print("Hello from myscript")\n'
+        pysrc += 'print("Hello from stderr", file=sys.stderr)'
+        create_python_script(path, pysrc)
+        cmd = BackgroundCommand(path)
+        cmd.run()
+        ret_code, stdout, stderr = cmd.wait()
+        assert stdout == b'Hello from myscript\n'
+        assert stderr == b'Hello from stderr\n'
+
     def test_startable(self):
         # we can start executables
         path = os.path.join(self.path_dir, 'myscript')
