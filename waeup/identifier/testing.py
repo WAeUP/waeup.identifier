@@ -38,6 +38,7 @@ def create_python_script(path, commands, ret_code=0):
     content = (
         '#!%s\n'
         'import sys\n'
+        'import time\n'
         '%s\n'
         'sys.exit(%s)\n' % (
             sys.executable, commands, ret_code))
