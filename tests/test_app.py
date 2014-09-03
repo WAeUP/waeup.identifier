@@ -1,6 +1,7 @@
 import os
 import stat
 import sys
+import time
 import unittest
 from tkinter import Menu
 from waeup.identifier.app import (
@@ -211,3 +212,24 @@ class BackgroundCommandTests(unittest.TestCase, VirtualHomeProvider):
         cmd = BackgroundCommand(path)
         cmd.run()
         assert os.path.isfile(stamp_file)
+
+    def test_args(self):
+        # we can pass in arguments
+        path = os.path.join(self.path_dir, 'myscript')
+        stamp_file = os.path.join(self.path_dir, 'i_was_here')
+        pysrc = 'open("%s", "w").write(sys.argv[1])' % stamp_file
+        create_python_script(path, pysrc)
+        cmd = BackgroundCommand([path, 'myarg'])
+        cmd.run()
+        assert open(stamp_file, 'r').read() == 'myarg'
+
+    def test_timeout(self):
+        # we can set a timeout
+        path = os.path.join(self.path_dir, 'myscript')
+        pysrc = 'time.sleep(10)'
+        create_python_script(path, pysrc)
+        cmd = BackgroundCommand(path, timeout=0.1)
+        t_stamp1 = time.time()
+        cmd.execute()
+        t_stamp2 = time.time()
+        assert t_stamp2 - t_stamp1 < 5
