@@ -111,7 +111,8 @@ class BackgroundCommand(threading.Thread):
 
     def run(self):
         # override base
-        self.p = subprocess.Popen(self.cmd)
+        self.p = subprocess.Popen(self.cmd, stdout=subprocess.PIPE,
+                                  stderr=subprocess.PIPE)
 
     def execute(self):
         """Execute the given command, respecting timeouts.
