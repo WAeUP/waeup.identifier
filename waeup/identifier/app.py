@@ -100,7 +100,7 @@ def scan(fpscan_path, device):
 
 
 # -----------------------------------------------
-import subprocess as sub
+import subprocess
 import threading
 
 class BackgroundCommand(threading.Thread):
@@ -111,7 +111,7 @@ class BackgroundCommand(threading.Thread):
 
     def run(self):
         # override base
-        self.p = sub.Popen(self.cmd)
+        self.p = subprocess.Popen(self.cmd)
         self.p.wait()
 
     def execute(self):
