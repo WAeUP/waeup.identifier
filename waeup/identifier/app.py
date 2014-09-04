@@ -103,16 +103,32 @@ def scan(fpscan_path, device):
 import subprocess
 import threading
 
+POLL_INTERVAL = 0.1   #: How often do we look for new data?
+
 class BackgroundCommand(threading.Thread):
-    def __init__(self, cmd, timeout=None):
+    def __init__(self, cmd, timeout=None, callback=None):
         threading.Thread.__init__(self)
         self.cmd = cmd
         self.timeout = timeout
+        self.callback = callback
+        self._timer = None
+
+    def _poll(self):
+        """Poll process output. If new output was received, call back.
+        """
+        if self._timer is not None:
+            self._timer.cancel()
+        if self.p.is_alive():
+            self._timer = threading.Timer(POLL_INTERVAL, self._poll)
+            self._timer.daemon = True
+            self._timer.start()
 
     def run(self):
         # override base
         self.p = subprocess.Popen(self.cmd, stdout=subprocess.PIPE,
                                   stderr=subprocess.PIPE)
+        if self.callback:
+            self._poll()
 
     def execute(self):
         """Execute the given command, respecting timeouts.
