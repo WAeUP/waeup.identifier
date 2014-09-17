@@ -272,6 +272,8 @@ class BackgroundCommandTests(unittest.TestCase, VirtualHomeProvider):
 
     def test_callback(self):
         # a passed-in callback function is really called
+        global callback_counter
+        callback_counter = 0
         def mycallback(*args, **kw):
             global callback_counter
             callback_counter += 1
