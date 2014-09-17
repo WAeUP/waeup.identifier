@@ -1,0 +1,92 @@
+#
+#    waeup.identifier - identifiy WAeUP Kofa students biometrically
+#    Copyright (C) 2014  Uli Fouquet, WAeUP Germany
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+"""A Python script faking real `fpscan' binary.
+
+This script, when called like `fpscan', tries to behave like the
+original. Its purpose is to simulate a working `fpscan' where not
+available, for instance in tests.
+
+Run this script with
+
+  `--help'
+
+to see all available options.
+
+It does, however, no 'real' operations. I.e. it does not create real
+fingerprints, etc.
+
+It supports some extra options to tell, what kind of situation should
+be simulated.
+"""
+import argparse
+import sys
+import time
+
+
+def store_fpm_file(filename):
+    open(filename, 'w').write("%s" % time.time())
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-s', '--scan', action="store_true")
+parser.add_argument('-c', '--compare', action="store_true")
+parser.add_argument('-o', '--outfile', default="data.fpm")
+parser.add_argument('--no-device', action="store_true",
+                    help=(
+                        "Assume that no device is attached. "
+                        "This option is not part of original "
+                        "fpscan.")
+                    )
+parser.add_argument('--scan-fail', action="store_true",
+                    help=(
+                        "Assume that a fingerprint scan will fail. "
+                        "This option is not part of original "
+                        "fpscan.")
+                    )
+args = parser.parse_args()
+
+if not (args.scan or args.compare):
+    if args.no_device:
+        print("0")
+    else:
+        print(
+            "Digital Persona U.are.U 4000/4000B/4500\n"
+            "  2 0 1 0 1 384 290"
+            )
+    sys.exit(0)
+
+if args.scan and args.compare:
+    print(
+        "Usage of `-s' and `-c' is mutual exclusive.\n"
+        "Try `./fpscan --help' for more information."
+        )
+    sys.exit(1)
+
+if args.scan:
+    if args.no_device:
+        print("Invalid device number: 0.")
+        sys.exit(1)
+    if args.scan_fail:
+        print("fail")
+        sys.exit(1)
+    print("ok")
+    store_fpm_file(args.outfile)
+    sys.exit(0)
+
+print(args, args.scan)
+sys.exit(0)
