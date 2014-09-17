@@ -329,6 +329,26 @@ class FPScanApplication(Frame):
         btn.pack(pady=15)
         self.page_scan_body.pack()
 
+    def draw_scan_running_page(self):
+        self.page_scan_body.pack_forget()
+        self.page_scan_body.destroy()  # remove old body
+        self.page_scan_body = Frame(self.page_scan)
+        state = NORMAL
+        if self.chosen_scanner.get() < 0:
+            state = DISABLED
+        Label(
+            self.page_scan_body,
+            text="Scanning Fingerprint\nPlease put finger on device",
+            anchor="nw").pack()
+        btn = Button(
+            self.page_scan_body,
+            text="Abort Scan",
+            command=lambda: self.cmd_start_scan(),
+            state=state,
+            )
+        btn.pack(pady=15)
+        self.page_scan_body.pack()
+
     def draw_hardware_detect_page(self):
         self.page_hardware_body.pack_forget()
         self.page_hardware_body.destroy()  # remove old body
@@ -396,6 +416,8 @@ class FPScanApplication(Frame):
         return
 
     def cmd_start_scan(self):
+        self.footer_bar['text'] = "Scanning..."
+        self.draw_scan_running_page()
         print("Start FP scan")
         return
 
