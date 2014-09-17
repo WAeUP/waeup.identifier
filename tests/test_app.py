@@ -195,6 +195,8 @@ class AppTests(unittest.TestCase, VirtualHomeProvider):
             self.app.footer_bar['text'], 'My Message.')
 
 
+callback_counter = 0
+
 class BackgroundCommandTests(unittest.TestCase, VirtualHomeProvider):
 
     def setUp(self):
@@ -267,3 +269,16 @@ class BackgroundCommandTests(unittest.TestCase, VirtualHomeProvider):
         cmd.execute()
         t_stamp2 = time.time()
         assert t_stamp2 - t_stamp1 < 5
+
+    def test_callback(self):
+        # a passed-in callback function is really called
+        def mycallback(*args, **kw):
+            global callback_counter
+            callback_counter += 1
+        path = os.path.join(self.path_dir, 'myscript')
+        pysrc = 'time.sleep(0.2)'
+        create_python_script(path, pysrc)
+        cmd = BackgroundCommand(path, callback=mycallback)
+        cmd.run()
+        cmd.wait()
+        assert callback_counter > 0
