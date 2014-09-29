@@ -306,7 +306,7 @@ class FPScanCommandTests(unittest.TestCase, VirtualHomeProvider):
         create_executable(dst, content)
         self.fpscan_path = dst
 
-    def test_detect_success(self):
+    def test_detect_ok(self):
         # we can detect devices
         cmd = FPScanCommand(self.fpscan_path)
         cmd.run()
@@ -324,4 +324,33 @@ class FPScanCommandTests(unittest.TestCase, VirtualHomeProvider):
         ret_code, stdout, stderr = cmd.wait()
         assert ret_code == 0
         assert stdout == b'0\n'
+        assert stderr == b''
+
+    def test_scan_ok(self):
+        # we can scan fingerprints (emulated)
+        cmd = FPScanCommand(self.fpscan_path, ['-s', ])
+        cmd.run()
+        ret_code, stdout, stderr = cmd.wait()
+        assert cmd.is_alive() == False
+        assert ret_code == 0
+        assert stdout == b'ok\n'
+        assert stderr == b''
+
+    def test_scan_invalid_device(self):
+        # we detect missing devices when scanning
+        cmd = FPScanCommand(self.fpscan_path, ['-s', '--no-device', ])
+        cmd.run()
+        ret_code, stdout, stderr = cmd.wait()
+        assert ret_code == 1
+        assert stdout == b''
+        assert stderr == b'Invalid device number: 0.\n'
+
+    def test_scan_fail(self):
+        # scans can fail. We respect that
+        cmd = FPScanCommand(self.fpscan_path, ['-s', '--scan-fail',])
+        cmd.run()
+        ret_code, stdout, stderr = cmd.wait()
+        assert cmd.is_alive() == False
+        assert ret_code == 1
+        assert stdout == b'fail\n'
         assert stderr == b''
