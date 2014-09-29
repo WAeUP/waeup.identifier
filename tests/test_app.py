@@ -306,8 +306,8 @@ class FPScanCommandTests(unittest.TestCase, VirtualHomeProvider):
         create_executable(dst, content)
         self.fpscan_path = dst
 
-    def test_wait_returncode(self):
-        # we get the returncode
+    def test_detect_success(self):
+        # we can detect devices
         cmd = FPScanCommand(self.fpscan_path)
         cmd.run()
         ret_code, stdout, stderr = cmd.wait()
@@ -315,3 +315,13 @@ class FPScanCommandTests(unittest.TestCase, VirtualHomeProvider):
         assert stdout == (
             b'Digital Persona U.are.U 4000/4000B/4500\n'
             b'  2 0 1 0 1 384 290\n')
+        assert stderr == b''
+
+    def test_detect_fail(self):
+        # we can detect missing devices
+        cmd = FPScanCommand(self.fpscan_path, ['--no-device', ])
+        cmd.run()
+        ret_code, stdout, stderr = cmd.wait()
+        assert ret_code == 0
+        assert stdout == b'0\n'
+        assert stderr == b''
