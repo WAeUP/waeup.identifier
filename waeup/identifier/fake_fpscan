@@ -82,7 +82,7 @@ if args.scan:
         sys.stderr.write("Invalid device number: 0.\n")
         sys.exit(1)
     if args.scan_fail:
-        sys.stderr.write("fail\n")
+        print("fail")
         sys.exit(1)
     print("ok")
     store_fpm_file(args.outfile)
