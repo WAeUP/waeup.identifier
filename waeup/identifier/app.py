@@ -106,8 +106,7 @@ def scan(fpscan_path, device):
 
 class BackgroundCommand(threading.Thread):
     def __init__(self, cmd, timeout=None, callback=None):
-        #super(BackgroundCommand, self).__init__()
-        threading.Thread.__init__(self)
+        super(BackgroundCommand, self).__init__()
         self.p = None
         self.cmd = cmd
         self.timeout = timeout
