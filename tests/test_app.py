@@ -328,13 +328,15 @@ class FPScanCommandTests(unittest.TestCase, VirtualHomeProvider):
 
     def test_scan_ok(self):
         # we can scan fingerprints (emulated)
-        cmd = FPScanCommand(self.fpscan_path, ['-s', ])
+        out_path = os.path.join(self.home_dir, 'data.fpm')
+        cmd = FPScanCommand(self.fpscan_path, ['-s', '-o', out_path])
         cmd.run()
         ret_code, stdout, stderr = cmd.wait()
         assert cmd.is_alive() == False
         assert ret_code == 0
         assert stdout == b'ok\n'
         assert stderr == b''
+        assert os.path.exists(out_path)
 
     def test_scan_invalid_device(self):
         # we detect missing devices when scanning
