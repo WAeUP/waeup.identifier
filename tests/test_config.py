@@ -76,7 +76,6 @@ class ConfigTests(VirtualHomingTestCase):
 
     def test_all_conf_keys_appear(self):
         # make sure that normally CONF_KEYS appear in default config
-        not_found = object()
         conf = get_config()
         conf_dict = dict(conf.defaults())
         for key in CONF_KEYS:
