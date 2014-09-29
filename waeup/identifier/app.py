@@ -106,6 +106,20 @@ def scan(fpscan_path, device):
 
 class BackgroundCommand(threading.Thread):
     def __init__(self, cmd, timeout=None, callback=None):
+        """A system  command run in background.
+
+        `cmd` is a list containing the command to execute and
+        parameters.
+
+        `timeout` is a float setting the amount of time after which
+        the command execution should be aborted.
+
+        `callback`, if given, is called when new output from the
+        executed binary (stdout or stderr) is available. The callback
+        is called without any parameters. To see, what output
+        happened, you have to query the `BackgroundCommand` used
+        before.
+        """
         super(BackgroundCommand, self).__init__()
         self.p = None
         self.cmd = cmd
@@ -168,13 +182,15 @@ class BackgroundCommand(threading.Thread):
 
 
 class FPScanCommand(BackgroundCommand):
-    def __init__(self, path, timeout=None, callback=None):
+    def __init__(self, path, params=[], timeout=None, callback=None):
         """Execute `fsscan` as background command.
 
-        `path` must be an existing binary path.
+        `path` must be an existing binary path. `params` is a list of
+        options to use when calling fsscan.
         """
+        cmd = [path,] + params
         super(FPScanCommand, self).__init__(
-            path, timeout=timeout, callback=callback)
+            cmd, timeout=timeout, callback=callback)
 
 
 class PreferencesDialog(Dialog):
