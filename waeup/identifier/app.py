@@ -103,7 +103,9 @@ def scan(fpscan_path, device):
 import subprocess
 import threading
 
-POLL_INTERVAL = 0.1   #: How often do we look for new data?
+#: How often do we look for new data?
+POLL_INTERVAL = 0.1
+
 
 class BackgroundCommand(threading.Thread):
     def __init__(self, cmd, timeout=None, callback=None):
