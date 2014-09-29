@@ -167,8 +167,6 @@ class BackgroundCommand(threading.Thread):
         return self.p.returncode, stdout_data, stderr_data
 
 
-#RunCmd(["./someProg", "arg1"], 60).Run()
-
 class PreferencesDialog(Dialog):
 
     def __init__(self, parent, title=None, values={}):
