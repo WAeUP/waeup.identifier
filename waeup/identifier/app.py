@@ -106,6 +106,7 @@ def scan(fpscan_path, device):
 
 class BackgroundCommand(threading.Thread):
     def __init__(self, cmd, timeout=None, callback=None):
+        #super(BackgroundCommand, self).__init__()
         threading.Thread.__init__(self)
         self.p = None
         self.cmd = cmd
@@ -165,6 +166,16 @@ class BackgroundCommand(threading.Thread):
         if self._timer is not None:
             self._timer.cancel()
         return self.p.returncode, stdout_data, stderr_data
+
+
+class FPScanCommand(BackgroundCommand):
+    def __init__(self, path, timeout=None, callback=None):
+        """Execute `fsscan` as background command.
+
+        `path` must be an existing binary path.
+        """
+        super(FPScanCommand, self).__init__(
+            path, timeout=timeout, callback=callback)
 
 
 class PreferencesDialog(Dialog):

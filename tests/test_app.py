@@ -3,10 +3,11 @@ import stat
 import sys
 import time
 import unittest
+import waeup.identifier
 from tkinter import Menu
 from waeup.identifier.app import (
     FPScanApplication, detect_scanners, check_path, fpscan, scan,
-    BackgroundCommand,
+    BackgroundCommand, FPScanCommand,
     )
 from waeup.identifier.testing import (
     VirtualHomeProvider, VirtualHomingTestCase, create_fpscan,
@@ -176,7 +177,6 @@ class AppTests(unittest.TestCase, VirtualHomeProvider):
 
     def test_menubar_hasquit(self):
         # the menubar has a quit-item
-        menubar = self.app.menubar
         filemenu = self.app.menu_file
         filemenu.invoke('Quit')  # must not raise any error
 
@@ -184,7 +184,6 @@ class AppTests(unittest.TestCase, VirtualHomeProvider):
         # the menubar has an help-item
         # XXX: Currently disabled as 'about' generates a modal dialog we
         #      cannot stop from here.
-        menubar = self.app.menubar
         helpmenu = self.app.menu_help
         helpmenu.invoke('About WAeUP Identifier')  # must not raise any error
 
@@ -196,6 +195,7 @@ class AppTests(unittest.TestCase, VirtualHomeProvider):
 
 
 callback_counter = 0
+
 
 class BackgroundCommandTests(unittest.TestCase, VirtualHomeProvider):
 
@@ -225,7 +225,7 @@ class BackgroundCommandTests(unittest.TestCase, VirtualHomeProvider):
         ret_code, stdout, stderr = cmd.wait()
         assert stdout == b'Hello from myscript\n'
 
-    def test_wait_stdout(self):
+    def test_wait_stderr(self):
         # we can get the stdout output when wait()-ing
         path = os.path.join(self.path_dir, 'myscript')
         pysrc = 'print("Hello from myscript")\n'
@@ -274,6 +274,7 @@ class BackgroundCommandTests(unittest.TestCase, VirtualHomeProvider):
         # a passed-in callback function is really called
         global callback_counter
         callback_counter = 0
+
         def mycallback(*args, **kw):
             global callback_counter
             callback_counter += 1
@@ -284,3 +285,33 @@ class BackgroundCommandTests(unittest.TestCase, VirtualHomeProvider):
         cmd.run()
         cmd.wait()
         assert callback_counter > 0
+
+
+class FPScanCommandTests(unittest.TestCase, VirtualHomeProvider):
+
+    def setUp(self):
+        self.setup_virtual_home()
+        self.setup_fake_fpscan()
+
+    def tearDown(self):
+        self.teardown_virtual_home()
+
+    def setup_fake_fpscan(self):
+        src = os.path.join(
+            os.path.dirname(waeup.identifier.__file__),
+            'fake_fpscan')
+        content = '#!%s\n' % (sys.executable)
+        content += open(src, 'r').read()
+        dst = os.path.join(self.path_dir, 'fpscan')
+        create_executable(dst, content)
+        self.fpscan_path = dst
+
+    def test_wait_returncode(self):
+        # we get the returncode
+        cmd = FPScanCommand(self.fpscan_path)
+        cmd.run()
+        ret_code, stdout, stderr = cmd.wait()
+        assert ret_code == 0
+        assert stdout == (
+            b'Digital Persona U.are.U 4000/4000B/4500\n'
+            b'  2 0 1 0 1 384 290\n')
