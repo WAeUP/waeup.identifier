@@ -17,6 +17,8 @@
 #
 import os
 import re
+import subprocess
+import threading
 from subprocess import Popen, PIPE
 from tkinter import (
     N, W, S, E, StringVar, IntVar, Frame, Label, Entry, Menu, SUNKEN,
@@ -30,6 +32,9 @@ from waeup.identifier.config import get_config, CONF_KEYS
 #: The set of chars allowed in filenames we handle.
 #: Last char must not be slash.
 VALID_FILENAME = re.compile('^[a-zA-Z0-9/\._\-]+$')
+
+#: How often do we look for new data while executing commands?
+POLL_INTERVAL = 0.1
 
 
 def check_path(path):
@@ -97,14 +102,6 @@ def scan(fpscan_path, device):
     if status != 0:  # scan failed
         raise ValueError('Scan failed: %s' % err)
     return
-
-
-# -----------------------------------------------
-import subprocess
-import threading
-
-#: How often do we look for new data?
-POLL_INTERVAL = 0.1
 
 
 class BackgroundCommand(threading.Thread):
