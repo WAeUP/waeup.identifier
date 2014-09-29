@@ -134,7 +134,8 @@ class BackgroundCommand(threading.Thread):
         """
         if self._timer is not None:
             self._timer.cancel()
-            self.callback()
+            if self.callback is not None:
+                self.callback()
         if self.p.returncode is None:
             self._timer = threading.Timer(POLL_INTERVAL, self._poll)
             self._timer.daemon = True
