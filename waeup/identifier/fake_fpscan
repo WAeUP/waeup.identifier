@@ -79,7 +79,7 @@ if args.scan and args.compare:
 
 if args.scan:
     if args.no_device:
-        print("Invalid device number: 0.")
+        sys.stderr.write("Invalid device number: 0.\n")
         sys.exit(1)
     if args.scan_fail:
         print("fail")
