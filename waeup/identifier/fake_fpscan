@@ -34,6 +34,7 @@ It supports some extra options to tell, what kind of situation should
 be simulated.
 """
 import argparse
+import os
 import sys
 import time
 
@@ -45,6 +46,7 @@ def store_fpm_file(filename):
 parser = argparse.ArgumentParser()
 parser.add_argument('-s', '--scan', action="store_true")
 parser.add_argument('-c', '--compare', action="store_true")
+parser.add_argument('-i', '--infile', default="data.fpm")
 parser.add_argument('-o', '--outfile', default="data.fpm")
 parser.add_argument('--no-device', action="store_true",
                     help=(
@@ -57,6 +59,18 @@ parser.add_argument('--scan-fail', action="store_true",
                         "Assume that a fingerprint scan will fail. "
                         "This option is not part of original "
                         "fpscan.")
+                    )
+parser.add_argument('--compare-fail', action="store_true",
+                    help=(
+                        "Assume that a fingerprint comparison will "
+                        "fail technically. This option is not part "
+                        "of original fpscan.")
+                    )
+parser.add_argument('--compare-no-match', action="store_true",
+                    help=(
+                        "Assume that a fingerprint comparison will "
+                        "result in no match. This option is not part "
+                        "of original fpscan.")
                     )
 args = parser.parse_args()
 
@@ -77,15 +91,30 @@ if args.scan and args.compare:
         )
     sys.exit(1)
 
+if args.no_device:
+    sys.stderr.write("Invalid device number: 0.\n")
+    sys.exit(1)
+
 if args.scan:
-    if args.no_device:
-        sys.stderr.write("Invalid device number: 0.\n")
-        sys.exit(1)
     if args.scan_fail:
         print("fail")
         sys.exit(1)
     print("ok")
     store_fpm_file(args.outfile)
+    sys.exit(0)
+
+if args.compare:
+    if not os.path.exists(args.infile):
+        sys.stderr.write(
+            "Could not load data from file: %s.\n" % args.infile)
+        sys.exit(1)
+    if args.compare_fail:
+        print("error: unknown reason")
+        sys.exit(1)
+    if args.compare_no_match:
+        print("no-match")
+        sys.exit(0)
+    print("ok")
     sys.exit(0)
 
 print(args, args.scan)
