@@ -306,6 +306,11 @@ class FPScanCommandTests(unittest.TestCase, VirtualHomeProvider):
         create_executable(dst, content)
         self.fpscan_path = dst
 
+    def create_fake_data_fpm(self):
+        file_path = os.path.join(self.home_dir, 'data.fpm')
+        open(file_path, 'wb').write(b'some fake data')
+        return file_path
+
     def test_detect_ok(self):
         # we can detect devices
         cmd = FPScanCommand(self.fpscan_path)
@@ -349,10 +354,45 @@ class FPScanCommandTests(unittest.TestCase, VirtualHomeProvider):
 
     def test_scan_fail(self):
         # scans can fail. We respect that
-        cmd = FPScanCommand(self.fpscan_path, ['-s', '--scan-fail',])
+        cmd = FPScanCommand(self.fpscan_path, ['-s', '--scan-fail', ])
         cmd.run()
         ret_code, stdout, stderr = cmd.wait()
         assert cmd.is_alive() == False
         assert ret_code == 1
         assert stdout == b'fail\n'
+        assert stderr == b''
+
+    def test_compare_ok(self):
+        # we can compare input with stored fingerprints
+        stored_path = self.create_fake_data_fpm()
+        cmd = FPScanCommand(self.fpscan_path, ['-c', '-i', stored_path])
+        cmd.run()
+        ret_code, stdout, stderr = cmd.wait()
+        assert cmd.is_alive() == False
+        assert ret_code == 0
+        assert stdout == b'ok\n'
+        assert stderr == b''
+
+    def test_compare_no_match(self):
+        # we can detect non-matches when comparing fingerprints
+        stored_path = self.create_fake_data_fpm()
+        cmd = FPScanCommand(
+            self.fpscan_path, ['-c', '-i', stored_path, '--compare-no-match'])
+        cmd.run()
+        ret_code, stdout, stderr = cmd.wait()
+        assert cmd.is_alive() == False
+        assert ret_code == 0
+        assert stdout == b'no-match\n'
+        assert stderr == b''
+
+    def test_compare_fail(self):
+        # we can detect failing comparisons by exit status
+        stored_path = self.create_fake_data_fpm()
+        cmd = FPScanCommand(
+            self.fpscan_path, ['-c', '-i', stored_path, '--compare-fail'])
+        cmd.run()
+        ret_code, stdout, stderr = cmd.wait()
+        assert cmd.is_alive() == False
+        assert ret_code == 1
+        assert stdout == b'error: unknown reason\n'
         assert stderr == b''
