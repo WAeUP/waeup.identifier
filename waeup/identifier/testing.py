@@ -143,10 +143,9 @@ def xmlrpcping(x):
 class AuthenticatingXMLRPCServer(SimpleXMLRPCServer):
     """An XMLRPC server that fakes WAeUP kofa XMLRPC services.
     """
-    def __init__(self, bind_address="127.0.0.1", bind_port=14096):
+    def __init__(self, host="127.0.0.1", port=14096):
         super(AuthenticatingXMLRPCServer, self).__init__(
-            (bind_address, bind_port),
-            requestHandler=AuthenticatingXMLRPCRequestHandler
+            (host, port), requestHandler=AuthenticatingXMLRPCRequestHandler
             )
         self.register_introspection_functions()
         self.register_function(xmlrpcping, 'ping')  # not part of kofa
