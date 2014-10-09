@@ -136,7 +136,7 @@ class AuthenticatingXMLRPCRequestHandler(SimpleXMLRPCRequestHandler):
         return False
 
 
-def xmlrpcping(x):
+def xmlrpc_ping(x):
     return ('pong', x)
 
 
@@ -148,7 +148,7 @@ class AuthenticatingXMLRPCServer(SimpleXMLRPCServer):
             (host, port), requestHandler=AuthenticatingXMLRPCRequestHandler
             )
         self.register_introspection_functions()
-        self.register_function(xmlrpcping, 'ping')  # not part of kofa
+        self.register_function(xmlrpc_ping, 'ping')  # not part of kofa
         return
 
 
