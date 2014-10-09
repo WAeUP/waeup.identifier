@@ -301,6 +301,7 @@ class BackgroundCommandTests(unittest.TestCase, VirtualHomeProvider):
         global callback_data
 
         callback_data = None
+
         def mycallback(*args, **kw):
             global callback_data
             callback_data = (args, kw)
