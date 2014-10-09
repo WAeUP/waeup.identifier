@@ -327,6 +327,7 @@ class FPScanApplication(Frame):
         self.chosen_scanner = IntVar()
         self.chosen_scanner.set(-1)
         self.chosen_scanner.trace("w", self.evt_scanner_chosen)
+        self.student_id = StringVar()
 
         self.body = Notebook(self, name="body")
         self.body.enable_traversal()
@@ -376,10 +377,19 @@ class FPScanApplication(Frame):
         state = NORMAL
         if self.chosen_scanner.get() < 0:
             state = DISABLED
+
         Label(
             self.page_scan_body,
             text="Scan Fingerprint",
             anchor="nw").pack()
+
+        student_box = LabelFrame(
+            self.page_scan_body, text="Student", padx=5, pady=5, takefocus=1)
+        Label(student_box, text="Student ID: ").grid(sticky=W)
+        w = Entry(student_box, width=30, textvariable=self.student_id)
+        w.grid(row=0, column=1, sticky=E + W, pady=2)
+        student_box.pack(fill=BOTH, expand=1)
+
         btn = Button(
             self.page_scan_body,
             text="Start Scan",
@@ -387,7 +397,7 @@ class FPScanApplication(Frame):
             state=state,
             )
         btn.pack(pady=15)
-        self.page_scan_body.pack()
+        self.page_scan_body.pack(fill=BOTH, expand=1)
 
     def draw_scan_running_page(self):
         self.page_scan_body.pack_forget()
@@ -516,6 +526,7 @@ class FPScanApplication(Frame):
         self.footer_bar['text'] = ""
         if cmd.returncode == 0:
             self.footer_bar['text'] = "Fingerprint taken."
+            self.student_id = ""
         print("Scan finished")
         print("RESULT: %s" % cmd.returncode)
         self.draw_scan_finished_page()
