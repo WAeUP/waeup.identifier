@@ -21,6 +21,7 @@ import stat
 import sys
 import tempfile
 import unittest
+import xmlrpc.client
 from base64 import b64decode
 from xmlrpc.server import SimpleXMLRPCServer, SimpleXMLRPCRequestHandler
 
@@ -136,9 +137,50 @@ class AuthenticatingXMLRPCRequestHandler(SimpleXMLRPCRequestHandler):
         return False
 
 
+fake_student_db = dict()
+
 def xmlrpc_ping(x):
     return ('pong', x)
 
+def xmlrpc_reset_student_db():
+    global fake_student_db
+    fake_student_db = dict()
+
+def xmlrpc_create_student(student_id):
+    global fake_student_db
+    if student_id not in fake_student_db.keys():
+        fake_student_db[student_id] = dict()
+    return True
+
+def xmlrpc_put_student_fingerprints(identifier=None, fingerprints={}):
+    global fake_student_db
+    result = False
+    if not identifier in fake_student_db.keys():
+        raise xmlrpc.client.Fault(
+            xmlrpc.client.INVALID_METHOD_PARAMS,
+            "No such student: '%s'" % identifier)
+    if not isinstance(fingerprints, dict):
+        raise xmlrpc.client.Fault(
+            xmlrpc.client.INVALID_METHOD_PARAMS,
+            "Invalid fingerprint data: must be dict'")
+    for str_key, val in fingerprints.items():
+        num = 0
+        try:
+            num = int(str_key)
+        except ValueError:
+            pass
+        if num < 1 or num > 10:
+            continue
+        if not isinstance(val, xmlrpc.client.Binary):
+            raise xmlrpc.client.Fault(
+                xmlrpc.client.INVALID_METHOD_PARAMS,
+                "Invalid fingerprint data for finger %s" % num)
+        if not val.data.startswith(b'FP1'):
+            raise xmlrpc.client.Fault(
+                xmlrpc.client.INVALID_METHOD_PARAMS,
+                "Invalid file format for finger %s" % num)
+        result = True
+    return result
 
 class AuthenticatingXMLRPCServer(SimpleXMLRPCServer):
     """An XMLRPC server that fakes WAeUP kofa XMLRPC services.
@@ -149,6 +191,12 @@ class AuthenticatingXMLRPCServer(SimpleXMLRPCServer):
             )
         self.register_introspection_functions()
         self.register_function(xmlrpc_ping, 'ping')  # not part of kofa
+        self.register_function(xmlrpc_create_student,
+                               'create_student')     # not part of kofa
+        self.register_function(xmlrpc_reset_student_db,
+                               'reset_student_db')   # not part of kofa
+        self.register_function(xmlrpc_put_student_fingerprints,
+                               'put_student_fingerprints')
         return
 
 
