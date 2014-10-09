@@ -160,4 +160,6 @@ def start_fake_kofa():
     Kofa. Useful for testing.
     """
     server = AuthenticatingXMLRPCServer('127.0.0.1', 61616)
+    print("Starting server at 127.0.0.1:61616")
+    print("Press ^C (Ctrl-c) to abort.")
     server.serve_forever()
