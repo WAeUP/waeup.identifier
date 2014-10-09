@@ -195,6 +195,7 @@ class AppTests(unittest.TestCase, VirtualHomeProvider):
 
 
 callback_counter = 0
+callback_data = None
 
 
 class BackgroundCommandTests(unittest.TestCase, VirtualHomeProvider):
@@ -266,9 +267,16 @@ class BackgroundCommandTests(unittest.TestCase, VirtualHomeProvider):
         create_python_script(path, pysrc)
         cmd = BackgroundCommand(path, timeout=0.1)
         t_stamp1 = time.time()
-        cmd.execute()
+        cmd.start()
+        cmd.wait()
         t_stamp2 = time.time()
         assert t_stamp2 - t_stamp1 < 5
+        assert not cmd.is_alive()
+        assert cmd.returncode == -9
+        assert cmd.stderr_data == b''
+        assert cmd.stdout_data == b''
+        # timeouts kill processes
+        assert cmd.is_killed == True
 
     def test_callback(self):
         # a passed-in callback function is really called
@@ -279,12 +287,38 @@ class BackgroundCommandTests(unittest.TestCase, VirtualHomeProvider):
             global callback_counter
             callback_counter += 1
         path = os.path.join(self.path_dir, 'myscript')
-        pysrc = 'time.sleep(0.2)'
+        pysrc = 'time.sleep(0.1)'
         create_python_script(path, pysrc)
         cmd = BackgroundCommand(path, callback=mycallback)
-        cmd.run()
-        cmd.wait()
+        cmd.start()
+        while cmd.is_alive():
+            pass
         assert callback_counter > 0
+        assert cmd.is_killed == False
+
+    def test_callback_retcode(self):
+        # we can get return codes from callbacks
+        global callback_data
+
+        callback_data = None
+        def mycallback(*args, **kw):
+            global callback_data
+            callback_data = (args, kw)
+        path = os.path.join(self.path_dir, 'myscript')
+        pysrc = (
+            'print("stdout output")\n'
+            'print("stderr output", file=sys.stderr)\n'
+            'sys.exit(42)')
+        create_python_script(path, pysrc)
+        cmd = BackgroundCommand(path, callback=mycallback)
+        cmd.start()
+        while cmd.is_alive():
+            pass
+        result_cmd = callback_data[0][0]
+        assert result_cmd is cmd
+        assert result_cmd.returncode == 42
+        assert result_cmd.stdout_data == b'stdout output\n'
+        assert result_cmd.stderr_data == b'stderr output\n'
 
 
 class FPScanCommandTests(unittest.TestCase, VirtualHomeProvider):

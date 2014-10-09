@@ -108,78 +108,112 @@ class BackgroundCommand(threading.Thread):
     def __init__(self, cmd, timeout=None, callback=None):
         """A system  command run in background.
 
-        `cmd` is a list containing the command to execute and
-        parameters.
+        Run system command in background. The command results like
+        output, returncode, etc., can be retrieved after command
+        completion.
 
-        `timeout` is a float setting the amount of time after which
-        the command execution should be aborted.
+        Normally, you will tell `BackgroundCommand` what command
+        should be run in a list like ``['/bin/ls', '-l']``. You might
+        optionally give a timeout and/or a callback function to call
+        when the command finished. Then you start the whole process
+        calling the `start()` method. Please use `start()` and not
+        `run()` because only with `start()` the command is run in a
+        concurrent thread.
+
+        After `timeout` seconds the command will be killed if it still
+        runs and the `callback` function will be called.
+
+        `BackgroundCommand` provides the three attributes
+
+        * `stdout_data`
+
+        * `stderr_data`
+
+        * `returncode`
+
+        that will provide the streamed output of the run command and
+        its exit code.
+
+        Furthermore you can ask for `timed_out`, a boolean, to check
+        whether the command was killed (due to timeout) and/or
+        `is_alive()`, a method to see whether the command already
+        finished.
+
+        `cmd` is a list containing the command to execute and
+        parameters. You can also pass in a single string as `cmd`.
+
+        `timeout`, if given, is a float setting the amount of seconds
+        after which the command execution should be aborted. By
+        default there is no timeout.
 
         `callback`, if given, is called when new output from the
         executed binary (stdout or stderr) is available. The callback
-        is called without any parameters. To see, what output
-        happened, you have to query the `BackgroundCommand` used
-        before.
+        is called with the `BackgroundCommand` instance as only
+        argument. Naturally, there is no default callback function.
         """
         super(BackgroundCommand, self).__init__()
+        if not isinstance(cmd, list):
+            cmd = [cmd, ]
         self.p = None
         self.cmd = cmd
         self.timeout = timeout
         self.callback = callback
         self._timer = None
-        self._stdout = None
-        self._stderr = None
-
-    def _poll(self):
-        """Poll process output. If new output was received, call back.
-        """
-        if self._timer is not None:
-            self._timer.cancel()
-            if self.callback is not None:
-                self.callback()
-        if self.p.returncode is None:
-            self._timer = threading.Timer(POLL_INTERVAL, self._poll)
-            self._timer.daemon = True
-            self._timer.start()
-
-    def stop(self):
-        """Stop running subprocess, terminate any timers, etc.
-
-        General cleanup actions.
-        """
-        if self._timer is not None:
-            self._timer.cancel()
-        if self.p is not None and self.is_alive():
-            self.p.terminate()
-            self.join()
+        self.returncode = None
+        self.stdout_data = None
+        self.stderr_data = None
+        self.is_killed = False
 
     def run(self):
-        # override base
-        self.p = subprocess.Popen(self.cmd, stdout=subprocess.PIPE,
-                                  stderr=subprocess.PIPE)
-        self._poll()
+        """Code run in a separate thread.
 
-    def execute(self):
-        """Execute the given command, respecting timeouts.
+        Run command in a subprocess, set timer and set command results
+        (exitcode, output, etc.).
 
-        Run the command given on init and terminate it when `timeout`
-        lapsed.
+        Do not use this method directly. Use `start()` instead,
+        because `start()` will properly call this method in a
+        concurrent thread.
         """
-        self.start()
-        self.join(self.timeout)
+        # override base
+        self.p = subprocess.Popen(
+            self.cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        if self.timeout is not None:
+            # start watchdog that aborts when we need too much time
+            self._timer = threading.Timer(self.timeout, self._kill)
+            self._timer.daemon = True
+            self._timer.start()
+        self.stdout_data, self.stderr_data = self.p.communicate()
+        self.returncode = self.p.returncode
+        if self.callback is not None:
+            if self._timer is not None:
+                self._timer.cancel()
+            self.callback(self)
+        return
 
-        if self.is_alive():
-            self.p.terminate()  # use self.p.kill() if process needs a kill -9
-            self.join()
+    def _kill(self):
+        """Kill any running thread.
+
+        For internal use only. This is the emergency break invoked
+        after `timeout` seconds.
+        """
+        if self._timer is not None:
+            self._timer.cancel()
+        if self.p.returncode is not None:
+            return
+        self.p.kill()
+        self.is_killed = True
+        self.join()
+        if self.callback is not None:
+            self.callback(self)
 
     def wait(self):
         """Wait until command terminates.
 
         Returns returncode, stdout data, and stderr data as a tuple.
         """
-        stdout_data, stderr_data = self.p.communicate()
-        if self._timer is not None:
-            self._timer.cancel()
-        return self.p.returncode, stdout_data, stderr_data
+        while self.is_alive():
+            pass
+        return self.returncode, self.stdout_data, self.stderr_data
 
 
 class FPScanCommand(BackgroundCommand):
@@ -189,7 +223,9 @@ class FPScanCommand(BackgroundCommand):
         `path` must be an existing binary path. `params` is a list of
         options to use when calling fsscan.
         """
-        cmd = [path,] + params
+        cmd = [path, ] + params
+        if not os.path.exists(path):
+            raise IOError("No such path: %s" % (path, ))
         super(FPScanCommand, self).__init__(
             cmd, timeout=timeout, callback=callback)
 
@@ -440,9 +476,14 @@ class FPScanApplication(Frame):
         return
 
     def cmd_start_scan(self):
+        """Start a fingerprint scan.
+        """
         self.footer_bar['text'] = "Scanning..."
         self.draw_scan_running_page()
         print("Start FP scan")
+        binary_path = self.config.get('DEFAULT', 'fpscan_path')
+        self.running_cmd = FPScanCommand(binary_path, ['-s'])
+        self.running_cmd.run()
         return
 
     def cmd_file(self):
