@@ -525,10 +525,8 @@ class FPScanApplication(Frame):
         """
         self.footer_bar['text'] = ""
         if cmd.returncode == 0:
-            self.footer_bar['text'] = "Fingerprint taken."
+            self.footer_bar['text'] = "ready."
             self.student_id = ""
-        print("Scan finished")
-        print("RESULT: %s" % cmd.returncode)
         self.draw_scan_finished_page()
 
     def cmd_file(self):
