@@ -1,8 +1,11 @@
 import threading
 import unittest
 import xmlrpc.client
-from waeup.identifier.testing import AuthenticatingXMLRPCServer, fake_student_db
+from waeup.identifier.testing import (
+    AuthenticatingXMLRPCServer, fake_student_db,
+    )
 from waeup.identifier.testing import fake_student_db
+
 
 class WebserviceTests(unittest.TestCase):
 
