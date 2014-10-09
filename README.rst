@@ -78,3 +78,41 @@ install the needed tools::
   (py32) $ make html
 
 Will generate the documentation in a subdirectory.
+
+
+Misc
+----
+
+There is a fake Kofa XMLRPC server included for use in tests. The
+server tries to mimic WAeUP Kofa XMLRPC API while being much more
+lightweight. It can be started using::
+
+  (py32) $ fake_kofa_server
+
+and will listen for XMLRPC requests on localhost port 61616. It
+requires basic authentication with ``mgr`` as username and ``mgrpw``
+as password.
+
+Programmatically, the fake kofa server can be started like this:
+
+  >>> import threading
+  >>> from waeup.identifier.testing import AuthenticatingXMLRPCServer
+  >>> server = AuthenticatingXMLRPCServer('127.0.0.1', 61616)
+  >>> server_thread = threading.Thread(
+  ...     target=server.serve_forever
+  ...     )
+  >>> server_thread.daemon = True
+  >>> server_thread.start()
+
+When the server runs, you can try to connect to it via `xmlrpclib`
+(Python 2.x) or `xmlrpc.client` (Python 3.x). Please note, that the
+`fake_kofa_server` by default listens on localhost port 14096.
+
+  >>> from xmlrpc.client import ServerProxy  # Python 3.x only
+  >>> s = ServerProxy("http://mgr:mgrpw@localhost:61616")
+  >>> s.ping(42)
+  ['pong', 42]
+
+See WAeUP Kofa docs or local webservice tests for method details.
+
+  >>> server.shutdown()
