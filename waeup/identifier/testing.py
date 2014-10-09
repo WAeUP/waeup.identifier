@@ -139,18 +139,22 @@ class AuthenticatingXMLRPCRequestHandler(SimpleXMLRPCRequestHandler):
 
 fake_student_db = dict()
 
+
 def xmlrpc_ping(x):
     return ('pong', x)
+
 
 def xmlrpc_reset_student_db():
     global fake_student_db
     fake_student_db = dict()
+
 
 def xmlrpc_create_student(student_id):
     global fake_student_db
     if student_id not in fake_student_db.keys():
         fake_student_db[student_id] = dict()
     return True
+
 
 def xmlrpc_put_student_fingerprints(identifier=None, fingerprints={}):
     global fake_student_db
@@ -181,6 +185,7 @@ def xmlrpc_put_student_fingerprints(identifier=None, fingerprints={}):
                 "Invalid file format for finger %s" % num)
         result = True
     return result
+
 
 class AuthenticatingXMLRPCServer(SimpleXMLRPCServer):
     """An XMLRPC server that fakes WAeUP kofa XMLRPC services.
