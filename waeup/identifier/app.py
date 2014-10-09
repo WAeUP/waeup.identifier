@@ -533,6 +533,12 @@ class FPScanApplication(Frame):
         return
 
     def cmd_quit(self, event=None):
+        """Quit the application.
+
+        Clean up environment, terminate running processes, etc.
+        """
+        if self.running_cmd.p is not None:
+            self.running_cmd.p.terminate()
         return self.master.quit()
 
     def cmd_about(self):
