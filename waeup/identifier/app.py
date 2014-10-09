@@ -403,8 +403,25 @@ class FPScanApplication(Frame):
         btn = Button(
             self.page_scan_body,
             text="Abort Scan",
-            command=lambda: self.cmd_start_scan(),
+            command=lambda: self.cmd_abort_scan(),
             state=state,
+            )
+        btn.pack(pady=15)
+        self.page_scan_body.pack()
+
+    def draw_scan_finished_page(self):
+        self.page_scan_body.pack_forget()
+        self.page_scan_body.destroy()  # remove old body
+        self.page_scan_body = Frame(self.page_scan)
+        Label(
+            self.page_scan_body,
+            text="Fingerprint successfully taken.\nThank you!",
+            anchor="nw").pack()
+        btn = Button(
+            self.page_scan_body,
+            text="Ok",
+            command=lambda: self.draw_scan_page(),
+            state=NORMAL,
             )
         btn.pack(pady=15)
         self.page_scan_body.pack()
@@ -482,9 +499,26 @@ class FPScanApplication(Frame):
         self.draw_scan_running_page()
         print("Start FP scan")
         binary_path = self.config.get('DEFAULT', 'fpscan_path')
-        self.running_cmd = FPScanCommand(binary_path, ['-s'])
-        self.running_cmd.run()
+        self.running_cmd = FPScanCommand(
+            binary_path, ['-s'], callback=self.evt_scan_finished)
+        self.running_cmd.start()
         return
+
+    def cmd_abort_scan(self):
+        self.running_cmd.p.terminate()
+        self.footer_bar['text'] = "Scanning aborted."
+        self.draw_scan_page()
+        pass
+
+    def evt_scan_finished(self, cmd):
+        """Callback function, called when scans are finished.
+        """
+        self.footer_bar['text'] = ""
+        if cmd.returncode == 0:
+            self.footer_bar['text'] = "Fingerprint taken."
+        print("Scan finished")
+        print("RESULT: %s" % cmd.returncode)
+        self.draw_scan_finished_page()
 
     def cmd_file(self):
         return
