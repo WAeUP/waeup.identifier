@@ -21,6 +21,8 @@ import stat
 import sys
 import tempfile
 import unittest
+from base64 import b64decode
+from xmlrpc.server import SimpleXMLRPCServer, SimpleXMLRPCRequestHandler
 
 
 def create_executable(path, content):
@@ -103,3 +105,59 @@ class VirtualHomingTestCase(unittest.TestCase, VirtualHomeProvider):
 
     def tearDown(self):
         self.teardown_virtual_home()
+
+
+class AuthenticatingXMLRPCRequestHandler(SimpleXMLRPCRequestHandler):
+    """XMLRPC handler providing basic auth.
+
+    We only accept one single credentials pair: ``mgr``, ``mgrpw``.
+    """
+    rpc_paths = ('/RPC2',)
+
+    def authenticate(self, headers):
+        auth_header_line = headers.get('Authorization', None)
+        if auth_header_line is None:
+            return False
+        (auth_type, trash, encoded_creds) = auth_header_line.partition(' ')
+        if auth_type != 'Basic':
+            return False
+        decoded_creds = b64decode(encoded_creds.encode())
+        (user_name, trash, password) = decoded_creds.decode().partition(':')
+        if user_name == 'mgr' and password == 'mgrpw':
+            return True
+        return False
+
+    def parse_request(self):
+        if super(AuthenticatingXMLRPCRequestHandler, self).parse_request():
+            if self.authenticate(self.headers):
+                return True
+            else:
+                self.send_error(401, 'Unauthorized')
+        return False
+
+
+def xmlrpcping(x):
+    return ('pong', x)
+
+
+class AuthenticatingXMLRPCServer(SimpleXMLRPCServer):
+    """An XMLRPC server that fakes WAeUP kofa XMLRPC services.
+    """
+    def __init__(self, bind_address="127.0.0.1", bind_port=14096):
+        super(AuthenticatingXMLRPCServer, self).__init__(
+            (bind_address, bind_port),
+            requestHandler=AuthenticatingXMLRPCRequestHandler
+            )
+        self.register_introspection_functions()
+        self.register_function(xmlrpcping, 'ping')  # not part of kofa
+        return
+
+
+def start_fake_kofa():
+    """Entry point to start a fake kofa server on commandline.
+
+    The fake server provides only a copy of the XMLRPC API of WAeUP
+    Kofa. Useful for testing.
+    """
+    server = AuthenticatingXMLRPCServer('127.0.0.1', 61616)
+    server.serve_forever()
