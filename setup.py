@@ -64,5 +64,6 @@ setup(name='waeup.identifier',
       entry_points="""
       [console_scripts]
       waeup_identifier = waeup.identifier:main
+      fake_kofa_server = waeup.identifier.testing:start_fake_kofa
       """,
       )
