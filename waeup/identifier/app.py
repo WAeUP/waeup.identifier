@@ -27,6 +27,7 @@ from tkinter import (
 from tkinter.simpledialog import Dialog
 from tkinter.ttk import Notebook, Progressbar, Button, Radiobutton
 from waeup.identifier.config import get_config, CONF_KEYS
+from waeup.identifier.webservice import get_url, store_fingerprint
 
 
 #: The set of chars allowed in filenames we handle.
@@ -525,6 +526,22 @@ class FPScanApplication(Frame):
         """
         self.footer_bar['text'] = ""
         if cmd.returncode == 0:
+            self.footer_bar['text'] = "Sending scan to server..."
+
+            username = self.config.get('DEFAULT', 'waeup_user')
+            password = self.config.get('DEFAULT', 'waeup_passwd')
+            netloc = self.config.get('DEFAULT', 'waeup_url')
+            url = get_url(netloc, username, password)
+            result = store_fingerprint(
+                url, self.student_id.get(), 1, './data.fpm')
+            if result is not None:
+                messagebox.showwarning(
+                    "Kofa Server Error", (
+                        "Could not send fingerprint.\n"
+                        "Server said: %s" % result))
+                self.footer_bar['text'] = "Sending fingerprint failed."
+                self.draw_scan_page()
+                return
             self.footer_bar['text'] = "ready."
             self.student_id = ""
         self.draw_scan_finished_page()
@@ -537,8 +554,8 @@ class FPScanApplication(Frame):
 
         Clean up environment, terminate running processes, etc.
         """
-        if self.running_cmd.p is not None:
-            self.running_cmd.p.terminate()
+        #if self.running_cmd.p is not None:
+        #    self.running_cmd.p.terminate()
         return self.master.quit()
 
     def cmd_about(self):
