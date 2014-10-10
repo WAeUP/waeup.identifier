@@ -6,7 +6,33 @@ import xmlrpc.client
 from waeup.identifier.testing import (
     AuthenticatingXMLRPCServer, create_fake_fpm_file,
     )
-from waeup.identifier.webservice import store_fingerprint
+from waeup.identifier.webservice import store_fingerprint, get_url
+
+class HelperTests(unittest.TestCase):
+
+    def test_get_url(self):
+        # we can get completed urls from netlocations plus credentials
+        assert get_url(
+            'http://localhost:8080', 'bob', 'secret'
+            ) == "http://bob:secret@localhost:8080"
+
+    def test_get_url_no_scheme(self):
+        # we get HTTPS if no scheme was specified
+        assert get_url(
+            'localhost:8080', 'bob', 'secret'
+            ) == "https://bob:secret@localhost:8080"
+
+    def test_get_url_no_port(self):
+        # we can construct valid URLs w/o port.
+        assert get_url(
+            'https://localhost', 'bob', 'secret'
+            ) == "https://bob:secret@localhost"
+
+    def test_get_url_paths(self):
+        # paths are kept in URLs
+        assert get_url(
+            'https://localhost:8080/app', 'bob', 'secret'
+            ) == "https://bob:secret@localhost:8080/app"
 
 
 class WebserviceTests(unittest.TestCase):
