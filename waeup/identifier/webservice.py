@@ -17,7 +17,32 @@
 #
 """Connect to WAeUP kofa via webservices.
 """
+import urllib.parse
 import xmlrpc.client
+
+
+def get_url(netlocation, username, password):
+    """Create a valid URL from the given parts.
+
+    The username and password are inserted into the netlocation to
+    build a valid URL. The `netlocation` should be a valid URL w/o any
+    username/password.
+
+    If no scheme is given in netlocation, ``https://`` is returned.
+
+    Example:
+
+       >>> get_url('localhost:8080', 'bob', 'secret')
+       'https://bob:secret@localhost:8080'
+    """
+    parts = urllib.parse.urlparse(netlocation, scheme="https")
+    parts_list = [x for x in tuple(parts)]
+    if parts_list[1] == '':
+        del parts_list[1]
+        parts_list += ['',]
+        parts_list = [x for x in parts_list]
+    parts_list[1] = "%s:%s@" % (username, password) + parts_list[1]
+    return urllib.parse.urlunparse(parts_list)
 
 
 def store_fingerprint(url, student_id, finger_num, data_file_path):
@@ -40,6 +65,19 @@ def store_fingerprint(url, student_id, finger_num, data_file_path):
     """
     server_proxy = xmlrpc.client.ServerProxy(url)
     data_to_store = xmlrpc.client.Binary(open(data_file_path, 'rb').read())
-    result = server_proxy.put_student_fingerprints(
-        student_id, {str(finger_num): data_to_store})
+    #import pdb; pdb.set_trace()
+    fingerprint = {str(finger_num): data_to_store}
+    result = None
+    try:
+        result = server_proxy.put_student_fingerprints(
+            student_id, fingerprint)
+    except xmlrpc.client.Fault:
+        print("FAULT")
+        import sys
+        e = sys.exc_info()
+        print(e, dir(e))
+        result = "Error %s: %s" % (e[1].faultCode, e[1].faultString)
+    #import pdb; pdb.set_trace
+    print("AFTER EXCEPT")
+    print(result)
     return result
