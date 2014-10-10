@@ -141,16 +141,28 @@ fake_student_db = dict()
 
 
 def xmlrpc_ping(x):
+    """Get a sign of life from server.
+
+    This method is not part of Kofa.
+    """
     return ('pong', x)
 
 
 def xmlrpc_reset_student_db():
+    """Remove all entries from local students DB.
+
+    This method is not part of Kofa.
+    """
     global fake_student_db
     fake_student_db = dict()
     return True
 
 
 def xmlrpc_create_student(student_id):
+    """Create an entry in local fake student DB.
+
+    This method is not part of Kofa.
+    """
     global fake_student_db
     if student_id not in fake_student_db.keys():
         fake_student_db[student_id] = dict()
@@ -158,6 +170,10 @@ def xmlrpc_create_student(student_id):
 
 
 def xmlrpc_put_student_fingerprints(identifier=None, fingerprints={}):
+    """Put student fingerprint data into local fake DB.
+
+    This function mimics behavior from Kofa.
+    """
     global fake_student_db
     result = False
     if not identifier in fake_student_db.keys():
