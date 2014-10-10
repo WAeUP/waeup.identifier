@@ -1,10 +1,7 @@
 import threading
 import unittest
 import xmlrpc.client
-from waeup.identifier.testing import (
-    AuthenticatingXMLRPCServer, fake_student_db,
-    )
-from waeup.identifier.testing import fake_student_db
+from waeup.identifier.testing import AuthenticatingXMLRPCServer
 
 
 class WebserviceTests(unittest.TestCase):
@@ -50,8 +47,8 @@ class WebserviceTests(unittest.TestCase):
 
     def test_internal_put_student_fingerprints(self):
         # make sure the faked method is faked properly
+        self.proxy.reset_student_db()
         self.proxy.create_student('AB123456')
-        assert fake_student_db == {'AB123456': {}}
         # invalid student id
         self.assertRaises(
             xmlrpc.client.Fault,
