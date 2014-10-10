@@ -25,6 +25,7 @@ class WebserviceTests(unittest.TestCase):
     def setUp(self):
         self.proxy = xmlrpc.client.ServerProxy(
             "http://mgr:mgrpw@localhost:61615")
+        self.proxy.reset_student_db()
 
     def test_internal_ping(self):
         # make sure the fake xmlrpc server works
@@ -47,7 +48,6 @@ class WebserviceTests(unittest.TestCase):
 
     def test_internal_put_student_fingerprints(self):
         # make sure the faked method is faked properly
-        self.proxy.reset_student_db()
         self.proxy.create_student('AB123456')
         # invalid student id
         self.assertRaises(
