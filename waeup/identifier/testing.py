@@ -147,6 +147,7 @@ def xmlrpc_ping(x):
 def xmlrpc_reset_student_db():
     global fake_student_db
     fake_student_db = dict()
+    return True
 
 
 def xmlrpc_create_student(student_id):
