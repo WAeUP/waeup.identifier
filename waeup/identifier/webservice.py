@@ -18,3 +18,28 @@
 """Connect to WAeUP kofa via webservices.
 """
 import xmlrpc.client
+
+
+def store_fingerprint(url, student_id, finger_num, data_file_path):
+    """Store a fingerprint on a Kofa server.
+
+    Returns `None` on success or some message otherwise.
+
+    `url` is the Kofa server to connect to. It must contain a scheme
+    (``http://`` or ``https://``), a username, password, and of course
+    the hostname and port. Something like
+    ``http://myname:secret@localhost:8080``, for instance.
+
+    `student_id` must be a student identifier existing on the server.
+
+    `finger_num` is the number of finger that was scanned.
+
+    `data_file_path` is the path to a file that contains the
+    fingerprint minutiae, i.e. the fingerprint data as produced by
+    libfprint.
+    """
+    server_proxy = xmlrpc.client.ServerProxy(url)
+    data_to_store = xmlrpc.client.Binary(open(data_file_path, 'rb').read())
+    result = server_proxy.put_student_fingerprints(
+        student_id, {str(finger_num): data_to_store})
+    return result
