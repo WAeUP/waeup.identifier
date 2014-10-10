@@ -66,6 +66,16 @@ def create_fpscan(path_dir, output, ret_code=0):
     return path
 
 
+def create_fake_fpm_file(path_dir):
+    """Create a fake .fpm file.
+
+    .fpm files are fingerprint files as created by libfprint.
+    """
+    path = os.path.join(path_dir, 'data.fpm')
+    open(path, 'wb').write(b'FP1-some-fake-file')
+    return path
+
+
 class VirtualHomeProvider(object):
     """A unittest mixin for tests where a virtual home is needed.
     """
