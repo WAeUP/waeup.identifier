@@ -1,7 +1,12 @@
+import shutil
+import tempfile
 import threading
 import unittest
 import xmlrpc.client
-from waeup.identifier.testing import AuthenticatingXMLRPCServer
+from waeup.identifier.testing import (
+    AuthenticatingXMLRPCServer, create_fake_fpm_file,
+    )
+from waeup.identifier.webservice import store_fingerprint
 
 
 class WebserviceTests(unittest.TestCase):
@@ -23,9 +28,13 @@ class WebserviceTests(unittest.TestCase):
         cls.server.shutdown()
 
     def setUp(self):
+        self.workdir = tempfile.mkdtemp()
         self.proxy = xmlrpc.client.ServerProxy(
             "http://mgr:mgrpw@localhost:61615")
         self.proxy.reset_student_db()
+
+    def tearDown(self):
+        shutil.rmtree(self.workdir)
 
     def test_internal_ping(self):
         # make sure the fake xmlrpc server works
@@ -75,3 +84,11 @@ class WebserviceTests(unittest.TestCase):
         # empty fingerprint dict
         assert self.proxy.put_student_fingerprints(
             'AB123456', {}) == False
+
+    def test_store_fingerprint(self):
+        # we can store a fingerprint
+        self.proxy.create_student('AB123456')
+        fpm_file_path = create_fake_fpm_file(self.workdir)
+        result = store_fingerprint(
+            "http://mgr:mgrpw@localhost:61615", "AB123456", 1, fpm_file_path)
+        assert result == True
