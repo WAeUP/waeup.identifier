@@ -28,7 +28,9 @@ from tkinter import (
 from tkinter.simpledialog import Dialog
 from tkinter.ttk import Notebook, Progressbar, Button, Radiobutton
 from waeup.identifier.config import get_config, CONF_KEYS
-from waeup.identifier.webservice import get_url, store_fingerprint
+from waeup.identifier.webservice import (
+    get_url_from_config, store_fingerprint
+)
 
 
 #: The set of chars allowed in filenames we handle.
@@ -529,10 +531,7 @@ class FPScanApplication(Frame):
         if cmd.returncode == 0:
             result = None
             self.footer_bar['text'] = "Sending scan to server..."
-            username = self.config.get('DEFAULT', 'waeup_user')
-            password = self.config.get('DEFAULT', 'waeup_passwd')
-            netloc = self.config.get('DEFAULT', 'waeup_url')
-            url = get_url(netloc, username, password)
+            url = get_url_from_config(self.config)
             try:
                 result = store_fingerprint(
                     url, self.student_id.get(), 1, './data.fpm')
@@ -541,10 +540,11 @@ class FPScanApplication(Frame):
                     "Connection Error", (
                         "Could not connect to server\n"
                         "at %s\n"
-                        "Please check preferences."  % self.config.get(
+                        "Please check preferences." % self.config.get(
                             'DEFAULT', 'waeup_url')))
                 self.footer_bar['text'] = "Sending fingerprint failed."
                 self.draw_scan_page()
+                return
             if result is not None:
                 messagebox.showwarning(
                     "Kofa Server Error", (
