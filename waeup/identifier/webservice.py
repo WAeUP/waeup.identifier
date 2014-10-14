@@ -45,6 +45,20 @@ def get_url(netlocation, username, password):
     return urllib.parse.urlunparse(parts_list)
 
 
+def get_url_from_config(config):
+    """Construct a valid XMLRPC URL from `config`.
+
+    `config` is expected to be an instance of ConfigParser as used,
+    for instance, in the main application.
+
+    Returns a valid URL usable to do XMLRPC requests.
+    """
+    netloc = config.get("DEFAULT", "waeup_url")
+    username = config.get("DEFAULT", "waeup_user")
+    password = config.get("DEFAULT", "waeup_passwd")
+    return get_url(netloc, username, password)
+
+
 def store_fingerprint(url, student_id, finger_num, data_file_path):
     """Store a fingerprint on a Kofa server.
 
