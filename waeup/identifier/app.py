@@ -17,6 +17,7 @@
 #
 import os
 import re
+import socket
 import subprocess
 import threading
 from subprocess import Popen, PIPE
@@ -526,14 +527,24 @@ class FPScanApplication(Frame):
         """
         self.footer_bar['text'] = ""
         if cmd.returncode == 0:
+            result = None
             self.footer_bar['text'] = "Sending scan to server..."
-
             username = self.config.get('DEFAULT', 'waeup_user')
             password = self.config.get('DEFAULT', 'waeup_passwd')
             netloc = self.config.get('DEFAULT', 'waeup_url')
             url = get_url(netloc, username, password)
-            result = store_fingerprint(
-                url, self.student_id.get(), 1, './data.fpm')
+            try:
+                result = store_fingerprint(
+                    url, self.student_id.get(), 1, './data.fpm')
+            except socket.error:
+                messagebox.showwarning(
+                    "Connection Error", (
+                        "Could not connect to server\n"
+                        "at %s\n"
+                        "Please check preferences."  % self.config.get(
+                            'DEFAULT', 'waeup_url')))
+                self.footer_bar['text'] = "Sending fingerprint failed."
+                self.draw_scan_page()
             if result is not None:
                 messagebox.showwarning(
                     "Kofa Server Error", (
