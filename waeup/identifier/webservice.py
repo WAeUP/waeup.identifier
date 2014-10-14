@@ -39,7 +39,7 @@ def get_url(netlocation, username, password):
     parts_list = [x for x in tuple(parts)]
     if parts_list[1] == '':
         del parts_list[1]
-        parts_list += ['',]
+        parts_list += ['', ]
         parts_list = [x for x in parts_list]
     parts_list[1] = "%s:%s@" % (username, password) + parts_list[1]
     return urllib.parse.urlunparse(parts_list)
