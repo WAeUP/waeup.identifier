@@ -217,6 +217,25 @@ def xmlrpc_put_student_fingerprints(identifier=None, fingerprints={}):
     return result
 
 
+def xmlrpc_get_student_fingerprints(identifier=None):
+    """Retrieve student data from local fake database.
+
+    This method mimics Kofa functionality.
+    """
+    global fake_student_db
+    if identifier not in fake_student_db.keys():
+        return dict()
+    student = fake_student_db[identifier]
+    return dict(
+        email=student.get("email", None),
+        firstname=student.get("firstname", None),
+        lastname=student.get("lastname", None),
+        fingerprints=student.get("fingerprints", {}),
+        img_name=student.get("img_name", ""),
+        img=student.get("img", None),
+        )
+
+
 class AuthenticatingXMLRPCServer(SimpleXMLRPCServer):
     """An XMLRPC server that fakes WAeUP kofa XMLRPC services.
     """
@@ -232,6 +251,8 @@ class AuthenticatingXMLRPCServer(SimpleXMLRPCServer):
                                'reset_student_db')   # not part of kofa
         self.register_function(xmlrpc_put_student_fingerprints,
                                'put_student_fingerprints')
+        self.register_function(xmlrpc_get_student_fingerprints,
+                               'get_student_fingerprints')
         return
 
 
