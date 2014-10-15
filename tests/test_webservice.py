@@ -108,7 +108,8 @@ class WebserviceTests(unittest.TestCase):
         # the following methods are available
         assert sorted(self.proxy.system.listMethods()) == [
             'create_student',
-            'ping', 'put_student_fingerprints',
+            'get_student_fingerprints', 'ping',
+            'put_student_fingerprints',
             'reset_student_db', 'system.listMethods',
             'system.methodHelp', 'system.methodSignature']
 
