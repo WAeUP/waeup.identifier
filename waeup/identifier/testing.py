@@ -168,14 +168,17 @@ def xmlrpc_reset_student_db():
     return True
 
 
-def xmlrpc_create_student(student_id):
+def xmlrpc_create_student(student_id, firstname="Bob", lastname="Barley",
+                          img="", img_name="", fingerprints={}):
     """Create an entry in local fake student DB.
 
     This method is not part of Kofa.
     """
     global fake_student_db
     if student_id not in fake_student_db.keys():
-        fake_student_db[student_id] = dict()
+        fake_student_db[student_id] = dict(
+            firstname=firstname, lastname=lastname,
+            img=img, img_name=img_name, fingerprints=fingerprints)
     return True
 
 
