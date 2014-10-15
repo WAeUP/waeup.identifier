@@ -227,12 +227,12 @@ def xmlrpc_get_student_fingerprints(identifier=None):
         return dict()
     student = fake_student_db[identifier]
     return dict(
-        email=student.get("email", None),
-        firstname=student.get("firstname", None),
-        lastname=student.get("lastname", None),
+        email=student.get("email", ""),
+        firstname=student.get("firstname", ""),
+        lastname=student.get("lastname", ""),
         fingerprints=student.get("fingerprints", {}),
         img_name=student.get("img_name", ""),
-        img=student.get("img", None),
+        img=student.get("img", ""),
         )
 
 
