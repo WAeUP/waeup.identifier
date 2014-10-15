@@ -143,6 +143,25 @@ class WebserviceTests(unittest.TestCase):
         assert self.proxy.put_student_fingerprints(
             'AB123456', {}) == False
 
+    def test_internal_get_student_fingerprints(self):
+        self.proxy.create_student(
+            'AB123456', "foo@sample.org", "foo", "bar",
+            "passport.png", xmlrpc.client.Binary(b"FakedPNGFile"),
+            {
+                "1": xmlrpc.client.Binary(b"FP1Fake"),
+                },
+            )
+        result1 = self.proxy.get_student_fingerprints("InvalidID")
+        assert result1 == dict()
+        result2 = self.proxy.get_student_fingerprints("AB123456")
+        assert isinstance(result2, dict)
+        assert result2["email"] == "foo@sample.org"
+        assert result2["firstname"] == "foo"
+        assert result2["lastname"] == "bar"
+        assert result2["img_name"] == "passport.png"
+        assert result2["img"].data == b"FakedPNGFile"
+        assert result2["fingerprints"]["1"].data == b"FP1Fake"
+
     def test_store_fingerprint(self):
         # we can store a fingerprint
         self.proxy.create_student('AB123456')
