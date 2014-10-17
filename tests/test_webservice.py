@@ -9,7 +9,7 @@ from waeup.identifier.testing import (
     AuthenticatingXMLRPCServer, create_fake_fpm_file,
     )
 from waeup.identifier.webservice import (
-    store_fingerprint, get_url, get_url_from_config,
+    store_fingerprint, get_fingerprints, get_url, get_url_from_config,
 )
 
 
@@ -94,6 +94,16 @@ class WebserviceTests(unittest.TestCase):
     def tearDown(self):
         shutil.rmtree(self.workdir)
 
+    def populate_db(self):
+        # create student in db
+        self.proxy.create_student(
+            'AB123456', "foo@sample.org", "foo", "bar",
+            "passport.png", xmlrpc.client.Binary(b"FakedPNGFile"),
+            {
+                "1": xmlrpc.client.Binary(b"FP1Fake"),
+                },
+            )
+
     def test_internal_ping(self):
         # make sure the fake xmlrpc server works
         assert self.proxy.ping(42) == ['pong', 42]
@@ -147,13 +157,7 @@ class WebserviceTests(unittest.TestCase):
     def test_internal_get_student_fingerprints(self):
         # the faked get_student_fingerprint method works as
         # as the Kofa original.
-        self.proxy.create_student(
-            'AB123456', "foo@sample.org", "foo", "bar",
-            "passport.png", xmlrpc.client.Binary(b"FakedPNGFile"),
-            {
-                "1": xmlrpc.client.Binary(b"FP1Fake"),
-                },
-            )
+        self.populate_db()
         result1 = self.proxy.get_student_fingerprints("InvalidID")
         assert result1 == dict()
         result2 = self.proxy.get_student_fingerprints("AB123456")
@@ -181,17 +185,48 @@ class WebserviceTests(unittest.TestCase):
             "http://localhost:61615", "AB123456", 1, fpm_file_path)
         assert result == "Error: 401 Unauthorized"
 
-    def test_store_fingerprint_unauth(self):
-        # trying to connect with invalid ips will fail
-        self.proxy.create_student('AB123456')
-        fpm_file_path = create_fake_fpm_file(self.workdir)
-        result = store_fingerprint(
-            "http://localhost:61615", "AB123456", 1, fpm_file_path)
-        assert result == "Error: 401 Unauthorized"
-
     def test_store_fingerprint_invalid_server(self):
         # trying to connect to invalid servers will raise socket errors.
         fpm_file_path = create_fake_fpm_file(self.workdir)
         self.assertRaises(socket.error, store_fingerprint,
                           "http://localhost:12345", "AB123456", 1,
                           fpm_file_path)
+
+    def test_get_fingerprints(self):
+        # we can retrieve stored fingerprints
+        self.populate_db()
+        result = get_fingerprints(
+            "http://mgr:mgrpw@localhost:61615",
+            "AB123456")
+        assert isinstance(result, dict)
+        assert result.get("email", None) == "foo@sample.org"
+        assert result.get("firstname", None) == "foo"
+        assert result.get("lastname", None) == "bar"
+        assert result.get("img", None) is not None
+        img = result["img"].data
+        assert img == b"FakedPNGFile"
+        assert result.get("img_name", None) == "passport.png"
+        assert isinstance(result.get("fingerprints", None), dict)
+        fprints = result.get("fingerprints")
+        assert "1" in fprints.keys()
+        fprint = fprints["1"].data
+        assert fprint == b"FP1Fake"
+
+    def test_get_fingerprints_unauth(self):
+        # we cannot get fingerprints w/o being authorized
+        self.populate_db()
+        result = get_fingerprints(
+            "http://illegal:mgrpw@localhost:61615",
+            "AB123456"
+            )
+        assert result == "Error: 401 Unauthorized"
+
+    def test_get_fingerprints_invalid_server(self):
+        # we cannot get fingerprints w/o being authorized
+        self.populate_db()
+        self.assertRaises(
+            socket.error,
+            get_fingerprints,
+            "http://illegal:mgrpw@localhost:12345",
+            "AB123456"
+            )

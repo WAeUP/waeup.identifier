@@ -90,3 +90,17 @@ def store_fingerprint(url, student_id, finger_num, data_file_path):
     except xmlrpc.client.ProtocolError as err:
         result = "Error: %s %s" % (err.errcode, err.errmsg)
     return result
+
+
+def get_fingerprints(url, student_id):
+    """Get fingerprints of student with `student_id`.
+    """
+    server_proxy = xmlrpc.client.ServerProxy(url)
+    result = None
+    try:
+        result = server_proxy.get_student_fingerprints(student_id)
+    except xmlrpc.client.Fault as err:
+        result = "Error %s: %s" % (err.faultCode, err.faultString)
+    except xmlrpc.client.ProtocolError as err:
+        result = "Error: %s %s" % (err.errcode, err.errmsg)
+    return result
