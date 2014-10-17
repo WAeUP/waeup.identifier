@@ -17,6 +17,7 @@
 #
 """Connect to WAeUP kofa via webservices.
 """
+import sys
 import urllib.parse
 import xmlrpc.client
 
@@ -79,19 +80,13 @@ def store_fingerprint(url, student_id, finger_num, data_file_path):
     """
     server_proxy = xmlrpc.client.ServerProxy(url)
     data_to_store = xmlrpc.client.Binary(open(data_file_path, 'rb').read())
-    #import pdb; pdb.set_trace()
     fingerprint = {str(finger_num): data_to_store}
     result = None
     try:
         result = server_proxy.put_student_fingerprints(
             student_id, fingerprint)
-    except xmlrpc.client.Fault:
-        print("FAULT")
-        import sys
-        e = sys.exc_info()
-        print(e, dir(e))
-        result = "Error %s: %s" % (e[1].faultCode, e[1].faultString)
-    #import pdb; pdb.set_trace
-    print("AFTER EXCEPT")
-    print(result)
+    except xmlrpc.client.Fault as err:
+        result = "Error %s: %s" % (err.faultCode, err.faultString)
+    except xmlrpc.client.ProtocolError as err:
+        result = "Error: %s %s" % (err.errcode, err.errmsg)
     return result
