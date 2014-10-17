@@ -17,7 +17,6 @@
 #
 """Connect to WAeUP kofa via webservices.
 """
-import sys
 import urllib.parse
 import xmlrpc.client
 
