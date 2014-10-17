@@ -1,4 +1,5 @@
 import shutil
+import socket
 import tempfile
 import threading
 import unittest
@@ -144,6 +145,8 @@ class WebserviceTests(unittest.TestCase):
             'AB123456', {}) == False
 
     def test_internal_get_student_fingerprints(self):
+        # the faked get_student_fingerprint method works as
+        # as the Kofa original.
         self.proxy.create_student(
             'AB123456', "foo@sample.org", "foo", "bar",
             "passport.png", xmlrpc.client.Binary(b"FakedPNGFile"),
@@ -169,3 +172,26 @@ class WebserviceTests(unittest.TestCase):
         result = store_fingerprint(
             "http://mgr:mgrpw@localhost:61615", "AB123456", 1, fpm_file_path)
         assert result == True
+
+    def test_store_fingerprint_unauth(self):
+        # tries to store fingerprints unauthorized will be blocked
+        self.proxy.create_student('AB123456')
+        fpm_file_path = create_fake_fpm_file(self.workdir)
+        result = store_fingerprint(
+            "http://localhost:61615", "AB123456", 1, fpm_file_path)
+        assert result == "Error: 401 Unauthorized"
+
+    def test_store_fingerprint_unauth(self):
+        # trying to connect with invalid ips will fail
+        self.proxy.create_student('AB123456')
+        fpm_file_path = create_fake_fpm_file(self.workdir)
+        result = store_fingerprint(
+            "http://localhost:61615", "AB123456", 1, fpm_file_path)
+        assert result == "Error: 401 Unauthorized"
+
+    def test_store_fingerprint_invalid_server(self):
+        # trying to connect to invalid servers will raise socket errors.
+        fpm_file_path = create_fake_fpm_file(self.workdir)
+        self.assertRaises(socket.error, store_fingerprint,
+                          "http://localhost:12345", "AB123456", 1,
+                          fpm_file_path)
