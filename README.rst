@@ -121,3 +121,6 @@ When the server runs, you can try to connect to it via `xmlrpclib`
 See WAeUP Kofa docs or local webservice tests for method details.
 
   >>> server.shutdown()
+
+
+.. _Kivy: http://kivy.org/
