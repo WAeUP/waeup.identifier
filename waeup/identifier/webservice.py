@@ -17,8 +17,11 @@
 #
 """Connect to WAeUP kofa via webservices.
 """
-import urllib.parse
 import xmlrpc.client
+try:
+    from urllib import parse as urlparse
+except ImportError:
+    from urlparse import urlparse
 
 
 def get_url(netlocation, username, password):
@@ -35,14 +38,14 @@ def get_url(netlocation, username, password):
        >>> get_url('localhost:8080', 'bob', 'secret')
        'https://bob:secret@localhost:8080'
     """
-    parts = urllib.parse.urlparse(netlocation, scheme="https")
+    parts = urlparse.urlparse(netlocation, scheme="https")
     parts_list = [x for x in tuple(parts)]
     if parts_list[1] == '':
         del parts_list[1]
         parts_list += ['', ]
         parts_list = [x for x in parts_list]
     parts_list[1] = "%s:%s@" % (username, password) + parts_list[1]
-    return urllib.parse.urlunparse(parts_list)
+    return urlparse.urlunparse(parts_list)
 
 
 def get_url_from_config(config):
