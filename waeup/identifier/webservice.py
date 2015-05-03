@@ -19,9 +19,9 @@
 """
 import xmlrpc.client
 try:
-    from urllib import parse as urlparse
+    from urllib import parse as urlparse  # Python 3.x
 except ImportError:
-    from urlparse import urlparse
+    from urlparse import urlparse         # Python 2.x
 
 
 def get_url(netlocation, username, password):
