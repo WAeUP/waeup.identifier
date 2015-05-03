@@ -2,9 +2,7 @@ language: python
 python:
   - "3.3"
 before_install:
-  - sudo apt-add-repository -y ppa:kivy-team/kivy
   - sudo apt-get update -qq
-  - sudo apt-get install -qq python3-kivy
   - sudo apt-get install -qq python3-tk
   # Workaround for a permissions issue with Travis virtual machine images
   # that breaks Python's multiprocessing:
