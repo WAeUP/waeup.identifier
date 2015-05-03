@@ -16,7 +16,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 import os
-from configparser import ConfigParser
+try:
+    from configparser import ConfigParser  # Python 3.x
+except ImportError:
+    from ConfigParser import ConfigParser  # Python 2.x
 
 
 #: A list of valid configuration keys.
