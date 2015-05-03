@@ -17,7 +17,10 @@
 #
 """Connect to WAeUP kofa via webservices.
 """
-import xmlrpc.client
+try:
+    import xmlrpc.client as xmlrpcclient  # Python 3.x
+except ImportError:
+    import xmlrpclib as xmlrpcclient      # Python 2.x
 try:
     from urllib import parse as urlparse  # Python 3.x
 except ImportError:
@@ -80,16 +83,16 @@ def store_fingerprint(url, student_id, finger_num, data_file_path):
     fingerprint minutiae, i.e. the fingerprint data as produced by
     libfprint.
     """
-    server_proxy = xmlrpc.client.ServerProxy(url)
-    data_to_store = xmlrpc.client.Binary(open(data_file_path, 'rb').read())
+    server_proxy = xmlrpcclient.ServerProxy(url)
+    data_to_store = xmlrpcclient.Binary(open(data_file_path, 'rb').read())
     fingerprint = {str(finger_num): data_to_store}
     result = None
     try:
         result = server_proxy.put_student_fingerprints(
             student_id, fingerprint)
-    except xmlrpc.client.Fault as err:
+    except xmlrpcclient.Fault as err:
         result = "Error %s: %s" % (err.faultCode, err.faultString)
-    except xmlrpc.client.ProtocolError as err:
+    except xmlrpcclient.ProtocolError as err:
         result = "Error: %s %s" % (err.errcode, err.errmsg)
     return result
 
@@ -97,12 +100,12 @@ def store_fingerprint(url, student_id, finger_num, data_file_path):
 def get_fingerprints(url, student_id):
     """Get fingerprints of student with `student_id`.
     """
-    server_proxy = xmlrpc.client.ServerProxy(url)
+    server_proxy = xmlrpcclient.ServerProxy(url)
     result = None
     try:
         result = server_proxy.get_student_fingerprints(student_id)
-    except xmlrpc.client.Fault as err:
+    except xmlrpcclient.Fault as err:
         result = "Error %s: %s" % (err.faultCode, err.faultString)
-    except xmlrpc.client.ProtocolError as err:
+    except xmlrpcclient.ProtocolError as err:
         result = "Error: %s %s" % (err.errcode, err.errmsg)
     return result
