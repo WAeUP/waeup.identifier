@@ -21,12 +21,25 @@ import socket
 import subprocess
 import threading
 from subprocess import Popen, PIPE
-from tkinter import (
-    N, W, S, E, StringVar, IntVar, Frame, Label, Entry, Menu, SUNKEN,
-    messagebox, ACTIVE, LEFT, BOTH, LabelFrame, X, BOTTOM, NORMAL, DISABLED,
-    )
-from tkinter.simpledialog import Dialog
-from tkinter.ttk import Notebook, Progressbar, Button, Radiobutton
+try:
+    from tkinter import (                    # python 3.x
+        N, W, S, E, StringVar, IntVar, Frame, Label, Entry, Menu, SUNKEN,
+        messagebox, ACTIVE, LEFT, BOTH, LabelFrame, X, BOTTOM, NORMAL, DISABLED,
+        )
+except ImportError:
+    from Tkinter import (                    # python 2.x
+        N, W, S, E, StringVar, IntVar, Frame, Label, Entry, Menu, SUNKEN,
+        ACTIVE, LEFT, BOTH, LabelFrame, X, BOTTOM, NORMAL, DISABLED,
+        )
+    import tkMessageBox as messagebox
+try:
+    from tkinter.simpledialog import Dialog  # python 3.x
+except ImportError:
+    import tkSimpleDialog as Dialog          # python 2.x
+try:                                         # python 3.x
+    from tkinter.ttk import Notebook, Progressbar, Button, Radiobutton
+except ImportError:                          # python 2.x
+    from ttk import Notebook, Progressbar, Button, Radiobutton
 from waeup.identifier.config import get_config, CONF_KEYS
 from waeup.identifier.webservice import (
     get_url_from_config, store_fingerprint
