@@ -15,6 +15,19 @@ which are stored in WAeUP student portals.
              unhelpful.
 
 
+Kivy Install
+------------
+
+Install we do in tests, based on Ubuntu 14.04.::
+
+  $ sudo apt-add-repository ppa:kivy-team/kivy
+  $ sudo apt-get update
+  $ sudo apt-get install python3-kivy
+  $ sudo apt-get install kivy-examples
+
+
+
+
 User Install
 ------------
 
