@@ -9,6 +9,11 @@ Identify WAeUP students biometrically.
 Provides a package that helps with fingerprint scanning/verifying,
 which are stored in WAeUP student portals.
 
+.. warning:: We are going to give Kivy_ a try. As install is much more
+             complicated with Kivy_, some or all of the following
+             information might be wrong, misleading, or in other ways
+             unhelpful.
+
 
 User Install
 ------------
