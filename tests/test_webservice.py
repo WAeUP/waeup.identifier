@@ -152,10 +152,10 @@ class WebserviceTests(unittest.TestCase):
         assert self.proxy.put_student_fingerprints(
             'AB123456', {
                 '1': xmlrpcclient.Binary(b'FP1-faked-fpm-file')}
-            ) == True
+            ) is True
         # empty fingerprint dict
         assert self.proxy.put_student_fingerprints(
-            'AB123456', {}) == False
+            'AB123456', {}) is False
 
     def test_internal_get_student_fingerprints(self):
         # the faked get_student_fingerprint method works as
@@ -178,7 +178,7 @@ class WebserviceTests(unittest.TestCase):
         fpm_file_path = create_fake_fpm_file(self.workdir)
         result = store_fingerprint(
             "http://mgr:mgrpw@localhost:61615", "AB123456", 1, fpm_file_path)
-        assert result == True
+        assert result is True
 
     def test_store_fingerprint_unauth(self):
         # tries to store fingerprints unauthorized will be blocked
