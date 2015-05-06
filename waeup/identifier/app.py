@@ -24,7 +24,8 @@ from subprocess import Popen, PIPE
 try:
     from tkinter import (                    # python 3.x
         N, W, S, E, StringVar, IntVar, Frame, Label, Entry, Menu, SUNKEN,
-        messagebox, ACTIVE, LEFT, BOTH, LabelFrame, X, BOTTOM, NORMAL, DISABLED,
+        messagebox, ACTIVE, LEFT, BOTH, LabelFrame, X, BOTTOM, NORMAL,
+        DISABLED,
         )
 except ImportError:
     from Tkinter import (                    # python 2.x
