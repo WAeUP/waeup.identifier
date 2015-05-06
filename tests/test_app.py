@@ -276,7 +276,7 @@ class BackgroundCommandTests(unittest.TestCase, VirtualHomeProvider):
         assert cmd.stderr_data == b''
         assert cmd.stdout_data == b''
         # timeouts kill processes
-        assert cmd.is_killed == True
+        assert cmd.is_killed is True
 
     def test_callback(self):
         # a passed-in callback function is really called
@@ -294,7 +294,7 @@ class BackgroundCommandTests(unittest.TestCase, VirtualHomeProvider):
         while cmd.is_alive():
             pass
         assert callback_counter > 0
-        assert cmd.is_killed == False
+        assert cmd.is_killed is False
 
     def test_callback_retcode(self):
         # we can get return codes from callbacks
@@ -372,7 +372,7 @@ class FPScanCommandTests(unittest.TestCase, VirtualHomeProvider):
         cmd = FPScanCommand(self.fpscan_path, ['-s', '-o', out_path])
         cmd.run()
         ret_code, stdout, stderr = cmd.wait()
-        assert cmd.is_alive() == False
+        assert cmd.is_alive() is False
         assert ret_code == 0
         assert stdout == b'ok\n'
         assert stderr == b''
@@ -392,7 +392,7 @@ class FPScanCommandTests(unittest.TestCase, VirtualHomeProvider):
         cmd = FPScanCommand(self.fpscan_path, ['-s', '--scan-fail', ])
         cmd.run()
         ret_code, stdout, stderr = cmd.wait()
-        assert cmd.is_alive() == False
+        assert cmd.is_alive() is False
         assert ret_code == 1
         assert stdout == b'fail\n'
         assert stderr == b''
@@ -403,7 +403,7 @@ class FPScanCommandTests(unittest.TestCase, VirtualHomeProvider):
         cmd = FPScanCommand(self.fpscan_path, ['-c', '-i', stored_path])
         cmd.run()
         ret_code, stdout, stderr = cmd.wait()
-        assert cmd.is_alive() == False
+        assert cmd.is_alive() is False
         assert ret_code == 0
         assert stdout == b'ok\n'
         assert stderr == b''
@@ -415,7 +415,7 @@ class FPScanCommandTests(unittest.TestCase, VirtualHomeProvider):
             self.fpscan_path, ['-c', '-i', stored_path, '--compare-no-match'])
         cmd.run()
         ret_code, stdout, stderr = cmd.wait()
-        assert cmd.is_alive() == False
+        assert cmd.is_alive() is False
         assert ret_code == 0
         assert stdout == b'no-match\n'
         assert stderr == b''
@@ -427,7 +427,7 @@ class FPScanCommandTests(unittest.TestCase, VirtualHomeProvider):
             self.fpscan_path, ['-c', '-i', stored_path, '--compare-fail'])
         cmd.run()
         ret_code, stdout, stderr = cmd.wait()
-        assert cmd.is_alive() == False
+        assert cmd.is_alive() is False
         assert ret_code == 1
         assert stdout == b'error: unknown reason\n'
         assert stderr == b''
