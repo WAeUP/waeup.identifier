@@ -21,9 +21,16 @@ import stat
 import sys
 import tempfile
 import unittest
-import xmlrpc.client
+try:
+    import xmlrpc.client as xmlrpc_client
+except ImportError:
+    import xmlrpclib as xmlrpcclient
 from base64 import b64decode
-from xmlrpc.server import SimpleXMLRPCServer, SimpleXMLRPCRequestHandler
+try:                  # Python 3.x
+    from xmlrpc.server import SimpleXMLRPCServer, SimpleXMLRPCRequestHandler
+except ImportError:   # Python 2.x
+    from SimpleXMLRPCServer import (
+        SimpleXMLRPCServer, SimpleXMLRPCRequestHandler)
 
 
 def create_executable(path, content):
@@ -192,12 +199,12 @@ def xmlrpc_put_student_fingerprints(identifier=None, fingerprints={}):
     global fake_student_db
     result = False
     if not identifier in fake_student_db.keys():
-        raise xmlrpc.client.Fault(
-            xmlrpc.client.INVALID_METHOD_PARAMS,
+        raise xmlrpc_client.Fault(
+            xmlrpc_client.INVALID_METHOD_PARAMS,
             "No such student: '%s'" % identifier)
     if not isinstance(fingerprints, dict):
-        raise xmlrpc.client.Fault(
-            xmlrpc.client.INVALID_METHOD_PARAMS,
+        raise xmlrpc_client.Fault(
+            xmlrpc_client.INVALID_METHOD_PARAMS,
             "Invalid fingerprint data: must be dict'")
     for str_key, val in fingerprints.items():
         num = 0
@@ -207,13 +214,13 @@ def xmlrpc_put_student_fingerprints(identifier=None, fingerprints={}):
             pass
         if num < 1 or num > 10:
             continue
-        if not isinstance(val, xmlrpc.client.Binary):
-            raise xmlrpc.client.Fault(
-                xmlrpc.client.INVALID_METHOD_PARAMS,
+        if not isinstance(val, xmlrpc_client.Binary):
+            raise xmlrpc_client.Fault(
+                xmlrpc_client.INVALID_METHOD_PARAMS,
                 "Invalid fingerprint data for finger %s" % num)
         if not val.data.startswith(b'FP1'):
-            raise xmlrpc.client.Fault(
-                xmlrpc.client.INVALID_METHOD_PARAMS,
+            raise xmlrpc_client.Fault(
+                xmlrpc_client.INVALID_METHOD_PARAMS,
                 "Invalid file format for finger %s" % num)
         result = True
     return result
