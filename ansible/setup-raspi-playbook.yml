@@ -12,5 +12,5 @@
   become: true
   become_user: root
   tasks:
-  - name: Gather facts about host
-    setup:
+  - name: Rotate screen by 180°
+    lineinfile: dest=/boot/config.txt line="lcd_rotate=2"
