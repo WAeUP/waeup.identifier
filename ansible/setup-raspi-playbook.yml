@@ -1,0 +1,13 @@
+---
+# This ansible-playbook does setup of a
+# Raspberry pi running waeup.identifier.
+#
+# Sample:
+#
+#   $ ansible-playbook -K -l setup-raspi-playbook.yml
+- hosts: all
+  become: true
+  become_user: root
+  tasks:
+  - name: Gather facts about host
+    setup:
