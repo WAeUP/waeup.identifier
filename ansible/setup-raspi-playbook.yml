@@ -12,5 +12,7 @@
   become: true
   become_user: root
   tasks:
+  - name: Update system
+    apt: upgrade=safe update_cache=yes
   - name: Rotate screen by 180°
     lineinfile: dest=/boot/config.txt line="lcd_rotate=2"
