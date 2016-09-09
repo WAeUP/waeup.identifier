@@ -2,6 +2,7 @@
 # vi: set ft=ruby :
 
 Vagrant.configure(2) do |config|
+  # Debian base boxes: see https://wiki.debian.org/Teams/Cloud/VagrantBaseBoxes
   config.vm.box = "debian/jessie64"
   config.vm.define "kivy" do |machine|
     # Create a private network, which allows host-only access to the machine
@@ -14,6 +15,8 @@ Vagrant.configure(2) do |config|
       vb.memory = "2048"
       vb.name = "kivy"
     end
+    # ansible does not need a client, but needs python-apt to install packages
+    config.vm.provision "shell", inline: "apt-get install --yes python-apt"
     #machine.vm.provision "ansible" do |ansible|
     #  ansible.verbose = "v"
     #  ansible.playbook = "provision.yml"
