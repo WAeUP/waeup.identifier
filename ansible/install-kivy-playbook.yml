@@ -55,3 +55,11 @@
       version={{ cython_version }}
       state=present
       virtualenv=/home/vagrant/venv27
+
+  - name: Install kivy in virtualenv
+    become: no
+    pip:
+      name=kivy
+      version={{ kivy_version }}
+      state=present
+      virtualenv=/home/vagrant/venv27
