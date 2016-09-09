@@ -5,6 +5,7 @@
   vars:
     kivy_version: 1.9.1
     cython_version: 0.23
+    venv_path: /home/vagrant/venv27
   tasks:
   - name: Update cache if not done in last 24 hours.
     apt: update_cache=yes cache_valid_time=86400
@@ -44,9 +45,9 @@
 
   - name: Create virtualenv
     become: no
-    command: virtualenv /home/vagrant/venv27 -p python2.7
+    command: virtualenv {{ venv_path }} -p python2.7
     args:
-      creates: /home/vagrant/venv27
+      creates: "{{ venv_path }}"
 
   - name: Install Cython in virtualenv
     become: no
@@ -54,7 +55,7 @@
       name=Cython
       version={{ cython_version }}
       state=present
-      virtualenv=/home/vagrant/venv27
+      virtualenv="{{ venv_path }}"
 
   - name: Install kivy in virtualenv
     become: no
@@ -62,4 +63,4 @@
       name=kivy
       version={{ kivy_version }}
       state=present
-      virtualenv=/home/vagrant/venv27
+      virtualenv="{{ venv_path }}"
