@@ -38,3 +38,9 @@
       - pip
       - virtualenv
       - setuptools
+
+  - name: Create virtualenv
+    become: no
+    command: virtualenv /home/vagrant/venv27 -p python2.7
+    args:
+      creates: /home/vagrant/venv27
