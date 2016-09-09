@@ -17,9 +17,9 @@ Vagrant.configure(2) do |config|
     end
     # ansible does not need a client, but needs python-apt to install packages
     config.vm.provision "shell", inline: "apt-get install --yes python-apt"
-    #machine.vm.provision "ansible" do |ansible|
-    #  ansible.verbose = "v"
-    #  ansible.playbook = "provision.yml"
-    #end
+    machine.vm.provision "ansible" do |ansible|
+      ansible.verbose = "v"
+      ansible.playbook = "ansible/install-kivy-playbook.yml"
+    end
   end
 end
