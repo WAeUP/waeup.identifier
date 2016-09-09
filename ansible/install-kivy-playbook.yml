@@ -29,3 +29,12 @@
       - libavformat-dev
       - libavcodec-dev
       - zlib1g-dev
+
+  - name: Upgrade pip, virtualenv, setuptools
+    pip:
+      name={{ item }}
+      state=latest
+    with_items:
+      - pip
+      - virtualenv
+      - setuptools
