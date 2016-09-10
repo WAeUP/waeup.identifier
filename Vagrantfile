@@ -9,7 +9,8 @@ Vagrant.configure(2) do |config|
     # using a specific IP.
     machine.vm.hostname = "kivy.sample.org"
     machine.vm.network "private_network", ip: "192.168.34.33"
-    # machine.vm.synced_folder "../data", "/vagrant_data"
+    # Provide local sources also in virtual machine
+    machine.vm.synced_folder ".", "/home/vagrant/waeup.identifier"
     machine.vm.provider "virtualbox" do |vb|
       vb.gui = false
       vb.memory = "2048"
