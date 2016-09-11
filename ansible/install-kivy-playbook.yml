@@ -2,7 +2,7 @@
 # this playbook installs kivy in a local virtualenv.
 - hosts: all
   become: yes
-  remote_user: root
+  become_user: root
   vars:
     kivy_version: 1.9.1
     cython_version: 0.23
