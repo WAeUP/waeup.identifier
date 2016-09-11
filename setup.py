@@ -63,7 +63,6 @@ setup(
     extras_require=dict(
         tests=[
             'pytest >= 2.0.3',
-            'pytest-xdist',
             'pytest-cov',
         ],
         docs=[
