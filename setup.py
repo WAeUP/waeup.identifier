@@ -59,12 +59,12 @@ setup(
     ],
     setup_requires=[
         'pytest-runner',
-        ],
+    ],
+    tests_require=[
+        'pytest >= 2.0.3',
+        'pytest-cov',
+    ],
     extras_require=dict(
-        tests=[
-            'pytest >= 2.0.3',
-            'pytest-cov',
-        ],
         docs=[
             'Sphinx',
             'sphinx_rtd_theme',
