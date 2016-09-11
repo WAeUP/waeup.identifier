@@ -5,7 +5,7 @@
   vars:
     kivy_version: 1.9.1
     cython_version: 0.23
-    venv_path: /home/vagrant/venv27
+    venv_path: /home/{{ ansible_ssh_user }}/venv27
   tasks:
   - name: Update cache if not done in last 24 hours.
     apt: update_cache=yes cache_valid_time=86400
