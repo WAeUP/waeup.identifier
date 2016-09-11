@@ -1,4 +1,5 @@
 ---
+# this playbook installs kivy in a local virtualenv.
 - hosts: all
   become: yes
   remote_user: root
