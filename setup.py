@@ -57,7 +57,9 @@ setup(
     install_requires=[
         'setuptools',
     ],
-    setup_requires=[],
+    setup_requires=[
+        'pytest-runner',
+        ],
     extras_require=dict(
         tests=[
             'pytest >= 2.0.3',
