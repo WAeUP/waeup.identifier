@@ -9,6 +9,12 @@ version = '0.1.dev0'
 tests_path = os.path.join(os.path.dirname(__file__), 'tests')
 
 
+tests_require = [
+    'pytest >= 2.0.3',
+    'pytest-cov',
+]
+
+
 class PyTest(TestCommand):
     def finalize_options(self):
         TestCommand.finalize_options(self)
@@ -60,11 +66,9 @@ setup(
     setup_requires=[
         'pytest-runner',
     ],
-    tests_require=[
-        'pytest >= 2.0.3',
-        'pytest-cov',
-    ],
+    tests_require=tests_require,
     extras_require=dict(
+        dev=tests_require,
         docs=[
             'Sphinx',
             'sphinx_rtd_theme',
