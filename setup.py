@@ -1,5 +1,4 @@
 from setuptools import setup, find_packages
-from setuptools.command.test import test as TestCommand
 import os
 import sys
 import multiprocessing  # neccessary to keep setuptools quiet in tests
@@ -13,20 +12,6 @@ tests_require = [
     'pytest >= 2.0.3',
     'pytest-cov',
 ]
-
-
-class PyTest(TestCommand):
-    def finalize_options(self):
-        TestCommand.finalize_options(self)
-        args = sys.argv[sys.argv.index('test')+1:]
-        self.test_args = args
-        self.test_suite = True
-
-    def run_tests(self):
-        #import here, cause outside the eggs aren't loaded
-        import pytest
-        errno = pytest.main(self.test_args)
-        sys.exit(errno)
 
 
 setup(
@@ -74,7 +59,6 @@ setup(
             'sphinx_rtd_theme',
         ]
     ),
-    cmdclass={'test': PyTest},
     entry_points="""
     [console_scripts]
     waeup_identifier = waeup.identifier:main
