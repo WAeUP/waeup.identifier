@@ -1,7 +1,13 @@
 Changes
 =======
 
-0.1dev (unreleased)
--------------------
+1.0.dev0 (unreleased)
+---------------------
+
+- Major rewrite: switch from pytk to `kivy`.
+
+
+0.1 (2015-05-09)
+----------------
 
 Initial release.

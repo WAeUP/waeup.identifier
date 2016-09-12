@@ -4,7 +4,7 @@ import sys
 import multiprocessing  # neccessary to keep setuptools quiet in tests
 
 
-version = '0.1.dev0'
+version = '1.0.dev0'
 tests_path = os.path.join(os.path.dirname(__file__), 'tests')
 
 
