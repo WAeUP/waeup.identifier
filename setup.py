@@ -27,7 +27,9 @@ setup(
             "License v3 or later (GPLv3+)"
         ),
         "Programming Language :: Python",
-        "Programming Language :: Python :: 3.2",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: Implementation :: CPython",
         "Operating System :: POSIX",
         "Framework :: Paste",
         "Environment :: X11 Applications",
