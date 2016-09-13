@@ -55,7 +55,7 @@ It is recommended to setup sources in a virtual environment::
 
 Get the sources::
 
-  (py34) $ git clone https://github.com/ulif/waeup.identifier.git
+  (py34) $ git clone https://github.com/WAeUP/waeup.identifier.git
   (py34) $ cd waeup.identifier
 
 Install packages for testing/developing::
