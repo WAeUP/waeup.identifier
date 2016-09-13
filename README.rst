@@ -49,18 +49,18 @@ Developer Install
 
 It is recommended to setup sources in a virtual environment::
 
-  $ virtualenv py32         # only Python 3.2 is supported currently
-  $ source py32/bin/activate
-  (py32) $
+  $ virtualenv py34 -p python3.4    # only Python 3.4 is supported currently
+  $ source py34/bin/activate
+  (py34) $
 
 Get the sources::
 
-  (py32) $ git clone https://github.com/ulif/waeup.identifier.git
-  (py32) $ cd waeup.identifier
+  (py34) $ git clone https://github.com/ulif/waeup.identifier.git
+  (py34) $ cd waeup.identifier
 
 Install packages for testing/developing::
 
-  (py32) $ python setup.py dev
+  (py34) $ python setup.py dev
 
 This will also install the ``waeup_identifier`` script in your virtual
 environment ``bin/`` dir (do *not* use the ``install`` command of
@@ -68,20 +68,20 @@ environment ``bin/`` dir (do *not* use the ``install`` command of
 
 Running tests::
 
-  (py32) $ py.test
+  (py34) $ py.test
 
 We also support `tox` to run tests for all supported Python versions::
 
-  (py32) $ pip install tox
-  (py32) $ tox
+  (py34) $ pip install tox
+  (py34) $ tox
 
 Of course you must have the respective Python versions installed
-(currently 3.2 only).
+(currently 3.4 only).
 
 Running the test coverage detector::
 
-  (py32) $ py.test --cov=waeup.identifier   # for cmdline results
-  (py32) $ py.test --cov=waeup.identifier --cov-report=html
+  (py34) $ py.test --cov=waeup.identifier   # for cmdline results
+  (py34) $ py.test --cov=waeup.identifier --cov-report=html
 
 The latter will generate HTML coverage reports in a subdirectory.
 
@@ -92,9 +92,9 @@ Docs Install
 To install/generate the documentation locally, you first have to
 install the needed tools::
 
-  (py32) $ python setup.py docs
-  (py32) $ cd doc
-  (py32) $ make html
+  (py34) $ python setup.py docs
+  (py34) $ cd doc
+  (py34) $ make html
 
 Will generate the documentation in a subdirectory.
 
@@ -106,7 +106,7 @@ There is a fake Kofa XMLRPC server included for use in tests. The
 server tries to mimic WAeUP Kofa XMLRPC API while being much more
 lightweight. It can be started using::
 
-  (py32) $ fake_kofa_server
+  (py34) $ fake_kofa_server
 
 and will listen for XMLRPC requests on localhost port 61616. It
 requires basic authentication with ``mgr`` as username and ``mgrpw``
