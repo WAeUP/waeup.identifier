@@ -20,6 +20,13 @@
   - name: Rotate screen by 180°
     lineinfile: dest=/boot/config.txt line="lcd_rotate=2"
 
+  - name: Install git
+    package:
+      name={{ item }}
+      state=present
+    with_items:
+      - git
+
   - name: Clone waeup.identifier git repository
     become: false
     git: repo=https://github.com/WAeUP/waeup.identifier
