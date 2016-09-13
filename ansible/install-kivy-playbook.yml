@@ -6,7 +6,7 @@
   vars:
     kivy_version: 1.9.1
     cython_version: 0.23
-    venv_path: /home/{{ ansible_ssh_user }}/venv27
+    venv_path: /home/{{ ansible_ssh_user }}/venv34
   tasks:
   - name: Update cache if not done in last 24 hours.
     apt: update_cache=yes cache_valid_time=86400
@@ -19,11 +19,11 @@
       name={{ item }}
       state=present
     with_items:
-      - python-pip
+      - python3-pip
       - build-essential
       - git
-      - python
-      - python-dev
+      - python3
+      - python3-dev
       - libav-tools
       - libsdl2-dev
       - libsdl2-image-dev
@@ -46,7 +46,7 @@
 
   - name: Create virtualenv
     become: no
-    command: virtualenv {{ venv_path }} -p python2.7
+    command: virtualenv {{ venv_path }} -p python3
     args:
       creates: "{{ venv_path }}"
 
