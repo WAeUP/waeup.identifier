@@ -158,43 +158,14 @@ class AppTests(unittest.TestCase, VirtualHomeProvider):
         open(fake_fpscan, 'w').write('#!%s\nprint("0")\n' % sys.executable)
         os.chmod(fake_fpscan, os.stat(fake_fpscan).st_mode | stat.S_IEXEC)
         self.app = FPScanApplication()
-        #self.app.wait_visibility()
 
     def tearDown(self):
-        self.app.destroy()
         self.teardown_virtual_home()
 
     def test_create(self):
         # we can create app instances
         assert self.app is not None
 
-    def test_title(self):
-        # The app will have a certain title
-        self.assertEqual(self.app.master.title(), 'WAeUP Identifier')
-
-    def test_menubar_exists(self):
-        # we have (exactly) 1 menubar
-        menus = [x for x in self.app.children.values()
-                 if isinstance(x, Menu)]
-        assert len(menus) == 1
-
-    def test_menubar_hasquit(self):
-        # the menubar has a quit-item
-        filemenu = self.app.menu_file
-        filemenu.invoke('Quit')  # must not raise any error
-
-    def DISABLED_test_menubar_hasabout(self):
-        # the menubar has an help-item
-        # XXX: Currently disabled as 'about' generates a modal dialog we
-        #      cannot stop from here.
-        helpmenu = self.app.menu_help
-        helpmenu.invoke('About WAeUP Identifier')  # must not raise any error
-
-    def test_footer_bar(self):
-        # we can set text of the footer bar
-        self.app.footer_bar['text'] = 'My Message.'
-        self.assertEqual(
-            self.app.footer_bar['text'], 'My Message.')
 
 
 callback_counter = 0
