@@ -70,3 +70,6 @@ your local settings.
 
 The playbook will ask for the SSH password of the user set with ``-u``
 (default: ``raspberry``).
+
+This playbook will also clone the `waeup.identifier` repository.
+
