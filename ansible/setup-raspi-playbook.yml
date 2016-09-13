@@ -11,8 +11,16 @@
 - hosts: all
   become: true
   become_user: root
+  vars:
+    - repo_path: /home/{{ ansible_ssh_user }}/waeup.identifier
   tasks:
   - name: Update system
     apt: upgrade=safe update_cache=yes
+
   - name: Rotate screen by 180°
     lineinfile: dest=/boot/config.txt line="lcd_rotate=2"
+
+  - name: Clone waeup.identifier git repository
+    become: false
+    git: repo=https://github.com/WAeUP/waeup.identifier
+         dest="{{ repo_path }}"
