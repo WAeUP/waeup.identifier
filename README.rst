@@ -19,14 +19,22 @@ which are stored in WAeUP student portals.
 Kivy Install
 ------------
 
-Install we do in tests, based on Ubuntu 14.04.::
+There are many ways to install kivy on your system. Please see the
+Kivy_ homepage for a detailed discussion.
+
+The shortest way to install it on Ubuntu 14.04. might be::
 
   $ sudo apt-add-repository ppa:kivy-team/kivy
   $ sudo apt-get update
   $ sudo apt-get install python3-kivy
   $ sudo apt-get install kivy-examples
 
+If that works for you, everything is fine.
 
+In tests we install Kivy_ differently. We put it into a
+`virtualenv`. For us this is less effort as we use `ansible` for
+provision of our testing hosts. Please see the extended documentation
+for details.
 
 
 User Install
