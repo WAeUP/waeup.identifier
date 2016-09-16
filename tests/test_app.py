@@ -4,10 +4,6 @@ import sys
 import time
 import unittest
 import waeup.identifier
-try:
-    from tkinter import Menu  # Python 3.x
-except ImportError:
-    from Tkinter import Menu  # Python 2.x
 from waeup.identifier.app import (
     FPScanApplication, detect_scanners, check_path, fpscan, scan,
     BackgroundCommand, FPScanCommand,
