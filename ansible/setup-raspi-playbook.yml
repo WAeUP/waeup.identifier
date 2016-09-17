@@ -31,3 +31,9 @@
     become: false
     git: repo=https://github.com/WAeUP/waeup.identifier
          dest="{{ repo_path }}"
+
+  - include: install_kivy_playbook.yml
+    vars:
+      kivy_version: 1.9.1
+      cython_version: 0.23
+      venv_path: /home/{{ ansible_ssh_user }}/venv34
