@@ -25,6 +25,7 @@ before_install:
 
 # command to install dependencies
 install:
+  - pip install Cython==0.23
   - python setup.py dev
 # command to run tests
 script: "python setup.py test"
