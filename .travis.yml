@@ -2,7 +2,7 @@ language: python
 python:
   - "3.4"
 before_install:
-  # - sudo apt-add-repository ppa:kivy-team/kivy -y
+  - sudo apt-add-repository ppa:ansible/ansible -y
   - sudo apt-get update -qq
   - sudo apt-get install -qq ansible
   - sudo apt-get install -qq build-essential git python3 python3-dev python-pip
