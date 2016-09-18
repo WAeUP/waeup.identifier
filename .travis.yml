@@ -11,7 +11,6 @@ before_install:
   - sudo apt-get install -qq libportmidi-dev libswscale-dev
   - sudo apt-get install -qq libavformat-dev libavcodec-dev zlib1g-dev
 
-  # - sudo apt-get install -qq python3-kivy
   # Workaround for a permissions issue with Travis virtual machine images
   # that breaks Python's multiprocessing:
   # https://github.com/travis-ci/travis-cookbooks/issues/155
