@@ -229,7 +229,7 @@ class FPScanCommand(BackgroundCommand):
             cmd, timeout=timeout, callback=callback)
 
 
-class FPScanApplication(object):
+class FPScanApplication(App):
     """The main application.
     """
     detected_scanners = []
