@@ -22,6 +22,7 @@ import subprocess
 import threading
 from kivy.app import App
 from kivy.uix.button import Button
+from kivy.uix.widget import Widget
 from subprocess import Popen, PIPE
 from waeup.identifier.config import get_config, CONF_KEYS
 from waeup.identifier.webservice import (
@@ -228,6 +229,12 @@ class FPScanCommand(BackgroundCommand):
             raise IOError("No such path: %s" % (path, ))
         super(FPScanCommand, self).__init__(
             cmd, timeout=timeout, callback=callback)
+
+
+class FPScanMainWidget(Widget):
+    """The main app.
+    """
+    pass
 
 
 class FPScanApplication(App):
