@@ -20,6 +20,7 @@ import re
 import socket
 import subprocess
 import threading
+from kivy.app import App
 from subprocess import Popen, PIPE
 from waeup.identifier.config import get_config, CONF_KEYS
 from waeup.identifier.webservice import (
