@@ -20,7 +20,7 @@ from waeup.identifier.app import FPScanApplication
 
 def main():                              # pragma: no cover
     myapp = FPScanApplication()
-    myapp.mainloop()
+    myapp.run()
 
 if __name__ == '__main__':               # pragma: no cover
     main()
