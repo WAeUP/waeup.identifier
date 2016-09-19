@@ -49,11 +49,11 @@ setup(
     zip_safe=False,
     install_requires=[
         'setuptools',
-        'Cython==0.23',
         'kivy==1.9.1',
     ],
     setup_requires=[
         'pytest-runner',
+        'Cython==0.23',
     ],
     tests_require=tests_require,
     extras_require=dict(
