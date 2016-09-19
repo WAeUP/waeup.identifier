@@ -229,10 +229,7 @@ class FPScanCommand(BackgroundCommand):
 
 
 class FPScanApplication(object):
-
+    """The main application.
+    """
     detected_scanners = []
     chosen_scanner = None
-
-    def __init__(self):
-        """The main application.
-        """
