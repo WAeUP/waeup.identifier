@@ -244,4 +244,8 @@ class FPScanApplication(App):
     chosen_scanner = None
 
     def build(self):
-        return Button(text="Hello world")
+        self.parent = Widget()
+        self.main_widget = FPScanMainWidget()
+        self.parent.add_widget(self.main_widget)
+        self.parent.add_widget(Button(text="Hello world"))
+        return self.parent
