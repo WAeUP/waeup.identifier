@@ -21,6 +21,7 @@ import socket
 import subprocess
 import threading
 from kivy.app import App
+from kivy.uix.button import Button
 from subprocess import Popen, PIPE
 from waeup.identifier.config import get_config, CONF_KEYS
 from waeup.identifier.webservice import (
@@ -234,3 +235,6 @@ class FPScanApplication(App):
     """
     detected_scanners = []
     chosen_scanner = None
+
+    def build(self):
+        return Button(text="Hello world")
