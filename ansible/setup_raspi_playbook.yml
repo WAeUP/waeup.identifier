@@ -40,3 +40,11 @@
   - name: Copy kivy config skeleton
     become: false
     copy: src=config.ini.tmpl force=no dest=/home/{{ ansible_ssh_user }}/.kivy/config.ini
+
+  # this setting is for official raspi touchscreen.
+  - name: Tweak kivy mtdev config.ini setting
+    become: false
+    ini_file: dest=/home/{{ ansible_ssh_user }}/.kivy/config.ini
+              section=input
+              option="mtdev_%(name)s"
+              value=probesysfs,provider=mtdev
