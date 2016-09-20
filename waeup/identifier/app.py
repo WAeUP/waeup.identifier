@@ -254,3 +254,4 @@ class FPScanApplication(App):
 
     def quit_pressed(self, instance):
         print("pressed QUIT")
+        self.stop()
