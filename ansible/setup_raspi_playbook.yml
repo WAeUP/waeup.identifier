@@ -31,6 +31,7 @@
     become: false
     git: repo=https://github.com/WAeUP/waeup.identifier
          dest="{{ repo_path }}"
+         update=no
 
   - include: install_kivy_playbook.yml
     vars:
