@@ -48,3 +48,11 @@
               section=input
               option="mtdev_%(name)s"
               value=probesysfs,provider=mtdev
+
+  # this setting is for official raspi touchscreen.
+  - name: Tweak kivy hid config.ini setting
+    become: false
+    ini_file: dest=/home/{{ ansible_ssh_user }}/.kivy/config.ini
+              section=input
+              option="hid_%(name)s"
+              value=probesysfs,provider=hidinput
