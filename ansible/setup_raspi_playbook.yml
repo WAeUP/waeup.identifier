@@ -32,3 +32,11 @@
     git: repo=https://github.com/WAeUP/waeup.identifier
          dest="{{ repo_path }}"
          update=no
+
+  - name: Ensure $HOME/.kivy/ dir exists
+    become: false
+    file: path=/home/{{ ansible_ssh_user }}/.kivy state=directory
+
+  - name: Copy kivy config skeleton
+    become: false
+    copy: src=config.ini.tmpl force=no dest=/home/{{ ansible_ssh_user }}/.kivy/config.ini
