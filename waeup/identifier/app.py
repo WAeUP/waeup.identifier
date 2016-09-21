@@ -21,6 +21,7 @@ import socket
 import subprocess
 import threading
 from kivy.app import App
+from kivy.uix.actionbar import ActionBar
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
@@ -241,6 +242,7 @@ class FPScanApp(App):
 
     def build(self):
         self.parent = BoxLayout(orientation="vertical")
+        self.parent.add_widget(ActionBar())
         self.label = Label(
             text='[size=40][color=eeeeee][b]waeup[/b][/color][color=3333ff]'
                  'identifier[/color][/size]',
