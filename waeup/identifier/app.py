@@ -234,6 +234,11 @@ class FPScanCommand(BackgroundCommand):
             cmd, timeout=timeout, callback=callback)
 
 
+def create_action_bar():
+    bar = ActionBar()
+    return bar
+
+
 class FPScanApp(App):
     """The main application.
     """
@@ -242,7 +247,7 @@ class FPScanApp(App):
 
     def build(self):
         self.parent = BoxLayout(orientation="vertical")
-        self.parent.add_widget(ActionBar())
+        self.parent.add_widget(create_action_bar())
         self.label = Label(
             text='[size=40][color=eeeeee][b]waeup[/b][/color][color=3333ff]'
                  'identifier[/color][/size]',
