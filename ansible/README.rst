@@ -9,6 +9,25 @@ On Ubuntu/Debian::
 
   $ sudo apt-get install ansible
 
+Please make sure, your `ansible` is not too old. Version 2.x+ would be
+nice::
+
+  $ ansible --version
+  ansible 2.1.1.0
+
+If it is too old, Ubuntu users can get a more recent version from the
+`ansible/ansible` PPA. It can be activated with `add-apt-repository`
+command.
+
+On Ubuntu 12.04 you have to install `python-software-properties`
+instead of `software-properties-common`::
+
+  $ sudo apt-get install software-properties-common  # on Ubuntu 14.04
+  $ sudo add-apt-repository ppa:ansible/ansible
+  $ sudo apt-get update
+  $ sudo apt-get install ansible
+
+
 The `hosts` file is an ansible inventory file. The IP set in it must
 be set to the real IP of your local raspberry pi.
 
