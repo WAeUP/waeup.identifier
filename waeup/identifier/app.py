@@ -238,8 +238,9 @@ def create_action_bar():
     view = ActionView()
     view.use_separator = True
     previous = ActionPrevious(title="Bar")
+    previous.title = 'Foo'
     view.add_widget(previous)
-    bar = ActionBar(action_view=view)
+    bar = ActionBar(pos_hint={'top': 1}, action_view=view)
     return bar
 
 
