@@ -23,6 +23,7 @@ import threading
 from kivy.app import App
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.label import Label
 from kivy.uix.widget import Widget
 from subprocess import Popen, PIPE
 from waeup.identifier.config import get_config, CONF_KEYS
@@ -240,6 +241,11 @@ class FPScanApp(App):
 
     def build(self):
         self.parent = BoxLayout(orientation="vertical")
+        self.label = Label(
+            text='[size=40][color=eeeeee][b]waeup[/b][/color][color=3333ff]'
+                 'identifier[/color][/size]',
+            markup = True)
+        self.parent.add_widget(self.label)
         self.parent.add_widget(Button(text="Push me!"))
         self.quit_btn = Button(text="Quit")
         self.quit_btn.bind(on_press=self.quit_pressed)
