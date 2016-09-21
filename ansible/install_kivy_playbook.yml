@@ -65,3 +65,11 @@
       version={{ kivy_version }}
       state=present
       virtualenv="{{ venv_path }}"
+
+  # looks like pillow is not always needed, but travis won't work without.
+  - name: Install pillow in virtualenv
+    become: no
+    pip:
+      name=pillow
+      state=latest
+      virtualenv="{{ venv_path }}"
