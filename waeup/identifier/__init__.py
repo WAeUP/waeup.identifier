@@ -15,11 +15,11 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-from waeup.identifier.app import FPScanApplication
+from waeup.identifier.app import FPScanApp
 
 
 def main():                              # pragma: no cover
-    myapp = FPScanApplication()
+    myapp = FPScanApp()
     myapp.run()
 
 if __name__ == '__main__':               # pragma: no cover

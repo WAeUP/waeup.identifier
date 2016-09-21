@@ -5,7 +5,7 @@ import time
 import unittest
 import waeup.identifier
 from waeup.identifier.app import (
-    FPScanApplication, detect_scanners, check_path, fpscan, scan,
+    FPScanApp, detect_scanners, check_path, fpscan, scan,
     BackgroundCommand, FPScanCommand,
     )
 from waeup.identifier.testing import (
@@ -153,7 +153,7 @@ class AppTests(unittest.TestCase, VirtualHomeProvider):
         fake_fpscan = os.path.join(self.path_dir, 'fpscan')
         open(fake_fpscan, 'w').write('#!%s\nprint("0")\n' % sys.executable)
         os.chmod(fake_fpscan, os.stat(fake_fpscan).st_mode | stat.S_IEXEC)
-        self.app = FPScanApplication()
+        self.app = FPScanApp()
 
     def tearDown(self):
         self.teardown_virtual_home()

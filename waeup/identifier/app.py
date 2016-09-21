@@ -237,7 +237,7 @@ class FPScanMainWidget(Widget):
     pass
 
 
-class FPScanApplication(App):
+class FPScanApp(App):
     """The main application.
     """
     detected_scanners = []
@@ -247,9 +247,10 @@ class FPScanApplication(App):
         self.parent = Widget()
         self.main_widget = FPScanMainWidget()
         self.parent.add_widget(self.main_widget)
+        self.parent.add_widget(Button(text="Push me!"))
         self.quit_btn = Button(text="Quit")
         self.quit_btn.bind(on_press=self.quit_pressed)
-        self.parent.add_widget(self.quit_btn)
+        #self.parent.add_widget(self.quit_btn)
         return self.parent
 
     def quit_pressed(self, instance):
