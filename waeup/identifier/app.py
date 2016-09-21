@@ -22,7 +22,7 @@ import subprocess
 import threading
 from kivy.app import App
 from kivy.uix.button import Button
-from kivy.uix.gridlayout import GridLayout
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.widget import Widget
 from subprocess import Popen, PIPE
 from waeup.identifier.config import get_config, CONF_KEYS
@@ -232,12 +232,6 @@ class FPScanCommand(BackgroundCommand):
             cmd, timeout=timeout, callback=callback)
 
 
-class FPScanMainWidget(Widget):
-    """The main app.
-    """
-    pass
-
-
 class FPScanApp(App):
     """The main application.
     """
@@ -245,9 +239,7 @@ class FPScanApp(App):
     chosen_scanner = None
 
     def build(self):
-        self.parent = GridLayout(cols=2)
-        self.main_widget = FPScanMainWidget()
-        self.parent.add_widget(self.main_widget)
+        self.parent = BoxLayout(orientation="vertical")
         self.parent.add_widget(Button(text="Push me!"))
         self.quit_btn = Button(text="Quit")
         self.quit_btn.bind(on_press=self.quit_pressed)
