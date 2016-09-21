@@ -237,7 +237,6 @@ class FPScanCommand(BackgroundCommand):
 def create_action_bar():
     view = ActionView()
     bar = ActionBar(action_view=view)
-    print(bar.action_view)
     return bar
 
 
