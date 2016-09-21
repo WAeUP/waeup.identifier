@@ -250,7 +250,6 @@ class FPScanApp(App):
         self.parent.add_widget(Button(text="Push me!"))
         self.quit_btn = Button(text="Quit")
         self.quit_btn.bind(on_press=self.quit_pressed)
-        #self.parent.add_widget(self.quit_btn)
         return self.parent
 
     def quit_pressed(self, instance):
