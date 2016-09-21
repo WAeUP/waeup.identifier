@@ -236,6 +236,7 @@ class FPScanCommand(BackgroundCommand):
 
 def create_action_bar():
     view = ActionView()
+    view.use_separator = True
     bar = ActionBar(action_view=view)
     return bar
 
