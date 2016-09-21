@@ -237,7 +237,8 @@ class FPScanCommand(BackgroundCommand):
 def create_action_bar():
     view = ActionView()
     view.use_separator = True
-    previous = ActionPrevious()
+    previous = ActionPrevious(title="Bar")
+    view.add_widget(previous)
     bar = ActionBar(action_view=view)
     return bar
 
