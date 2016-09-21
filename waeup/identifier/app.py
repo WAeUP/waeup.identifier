@@ -21,7 +21,6 @@ import socket
 import subprocess
 import threading
 from kivy.app import App
-from kivy.uix.actionbar import ActionBar, ActionView, ActionPrevious
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
@@ -235,6 +234,10 @@ class FPScanCommand(BackgroundCommand):
 
 
 def create_action_bar():
+    # late import
+    # Normal import (on top of file) tries to initialize graphics stuff even
+    # if no application is created. This breaks travis-ci.
+    from kivy.uix.actionbar import ActionBar, ActionView, ActionPrevious
     view = ActionView()
     view.use_separator = True
     previous = ActionPrevious(title="Bar")
