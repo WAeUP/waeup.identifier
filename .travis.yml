@@ -27,6 +27,7 @@ before_install:
 install:
   - pip install Cython==0.23
   - pip install kivy==1.9.1
+  - pip install --upgrade pillow
   - python setup.py dev
 # command to run tests
 script: "python setup.py test"
