@@ -21,7 +21,7 @@ import socket
 import subprocess
 import threading
 from kivy.app import App
-from kivy.uix.actionbar import ActionBar
+from kivy.uix.actionbar import ActionBar, ActionView
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
@@ -235,7 +235,9 @@ class FPScanCommand(BackgroundCommand):
 
 
 def create_action_bar():
-    bar = ActionBar()
+    view = ActionView()
+    bar = ActionBar(action_view=view)
+    print(bar.action_view)
     return bar
 
 
