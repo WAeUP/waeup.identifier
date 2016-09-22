@@ -56,8 +56,9 @@ Again, use the real IP of your RaspberryPI instead of
 ``192.168.32.86`` (don't forget the trailung comma). You will be asked
 for the SSH password.
 
-If you have an `hosts` file with appropriate settings, you can instead
-do::
+If you have an `hosts` file with appropriate settings (IP and
+username) and configured passwordless login on your Raspberry PI, you
+can instead do::
 
   $ ansible -i hosts all -m setup
 
