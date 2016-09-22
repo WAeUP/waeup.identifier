@@ -240,7 +240,7 @@ def create_action_bar():
     from kivy.lang import Builder
     path = os.path.join(os.path.dirname(__file__), "actionbar.kv")
     bar = Builder.load_file(path)
-    return foo
+    return bar
 
 
 class FPScanApp(App):
