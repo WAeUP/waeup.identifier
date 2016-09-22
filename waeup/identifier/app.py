@@ -237,14 +237,10 @@ def create_action_bar():
     # late import
     # Normal import (on top of file) tries to initialize graphics stuff even
     # if no application is created. This breaks travis-ci.
-    from kivy.uix.actionbar import ActionBar, ActionView, ActionPrevious
-    view = ActionView()
-    view.use_separator = True
-    previous = ActionPrevious(title="Bar")
-    previous.title = 'Foo'
-    view.add_widget(previous)
-    bar = ActionBar(pos_hint={'top': 1}, action_view=view)
-    return bar
+    from kivy.lang import Builder
+    path = os.path.join(os.path.dirname(__file__), "actionbar.kv")
+    bar = Builder.load_file(path)
+    return foo
 
 
 class FPScanApp(App):
