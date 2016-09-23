@@ -255,7 +255,8 @@ class FPScanApp(App):
                  'identifier[/color][/size]',
             markup = True)
         self.parent.add_widget(self.label)
-        self.parent.add_widget(Button(text="Push me!"))
+        self.parent.add_widget(Button(text="Scan Fingerprints"))
+        self.parent.add_widget(Button(text="Verify Fingerprint"))
         self.quit_btn = Button(text="Quit")
         self.quit_btn.bind(on_press=self.quit_pressed)
         self.parent.add_widget(self.quit_btn)
