@@ -22,6 +22,7 @@ import subprocess
 import threading
 from kivy.app import App
 from kivy.lang import Builder
+from kivy.logger import Logger
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
@@ -267,4 +268,5 @@ class FPScanApp(App):
         return self.parent
 
     def quit_pressed(self, instance):
+        Logger.debug("waeup.identifier: 'quit' pressed")
         self.stop()
