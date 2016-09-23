@@ -41,6 +41,10 @@ VALID_FILENAME = re.compile('^[a-zA-Z0-9/\._\-]+$')
 POLL_INTERVAL = 0.1
 
 
+#: Directory where we store kv files
+KV_PATH = os.path.join(os.path.dirname(__file__), 'kv')
+
+
 def check_path(path):
     """Check a given path.
 
@@ -237,7 +241,7 @@ class FPScanCommand(BackgroundCommand):
 def create_action_bar():
     """Create an ActionBar widget, displayed at top.
     """
-    path = os.path.join(os.path.dirname(__file__), "actionbar.kv")
+    path = os.path.join(KV_PATH, "actionbar.kv")
     return Builder.load_file(path)
 
 
