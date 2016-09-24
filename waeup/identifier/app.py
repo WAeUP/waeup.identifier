@@ -258,19 +258,7 @@ class FPScanApp(App):
 
     def build(self):
         Logger.debug("waeup.identifier: Icon path set to %s" % self.icon)
-        self.parent = BoxLayout(orientation="vertical")
-        self.parent.add_widget(create_action_bar())
-        self.label = Label(
-            text='[size=40][color=eeeeee][b]waeup[/b][/color][color=3333ff]'
-                 'identifier[/color][/size]',
-            markup = True)
-        self.parent.add_widget(self.label)
-        self.parent.add_widget(Button(text="Scan Fingerprints"))
-        self.parent.add_widget(Button(text="Verify Fingerprint"))
-        self.quit_btn = Button(text="Quit")
-        self.quit_btn.bind(on_press=self.quit_pressed)
-        self.parent.add_widget(self.quit_btn)
-        return self.parent
+        return super(FPScanApp, self).build()
 
     def quit_pressed(self, instance):
         Logger.debug("waeup.identifier: 'quit' pressed")
