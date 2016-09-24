@@ -242,13 +242,6 @@ class FPScanCommand(BackgroundCommand):
             cmd, timeout=timeout, callback=callback)
 
 
-def create_action_bar():
-    """Create an ActionBar widget, displayed at top.
-    """
-    path = os.path.join(KV_PATH, "actionbar.kv")
-    return Builder.load_file(path)
-
-
 class FPScanApp(App):
     """The main application.
     """
