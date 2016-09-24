@@ -1,6 +1,19 @@
 #: kivy 1.9
 BoxLayout:
     orientation: 'vertical'
+    ActionBar:
+        pos_hint: {'top': 1}
+        ActionView:
+            use_separator: True
+            ActionPrevious:
+                title: 'waeup.identifier'
+                app_icon: app.icon
+                with_previous: True
+            ActionOverflow:
+            ActionButton:
+                text: 'Settings'
+                icon: 'atlas://data/images/defaulttheme/overflow'
+
     Label:
         markup: True
         text: '[size=40][color=eeeeee][b]waeup[/b][/color][color=3333ff]identifier[/color][/size]'
