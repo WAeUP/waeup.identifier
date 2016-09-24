@@ -45,6 +45,9 @@ POLL_INTERVAL = 0.1
 #: Directory where we store kv files
 KV_PATH = os.path.join(os.path.dirname(__file__), 'kv')
 
+#: Directory where we store images
+IMAGES_PATH = os.path.join(os.path.dirname(__file__), 'images')
+
 
 def check_path(path):
     """Check a given path.
