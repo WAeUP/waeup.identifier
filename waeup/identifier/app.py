@@ -254,9 +254,9 @@ class FPScanApp(App):
     """
     detected_scanners = []
     chosen_scanner = None
+    icon = '%s/waeupicon.png' % IMAGES_PATH
 
     def build(self):
-        self.icon = '%s/waeupicon.png' % IMAGES_PATH
         Logger.debug("waeup.identifier: Icon path set to %s" % self.icon)
         self.parent = BoxLayout(orientation="vertical")
         self.parent.add_widget(create_action_bar())
