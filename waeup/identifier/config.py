@@ -90,7 +90,7 @@ JSON_SETTINGS = [
     {
         "type": "string",
         "title": "Kofa User",
-        "desc": "username to connect with to Server",
+        "desc": "Username to connect with to Server",
         "section": "Server",
         "key": "kofa_user"
     },
