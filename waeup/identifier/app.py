@@ -254,6 +254,10 @@ class FPScanApp(App):
         for key, conf_dict in DEFAULT_SETTINGS:
             config.setdefaults(key, conf_dict)
 
+    def build_settings(self, settings):
+        import json
+        settings.add_json_panel("Server", self.config, data=json.dumps(JSON_SETTINGS))
+
     def on_config_change(self, config, section, key, value):
         """Configuration changed.
 
