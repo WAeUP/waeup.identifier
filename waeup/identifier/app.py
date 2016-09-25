@@ -28,7 +28,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.widget import Widget
 from subprocess import Popen, PIPE
-from waeup.identifier.config import get_config, CONF_KEYS
+from waeup.identifier.config import get_config, CONF_KEYS, JSON_SETTINGS, DEFAULT_SETTINGS
 from waeup.identifier.webservice import (
     get_url_from_config, store_fingerprint
 )
@@ -249,6 +249,10 @@ class FPScanApp(App):
     def build(self):
         Logger.debug("waeup.identifier: Icon path set to %s" % self.icon)
         return super(FPScanApp, self).build()
+
+    def build_config(self, config):
+        for key, conf_dict in DEFAULT_SETTINGS:
+            config.setdefaults(key, conf_dict)
 
     def on_config_change(self, config, section, key, value):
         """Configuration changed.
