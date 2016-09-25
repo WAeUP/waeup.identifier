@@ -95,3 +95,8 @@ JSON_SETTINGS = [
         "key": "kofa_user"
     },
 ]
+
+
+DEFAULT_SETTINGS = [
+    ('Server', {'kofa_user': 'grok'}),
+]
