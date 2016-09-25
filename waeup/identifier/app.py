@@ -251,6 +251,11 @@ class FPScanApp(App):
         return super(FPScanApp, self).build()
 
     def on_config_change(self, config, section, key, value):
+        """Configuration changed.
+
+        `config` is a ConfigParser instance , while `section`, `key` and
+        `value` denote the changed value.
+        """
         Logger.info("waeup.identifier: config change: {0}, {1}, {2}, {3}".format(
             config, section, key, value))
 
