@@ -84,3 +84,14 @@ def get_config(paths=None):
         conffile_locations = get_conffile_locations()
     conf.read(conffile_locations)
     return conf
+
+
+JSON_SETTINGS = [
+    {
+        "type": "string",
+        "title": "Kofa User",
+        "desc": "username to connect with to Server",
+        "section": "Server",
+        "key": "kofa_user"
+    },
+]
