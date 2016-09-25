@@ -42,9 +42,6 @@ VALID_FILENAME = re.compile('^[a-zA-Z0-9/\._\-]+$')
 POLL_INTERVAL = 0.1
 
 
-#: Directory where we store kv files
-KV_PATH = os.path.join(os.path.dirname(__file__), 'kv')
-
 #: Directory where we store images
 IMAGES_PATH = os.path.join(os.path.dirname(__file__), 'images')
 
