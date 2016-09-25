@@ -250,6 +250,10 @@ class FPScanApp(App):
         Logger.debug("waeup.identifier: Icon path set to %s" % self.icon)
         return super(FPScanApp, self).build()
 
+    def on_config_change(self, config, section, key, value):
+        Logger.info("waeup.identifier: config change: {0}, {1}, {2}, {3}".format(
+            config, section, key, value))
+
     def quit_pressed(self, instance):
         Logger.debug("waeup.identifier: 'quit' pressed")
         self.stop()
