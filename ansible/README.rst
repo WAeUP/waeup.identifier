@@ -81,7 +81,7 @@ connect from.
 
 Then you can run the local ansible setup playbook like this::
 
-  $ ansible-playbook -i 192.168.122.12, -u pi -k setup-raspi-playbook.yml
+  $ ansible-playbook -i 192.168.122.12, -u pi -k setup_raspi_playbook.yml
 
 Please note the trailing comma after the IP number.
 
