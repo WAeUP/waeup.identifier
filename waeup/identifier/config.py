@@ -27,35 +27,31 @@ CONF_KEYS = ['fpscan_path', 'waeup_url', 'waeup_user',
              'waeup_passwd']
 
 
-JSON_SETTINGS = [
+CONF_SETTINGS = [
     {
         "type": "string",
         "title": "WAeUP Username",
         "desc": "Username to connect to WAeUP server",
         "section": "Server",
-        "key": "waeup_user"
+        "key": "waeup_user",
+        "default": "grok",
     },
     {
         "type": "string",
         "title": "WAeUP Password",
         "desc": "Password to connect to WAeUP server",
         "section": "Server",
-        "key": "waeup_passwd"
+        "key": "waeup_passwd",
+        "default": "grok",
     },
     {
         "type": "string",
         "title": "Server URL",
         "desc": "URL of WAeUP server to connect to",
         "section": "Server",
-        "key": "waeup_url"
+        "key": "waeup_url",
+        "default": "",
     },
-]
-
-
-DEFAULT_SETTINGS = [
-    ('Server', {'waeup_user': 'grok'}),
-    ('Server', {'waeup_passwd': 'grok'}),
-    ('Server', {'waeup_url': ''}),
 ]
 
 
