@@ -89,14 +89,14 @@ def get_config(paths=None):
 JSON_SETTINGS = [
     {
         "type": "string",
-        "title": "Kofa Username",
-        "desc": "Username to connect to kofa server",
+        "title": "WAeUP Username",
+        "desc": "Username to connect to WAeUP server",
         "section": "Server",
-        "key": "kofa_user"
+        "key": "waeup_user"
     },
 ]
 
 
 DEFAULT_SETTINGS = [
-    ('Server', {'kofa_user': 'grok'}),
+    ('Server', {'waeup_user': 'grok'}),
 ]
