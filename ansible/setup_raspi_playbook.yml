@@ -4,7 +4,7 @@
 #
 # Sample:
 #
-#   $ ansible-playbook -i hosts -k setup-raspi-playbook.yml
+#   $ ansible-playbook -i hosts -k setup_raspi_playbook.yml
 #
 # Make sure, that the IP in `hosts` is the real raspberry-pi.
 #
