@@ -101,10 +101,18 @@ JSON_SETTINGS = [
         "section": "Server",
         "key": "waeup_passwd"
     },
+    {
+        "type": "string",
+        "title": "Server URL",
+        "desc": "URL of WAeUP server to connect to",
+        "section": "Server",
+        "key": "waeup_url"
+    },
 ]
 
 
 DEFAULT_SETTINGS = [
     ('Server', {'waeup_user': 'grok'}),
     ('Server', {'waeup_passwd': 'grok'}),
+    ('Server', {'waeup_url': ''}),
 ]
