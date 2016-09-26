@@ -25,6 +25,7 @@
       - python3
       - python3-dev
       - libav-tools
+      - libjpeg-dev
       - libsdl2-dev
       - libsdl2-image-dev
       - libsdl2-mixer-dev
