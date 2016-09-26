@@ -20,6 +20,13 @@
   - name: Rotate screen by 180°
     lineinfile: dest=/boot/config.txt line="lcd_rotate=2"
 
+  - name: Disable client-wise LC settings with SSH
+    lineinfile:
+      dest=/etc/ssh/sshd_config
+      line="# AcceptEnv LANG LC_*"
+      regexp="^AcceptEnv (.*)"
+      backrefs=yes
+
   - name: Install git
     package:
       name={{ item }}
