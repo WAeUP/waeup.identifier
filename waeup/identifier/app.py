@@ -21,6 +21,7 @@ import socket
 import subprocess
 import threading
 from kivy.app import App
+from kivy.config import Config
 from kivy.lang import Builder
 from kivy.logger import Logger
 from kivy.uix.button import Button
@@ -32,6 +33,9 @@ from waeup.identifier.webservice import (
     get_url_from_config, store_fingerprint
 )
 
+# Enable virtualkeyboard
+if not Config.get('kivy', 'keyboard_mode'):
+    Config.set('kivy', 'keyboard_mode', 'systemandmulti')
 
 #: The set of chars allowed in filenames we handle.
 #: Last char must not be slash.
