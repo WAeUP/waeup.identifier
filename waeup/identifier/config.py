@@ -89,8 +89,8 @@ def get_config(paths=None):
 JSON_SETTINGS = [
     {
         "type": "string",
-        "title": "Kofa User",
-        "desc": "Username to connect with to Server",
+        "title": "Kofa Username",
+        "desc": "Username to connect to kofa server",
         "section": "Server",
         "key": "kofa_user"
     },
