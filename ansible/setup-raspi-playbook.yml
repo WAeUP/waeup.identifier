@@ -27,7 +27,8 @@
     with_items:
       - git
 
-  - name: Clone waeup.identifier git repository
+  - name: Clone waeup.identifier git repository (if not yet existing)
     become: false
     git: repo=https://github.com/WAeUP/waeup.identifier
          dest="{{ repo_path }}"
+         update=no
