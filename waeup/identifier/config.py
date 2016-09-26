@@ -27,6 +27,38 @@ CONF_KEYS = ['fpscan_path', 'waeup_url', 'waeup_user',
              'waeup_passwd']
 
 
+JSON_SETTINGS = [
+    {
+        "type": "string",
+        "title": "WAeUP Username",
+        "desc": "Username to connect to WAeUP server",
+        "section": "Server",
+        "key": "waeup_user"
+    },
+    {
+        "type": "string",
+        "title": "WAeUP Password",
+        "desc": "Password to connect to WAeUP server",
+        "section": "Server",
+        "key": "waeup_passwd"
+    },
+    {
+        "type": "string",
+        "title": "Server URL",
+        "desc": "URL of WAeUP server to connect to",
+        "section": "Server",
+        "key": "waeup_url"
+    },
+]
+
+
+DEFAULT_SETTINGS = [
+    ('Server', {'waeup_user': 'grok'}),
+    ('Server', {'waeup_passwd': 'grok'}),
+    ('Server', {'waeup_url': ''}),
+]
+
+
 def get_conffile_locations():
     """Get a list of paths where we lookup config files.
 
@@ -84,35 +116,3 @@ def get_config(paths=None):
         conffile_locations = get_conffile_locations()
     conf.read(conffile_locations)
     return conf
-
-
-JSON_SETTINGS = [
-    {
-        "type": "string",
-        "title": "WAeUP Username",
-        "desc": "Username to connect to WAeUP server",
-        "section": "Server",
-        "key": "waeup_user"
-    },
-    {
-        "type": "string",
-        "title": "WAeUP Password",
-        "desc": "Password to connect to WAeUP server",
-        "section": "Server",
-        "key": "waeup_passwd"
-    },
-    {
-        "type": "string",
-        "title": "Server URL",
-        "desc": "URL of WAeUP server to connect to",
-        "section": "Server",
-        "key": "waeup_url"
-    },
-]
-
-
-DEFAULT_SETTINGS = [
-    ('Server', {'waeup_user': 'grok'}),
-    ('Server', {'waeup_passwd': 'grok'}),
-    ('Server', {'waeup_url': ''}),
-]
