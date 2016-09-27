@@ -163,7 +163,6 @@ class AppTests(unittest.TestCase, VirtualHomeProvider):
         assert self.app is not None
 
 
-
 callback_counter = 0
 callback_data = None
 
