@@ -28,7 +28,9 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.widget import Widget
 from subprocess import Popen, PIPE
-from waeup.identifier.config import get_config, CONF_KEYS, JSON_SETTINGS, DEFAULT_SETTINGS
+from waeup.identifier.config import (
+    get_config, CONF_KEYS, get_json_settings, get_default_settings
+)
 from waeup.identifier.webservice import (
     get_url_from_config, store_fingerprint
 )
@@ -254,12 +256,11 @@ class FPScanApp(App):
         return super(FPScanApp, self).build()
 
     def build_config(self, config):
-        for key, conf_dict in DEFAULT_SETTINGS:
+        for key, conf_dict in get_default_settings():
             config.setdefaults(key, conf_dict)
 
     def build_settings(self, settings):
-        import json
-        settings.add_json_panel("Server", self.config, data=json.dumps(JSON_SETTINGS))
+        settings.add_json_panel("Server", self.config, data=get_json_settings())
 
     def on_config_change(self, config, section, key, value):
         """Configuration changed.
