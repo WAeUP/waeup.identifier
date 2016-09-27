@@ -9,11 +9,11 @@ from waeup.identifier.config import (
 from waeup.identifier.testing import VirtualHomingTestCase
 
 
-def test_settings_as_json_empty(monkeypatch):
+def test_get_json_settings_empty(monkeypatch):
     waeup.identifier.config.CONF_SETTINGS = []
     assert get_json_settings() == '[]'
 
-def test_settings_as_json_no_default(monkeypatch):
+def test_get_json_settings_no_default(monkeypatch):
     # we discard `default` keys from settings
     waeup.identifier.config.CONF_SETTINGS = [
         {'section': 'foo', 'key': 'bar', 'default': 'baz'},]
