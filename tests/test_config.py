@@ -29,6 +29,13 @@ def test_get_default_settings(monkeypatch):
     assert get_default_settings() == [("foo", dict(bar="baz"))]
 
 
+def test_get_default_settings_ignore_no_default(monkeypatch):
+    # we ignore settings w/o a default value
+    waeup.identifier.config.CONF_SETTINGS = [
+        {'section': 'foo', 'key': 'bar'}, ]
+    assert get_default_settings() == []
+
+
 class ConfigTests(VirtualHomingTestCase):
 
     def test_get_conffile_locations(self):

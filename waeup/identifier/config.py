@@ -70,7 +70,8 @@ def get_default_settings():
     """
     return [
         (setting['section'], {setting['key']: setting['default']})
-        for setting in CONF_SETTINGS]
+        for setting in CONF_SETTINGS
+        if 'default' in setting]
 
 
 def get_conffile_locations():
