@@ -56,7 +56,7 @@ CONF_SETTINGS = [
 
 
 def get_json_settings():
-    """Get settings as JSON object.
+    """Get settings as JSON string.
     """
     import json
     new_list = [dict(x) for x in CONF_SETTINGS]  # create a copy
