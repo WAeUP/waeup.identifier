@@ -55,6 +55,24 @@ CONF_SETTINGS = [
 ]
 
 
+def get_json_settings():
+    """Get settings as JSON object.
+    """
+    import json
+    new_list = [dict(x) for x in CONF_SETTINGS]  # create a copy
+    for setting in new_list:
+        setting.pop('default', None)
+    return json.dumps(new_list)
+
+
+def get_default_settings():
+    """Get tuples (<SECTION>, {<KEY>: <DEFAULTVALUE>} for config.
+    """
+    return [
+        (setting['section'], {setting['key']: setting['default']})
+        for setting in CONF_SETTINGS]
+
+
 def get_conffile_locations():
     """Get a list of paths where we lookup config files.
 
