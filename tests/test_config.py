@@ -1,9 +1,24 @@
 # Tests for config module
+import json
 import os
+import waeup.identifier.config
 from waeup.identifier.config import (
     get_conffile_locations, find_fpscan_binary, get_config, CONF_KEYS,
+    get_json_settings,
     )
 from waeup.identifier.testing import VirtualHomingTestCase
+
+
+def test_settings_as_json_empty(monkeypatch):
+    waeup.identifier.config.CONF_SETTINGS = []
+    assert get_json_settings() == '[]'
+
+def test_settings_as_json_no_default(monkeypatch):
+    # we discard `default` keys from settings
+    waeup.identifier.config.CONF_SETTINGS = [
+        {'section': 'foo', 'key': 'bar', 'default': 'baz'},]
+    result = get_json_settings()
+    assert json.loads(result) == [{"key": "bar", "section": "foo"}]
 
 
 class ConfigTests(VirtualHomingTestCase):
