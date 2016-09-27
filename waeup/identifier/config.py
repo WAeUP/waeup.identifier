@@ -17,10 +17,7 @@
 #
 import json
 import os
-try:
-    from configparser import ConfigParser  # Python 3.x
-except ImportError:
-    from ConfigParser import ConfigParser  # Python 2.x
+from configparser import ConfigParser
 
 
 #: A list of valid configuration keys.
