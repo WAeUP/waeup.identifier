@@ -4,7 +4,7 @@ import os
 import waeup.identifier.config
 from waeup.identifier.config import (
     get_conffile_locations, find_fpscan_binary, get_config, CONF_KEYS,
-    get_json_settings,
+    get_json_settings, get_default_settings
     )
 from waeup.identifier.testing import VirtualHomingTestCase
 
@@ -20,6 +20,13 @@ def test_get_json_settings_no_default(monkeypatch):
         {'section': 'foo', 'key': 'bar', 'default': 'baz'}, ]
     result = get_json_settings()
     assert json.loads(result) == [{"key": "bar", "section": "foo"}]
+
+
+def test_get_default_settings(monkeypatch):
+    # we can get default of a single setting
+    waeup.identifier.config.CONF_SETTINGS = [
+        {'section': 'foo', 'key': 'bar', 'default': 'baz'}, ]
+    assert get_default_settings() == [("foo", dict(bar="baz"))]
 
 
 class ConfigTests(VirtualHomingTestCase):
