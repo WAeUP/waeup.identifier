@@ -259,6 +259,10 @@ class FPScanApp(App):
         return super(FPScanApp, self).build()
 
     def get_application_config(self):
+        """Get path of app configuration file.
+
+        We lookup a file `.waeupident.ini` in user home.
+        """
         return super(FPScanApp, self).get_application_config(
             get_conffile_location())
 
