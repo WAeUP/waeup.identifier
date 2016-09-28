@@ -116,8 +116,8 @@ def get_config(paths=None):
     if fpscan_path is not None:
         conf['DEFAULT'].update(fpscan_path=fpscan_path)
     if paths is not None:
-        conffile_locations = paths
+        conffile_location = paths
     else:
-        conffile_locations = get_conffile_locations()
-    conf.read(conffile_locations)
+        conffile_location = [get_conffile_location()]
+    conf.read(conffile_location)
     return conf
