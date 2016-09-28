@@ -3,7 +3,7 @@ import json
 import os
 import waeup.identifier.config
 from waeup.identifier.config import (
-    get_conffile_locations, find_fpscan_binary, get_config, CONF_KEYS,
+    get_conffile_location, find_fpscan_binary, get_config, CONF_KEYS,
     get_json_settings, get_default_settings
     )
 from waeup.identifier.testing import VirtualHomingTestCase
@@ -38,12 +38,10 @@ def test_get_default_settings_ignore_no_default(monkeypatch):
 
 class ConfigTests(VirtualHomingTestCase):
 
-    def test_get_conffile_locations(self):
-        # we can get a list of accepted config file locations
+    def test_get_conffile_location(self):
+        # we can get a config file location path
         result = get_conffile_locations()
-        assert result[0] == '/etc/waeupident.ini'
-        assert result[1] == os.path.join(self.home_dir, '.waeupident.ini')
-        assert result[2].startswith(os.getcwd())
+        assert result == os.path.join(self.home_dir, '.waeupident.ini')
 
     def test_find_fpscan_binary_no_binary(self):
         # we get None if there is no binary.

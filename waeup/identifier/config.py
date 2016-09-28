@@ -71,18 +71,11 @@ def get_default_settings():
         if 'default' in setting]
 
 
-def get_conffile_locations():
-    """Get a list of paths where we lookup config files.
-
-    Most general files come first (system-wide), most specific last
-    (local).
+def get_conffile_location():
+    """Get a path where we lookup the app config files.
     """
-    system_loc = os.path.abspath(
-        os.path.join("/etc", "waeupident.ini")
-        )
     home_loc = os.path.expanduser("~/.waeupident.ini")
-    local_loc = os.path.abspath("waeupident.ini")
-    return [system_loc, home_loc, local_loc]
+    return home_loc
 
 
 def find_fpscan_binary(path=None):
