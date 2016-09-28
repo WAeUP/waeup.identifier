@@ -26,6 +26,7 @@ from kivy.lang import Builder
 from kivy.logger import Logger
 from kivy.uix.button import Button
 from kivy.uix.label import Label
+from kivy.uix.settings import Settings
 from kivy.uix.widget import Widget
 from subprocess import Popen, PIPE
 from waeup.identifier.config import (
@@ -252,6 +253,7 @@ class FPScanApp(App):
     icon = '%s/waeupicon.png' % IMAGES_PATH
 
     def build(self):
+        self.settings_cls = Settings
         Logger.debug("waeup.identifier: Icon path set to %s" % self.icon)
         return super(FPScanApp, self).build()
 
