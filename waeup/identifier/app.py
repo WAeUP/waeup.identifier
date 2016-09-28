@@ -29,7 +29,8 @@ from kivy.uix.label import Label
 from kivy.uix.widget import Widget
 from subprocess import Popen, PIPE
 from waeup.identifier.config import (
-    get_config, CONF_KEYS, get_json_settings, get_default_settings
+    get_config, CONF_KEYS, get_json_settings, get_default_settings,
+    get_conffile_location,
 )
 from waeup.identifier.webservice import (
     get_url_from_config, store_fingerprint
@@ -256,6 +257,10 @@ class FPScanApp(App):
         self.settings_cls = Settings
         Logger.debug("waeup.identifier: Icon path set to %s" % self.icon)
         return super(FPScanApp, self).build()
+
+    def get_application_config(self):
+        return super(FPScanApp, self).get_application_config(
+            get_conffile_location())
 
     def build_config(self, config):
         for key, conf_dict in get_default_settings():
