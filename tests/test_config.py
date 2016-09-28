@@ -40,7 +40,7 @@ class ConfigTests(VirtualHomingTestCase):
 
     def test_get_conffile_location(self):
         # we can get a config file location path
-        result = get_conffile_locations()
+        result = get_conffile_location()
         assert result == os.path.join(self.home_dir, '.waeupident.ini')
 
     def test_find_fpscan_binary_no_binary(self):
