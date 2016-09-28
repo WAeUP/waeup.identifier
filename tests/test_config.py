@@ -1,12 +1,22 @@
 # Tests for config module
 import json
 import os
+import pytest
 import waeup.identifier.config
 from waeup.identifier.config import (
     get_conffile_location, find_fpscan_binary, get_config, CONF_KEYS,
     get_json_settings, get_default_settings
     )
 from waeup.identifier.testing import VirtualHomingTestCase
+
+
+@pytest.fixture(scope="function")
+def home_dir(request, monkeypatch, tmpdir):
+    """A py.test fixture providing a temporary user home.
+    """
+    tmpdir.mkdir("home")
+    monkeypatch.setenv("HOME", str(tmpdir / "home"))
+    return tmpdir / "home"
 
 
 def test_get_json_settings_empty(monkeypatch):
