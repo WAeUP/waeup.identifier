@@ -46,12 +46,13 @@ def test_get_default_settings_ignore_no_default(monkeypatch):
     assert get_default_settings() == []
 
 
-class ConfigTests(VirtualHomingTestCase):
+def test_get_conffile_location(home_dir):
+    # we can get a config file location path
+    result = get_conffile_location()
+    assert result == str(home_dir / '.waeupident.ini')
 
-    def test_get_conffile_location(self):
-        # we can get a config file location path
-        result = get_conffile_location()
-        assert result == os.path.join(self.home_dir, '.waeupident.ini')
+
+class ConfigTests(VirtualHomingTestCase):
 
     def test_find_fpscan_binary_no_binary(self):
         # we get None if there is no binary.
