@@ -263,8 +263,9 @@ class FPScanApp(App):
 
         We lookup a file `.waeupident.ini` in user home.
         """
-        return super(FPScanApp, self).get_application_config(
-            get_conffile_location())
+        path = get_conffile_location()
+        Logger.debug("waeup.identifier: expect config file in %s" % path)
+        return super(FPScanApp, self).get_application_config(path)
 
     def build_config(self, config):
         for key, conf_dict in get_default_settings():
