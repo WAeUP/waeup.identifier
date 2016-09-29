@@ -59,7 +59,7 @@ CONF_SETTINGS = [
         "title": "fpscan",
     },
     {
-        "type": "string",
+        "type": "path",
         "title": "fpscan path",
         "desc": "Path to the fpscan binary",
         "section": "fpscan",
