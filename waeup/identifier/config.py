@@ -56,7 +56,7 @@ CONF_SETTINGS = [
     },
     {
         "type": "title",
-        "title": "fpscan",
+        "title": "fpscan Utility",
     },
     {
         "type": "path",
