@@ -50,6 +50,14 @@ CONF_SETTINGS = [
         "key": "waeup_url",
         "default": "https://localhost:8080",
     },
+    {
+        "type": "string",
+        "title": "fpscan path",
+        "desc": "Path to the fpscan binary",
+        "section": "fpscan",
+        "key": "fpscan_path",
+        "default": "/usr/bin/fpscan",
+    },
 ]
 
 
