@@ -48,7 +48,7 @@ CONF_SETTINGS = [
         "desc": "URL of WAeUP server to connect to",
         "section": "Server",
         "key": "waeup_url",
-        "default": "",
+        "default": "https://localhost:8080",
     },
 ]
 
