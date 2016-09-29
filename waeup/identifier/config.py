@@ -55,6 +55,10 @@ CONF_SETTINGS = [
         "default": "https://localhost:8080",
     },
     {
+        "type": "title",
+        "title": "fpscan",
+    },
+    {
         "type": "string",
         "title": "fpscan path",
         "desc": "Path to the fpscan binary",
