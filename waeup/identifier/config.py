@@ -27,6 +27,10 @@ CONF_KEYS = ['fpscan_path', 'waeup_url', 'waeup_user',
 
 CONF_SETTINGS = [
     {
+        "type": "title",
+        "title": "Server",
+    },
+    {
         "type": "string",
         "title": "WAeUP Username",
         "desc": "Username to connect to WAeUP server",
