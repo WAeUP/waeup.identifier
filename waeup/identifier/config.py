@@ -82,7 +82,8 @@ def get_default_settings():
     """Get tuples (<SECTION>, {<KEY>: <DEFAULTVALUE>} for config.
 
     If <KEY> is "fpscan_path", the default is set to the result of
-    `find_fpscan_binary()`.
+    `find_fpscan_binary()`. If no path can be detected, we set "<unset>"
+    as fpscan_path default.
     """
     result = []
     for setting in CONF_SETTINGS:
@@ -90,8 +91,8 @@ def get_default_settings():
         if default is None:
             continue
         if setting['key'] == 'fpscan_path':
-            default = "%s" % find_fpscan_binary()
-        result.append((setting['section'], {setting['key']: setting['default']}))
+            default = "%s" % (find_fpscan_binary() or "<unset>")
+        result.append((setting['section'], {setting['key']: default}))
     return result
 
 
