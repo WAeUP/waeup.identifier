@@ -69,10 +69,10 @@ CONF_SETTINGS = [
 ]
 
 
-def get_json_settings():
+def get_json_settings(settings=CONF_SETTINGS):
     """Get settings as JSON string.
     """
-    new_list = [dict(x) for x in CONF_SETTINGS]  # create a copy
+    new_list = [dict(x) for x in settings]  # create a copy
     for setting in new_list:
         setting.pop('default', None)
     return json.dumps(new_list)

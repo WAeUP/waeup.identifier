@@ -22,16 +22,15 @@ def home_dir(request, monkeypatch, tmpdir):
     return tmpdir / "home"
 
 
-def test_get_json_settings_empty(monkeypatch):
-    monkeypatch.setattr(waeup.identifier.config, "CONF_SETTINGS", [])
-    assert get_json_settings() == '[]'
+def test_get_json_settings_empty():
+    # empty settings are possible
+    assert get_json_settings([]) == '[]'
 
 
-def test_get_json_settings_no_default(monkeypatch):
+def test_get_json_settings_no_default():
     # we discard `default` keys from settings
-    monkeypatch.setattr(waeup.identifier.config, "CONF_SETTINGS",
+    result = get_json_settings(
         [{'section': 'foo', 'key': 'bar', 'default': 'baz'}, ])
-    result = get_json_settings()
     assert json.loads(result) == [{"key": "bar", "section": "foo"}]
 
 
