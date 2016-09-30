@@ -20,37 +20,38 @@ def home_dir(request, monkeypatch, tmpdir):
 
 
 def test_get_json_settings_empty(monkeypatch):
-    waeup.identifier.config.CONF_SETTINGS = []
+    monkeypatch.setattr(waeup.identifier.config, "CONF_SETTINGS", [])
     assert get_json_settings() == '[]'
 
 
 def test_get_json_settings_no_default(monkeypatch):
     # we discard `default` keys from settings
-    waeup.identifier.config.CONF_SETTINGS = [
-        {'section': 'foo', 'key': 'bar', 'default': 'baz'}, ]
+    monkeypatch.setattr(waeup.identifier.config, "CONF_SETTINGS",
+        [{'section': 'foo', 'key': 'bar', 'default': 'baz'}, ])
     result = get_json_settings()
     assert json.loads(result) == [{"key": "bar", "section": "foo"}]
 
 
 def test_get_default_settings(monkeypatch):
     # we can get default of a single setting
-    waeup.identifier.config.CONF_SETTINGS = [
-        {'section': 'foo', 'key': 'bar', 'default': 'baz'}, ]
+    monkeypatch.setattr(waeup.identifier.config, "CONF_SETTINGS",
+        [{'section': 'foo', 'key': 'bar', 'default': 'baz'}, ])
     assert get_default_settings() == [("foo", dict(bar="baz"))]
 
 
 def test_get_default_settings_ignore_no_default(monkeypatch):
     # we ignore settings w/o a default value
-    waeup.identifier.config.CONF_SETTINGS = [
-        {'section': 'foo', 'key': 'bar'}, ]
+    monkeypatch.setattr(waeup.identifier.config, "CONF_SETTINGS",
+    [{'section': 'foo', 'key': 'bar'}, ])
     assert get_default_settings() == []
 
 
 def test_get_default_settings_multi_in_section(monkeypatch):
     # we put several settings per section in one entry
-    waeup.identifier.config.CONF_SETTINGS = [
-        {'section': 'foo', 'key': 'key1', 'default': 'bar1'},
-        {'section': 'foo', 'key': 'key2', 'default': 'bar2'}]
+    monkeypatch.setattr(waeup.identifier.config, "CONF_SETTINGS",
+        [
+            {'section': 'foo', 'key': 'key1', 'default': 'bar1'},
+            {'section': 'foo', 'key': 'key2', 'default': 'bar2'}])
     assert get_default_settings() == [
         ("foo", dict(key1="bar1")),
         ("foo", dict(key2="bar2"))]
