@@ -64,7 +64,7 @@ CONF_SETTINGS = [
         "desc": "Path to the fpscan binary",
         "section": "fpscan",
         "key": "fpscan_path",
-        "default": "<FPSCAN_BINARY_PATH>",
+        "default": "<unset>",
     },
 ]
 
@@ -91,7 +91,7 @@ def get_default_settings():
         if default is None:
             continue
         if setting['key'] == 'fpscan_path':
-            default = "%s" % (find_fpscan_binary() or "<unset>")
+            default = "%s" % (find_fpscan_binary() or default)
         result.append((setting['section'], {setting['key']: default}))
     return result
 
