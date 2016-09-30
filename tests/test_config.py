@@ -57,7 +57,7 @@ def test_get_default_settings_multi_in_section(monkeypatch):
         ("foo", dict(key2="bar2"))]
 
 
-def test_get_default_settings_fpscan_not_found(monkeypatch, tmpdir):
+def test_get_default_settings_fpscan_not_found(monkeypatch, home_dir):
     # we treat `fpscan_path` special.
     monkeypatch.setattr(waeup.identifier.config, "CONF_SETTINGS",
         [{'section': 'foo', 'key': 'fpscan_path', 'default': 'bar'}])
