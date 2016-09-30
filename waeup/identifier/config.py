@@ -64,7 +64,7 @@ CONF_SETTINGS = [
         "desc": "Path to the fpscan binary",
         "section": "fpscan",
         "key": "fpscan_path",
-        "default": "/usr/bin/fpscan",
+        "default": "<FPSCAN_BINARY_PATH>",
     },
 ]
 
@@ -81,10 +81,11 @@ def get_json_settings():
 def get_default_settings():
     """Get tuples (<SECTION>, {<KEY>: <DEFAULTVALUE>} for config.
     """
-    return [
-        (setting['section'], {setting['key']: setting['default']})
-        for setting in CONF_SETTINGS
-        if 'default' in setting]
+    result = []
+    for setting in CONF_SETTINGS:
+        if 'default' in setting:
+            result.append((setting['section'], {setting['key']: setting['default']}))
+    return result
 
 
 def get_conffile_location():
