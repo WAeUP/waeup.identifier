@@ -83,8 +83,12 @@ def get_default_settings():
     """
     result = []
     for setting in CONF_SETTINGS:
-        if 'default' in setting:
-            result.append((setting['section'], {setting['key']: setting['default']}))
+        default = setting.get('default', None)
+        if default is None:
+            continue
+        if setting['key'] == 'fpscan_path':
+            default = "%s" % find_fpscan_binary()
+        result.append((setting['section'], {setting['key']: setting['default']}))
     return result
 
 
