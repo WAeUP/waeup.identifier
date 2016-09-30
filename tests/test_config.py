@@ -57,6 +57,13 @@ def test_get_default_settings_multi_in_section(monkeypatch):
         ("foo", dict(key2="bar2"))]
 
 
+def test_get_default_settings_fpscan_not_found(monkeypatch, tmpdir):
+    # we treat `fpscan_path` special.
+    monkeypatch.setattr(waeup.identifier.config, "CONF_SETTINGS",
+        [{'section': 'foo', 'key': 'fpscan_path', 'default': 'bar'}])
+    assert get_default_settings() == [("foo", dict(fpscan_path="bar"))]
+
+
 def test_get_conffile_location(home_dir):
     # we can get a config file location path
     result = get_conffile_location()
