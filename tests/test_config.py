@@ -16,6 +16,7 @@ def home_dir(request, monkeypatch, tmpdir):
     """
     tmpdir.mkdir("home")
     monkeypatch.setenv("HOME", str(tmpdir / "home"))
+    monkeypatch.setenv("PATH", str(tmpdir / "home"))
     return tmpdir / "home"
 
 
