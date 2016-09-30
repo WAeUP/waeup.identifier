@@ -13,6 +13,8 @@ from waeup.identifier.testing import VirtualHomingTestCase
 @pytest.fixture(scope="function")
 def home_dir(request, monkeypatch, tmpdir):
     """A py.test fixture providing a temporary user home.
+
+    It also sets PATH to contain this temporary home as only entry.
     """
     tmpdir.mkdir("home")
     monkeypatch.setenv("HOME", str(tmpdir / "home"))
