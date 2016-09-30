@@ -78,7 +78,7 @@ def get_json_settings(settings=CONF_SETTINGS):
     return json.dumps(new_list)
 
 
-def get_default_settings():
+def get_default_settings(settings=CONF_SETTINGS):
     """Get tuples (<SECTION>, {<KEY>: <DEFAULTVALUE>} for config.
 
     If <KEY> is "fpscan_path", the default is set to the result of
@@ -86,7 +86,7 @@ def get_default_settings():
     as fpscan_path default.
     """
     result = []
-    for setting in CONF_SETTINGS:
+    for setting in settings:
         default = setting.get('default', None)
         if default is None:
             continue
