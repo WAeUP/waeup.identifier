@@ -46,6 +46,16 @@ def test_get_default_settings_ignore_no_default(monkeypatch):
     assert get_default_settings() == []
 
 
+def test_get_default_settings_multi_in_section(monkeypatch):
+    # we put several settings per section in one entry
+    waeup.identifier.config.CONF_SETTINGS = [
+        {'section': 'foo', 'key': 'key1', 'default': 'bar1'},
+        {'section': 'foo', 'key': 'key2', 'default': 'bar2'}]
+    assert get_default_settings() == [
+        ("foo", dict(key1="bar1")),
+        ("foo", dict(key2="bar2"))]
+
+
 def test_get_conffile_location(home_dir):
     # we can get a config file location path
     result = get_conffile_location()
