@@ -80,6 +80,9 @@ def get_json_settings():
 
 def get_default_settings():
     """Get tuples (<SECTION>, {<KEY>: <DEFAULTVALUE>} for config.
+
+    If <KEY> is "fpscan_path", the default is set to the result of
+    `find_fpscan_binary()`.
     """
     result = []
     for setting in CONF_SETTINGS:
