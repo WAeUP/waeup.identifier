@@ -1,5 +1,5 @@
 ---
-# this playbook installs fpscan from source.
+# this ansible playbook installs fpscan from source.
 - hosts: all
   become: yes
   become_user: root
