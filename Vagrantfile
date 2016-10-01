@@ -15,6 +15,8 @@ Vagrant.configure(2) do |config|
       vb.gui = false
       vb.memory = "2048"
       vb.name = "kivy"
+      # Enable USB ports
+      vb.customize ["modifyvm", :id, "--usb", "on"]
     end
     # ansible does not need a client, but needs python-apt to install packages
     config.vm.provision "shell", inline: "apt-get install --yes python-apt"
