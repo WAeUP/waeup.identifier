@@ -1,0 +1,52 @@
+---
+# this playbook installs fpscan from source.
+- hosts: all
+  become: yes
+  become_user: root
+  vars:
+    - fpscan_repo_path: /home/{{ ansible_ssh_user }}/fpscan
+  tasks:
+  - name: Update cache if not done in last 24 hours.
+    apt: update_cache=yes cache_valid_time=86400
+
+  - name: Aptitude safe-upgrade
+    apt: upgrade=safe
+
+  - name: Install system packages
+    package:
+      name={{ item }}
+      state=present
+    with_items:
+      - libfprint-dev
+      - git
+      - autoconf
+      - pkg-config
+
+  - name: Clone fpscan git repository
+    become: false
+    git: repo=https://github.com/ulif/fpscan
+         dest="{{ fpscan_repo_path }}"
+         update=no
+
+  - name: Autoreconf fpscan
+    become: false
+    command: autoreconf -fvi
+      chdir={{ fpscan_repo_path }}
+      creates={{ fpscan_repo_path }}/configure
+
+  - name: Configure fpscan
+    become: false
+    command: ./configure
+      chdir={{ fpscan_repo_path }}
+      creates={{ fpscan_repo_path }}/Makefile
+
+  - name: Make fpscan
+    become: false
+    command: make
+      chdir={{ fpscan_repo_path }}
+      creates={{ fpscan_repo_path }}/src/fpscan
+
+  - name: Install fpscan
+    become: true
+    command: make install
+      chdir={{ fpscan_repo_path }}
