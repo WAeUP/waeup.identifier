@@ -29,7 +29,7 @@ from kivy.uix.label import Label
 from kivy.uix.widget import Widget
 from subprocess import Popen, PIPE
 from waeup.identifier.config import (
-    get_config, CONF_KEYS, get_json_settings, get_default_settings,
+    get_config, get_json_settings, get_default_settings,
     get_conffile_location,
 )
 from waeup.identifier.webservice import (
