@@ -1,5 +1,4 @@
 import unittest
-import waeup.identifier
 from waeup.identifier import main
 
 
