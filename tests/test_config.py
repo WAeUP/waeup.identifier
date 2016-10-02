@@ -2,7 +2,6 @@
 import json
 import os
 import pytest
-import waeup.identifier.config
 from waeup.identifier.config import (
     get_conffile_location, find_fpscan_binary, get_config, CONF_KEYS,
     get_json_settings, get_default_settings
