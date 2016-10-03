@@ -18,10 +18,12 @@ BoxLayout:
     Label:
         markup: True
         text: '[size=40][color=eeeeee][b]waeup[/b][/color][color=3333ff]identifier[/color][/size]'
-    Button:
-        text: 'Scan fingerprints'
-    Button:
-        text: 'Verify fingerprints'
-    Button:
-        text: 'Quit'
-        on_press: app.quit_pressed(args)
+        size_hint: 1, 0.33
+    BoxLayout:
+        Button:
+            text: 'Scan fingerprints'
+        Button:
+            text: 'Verify fingerprints'
+        Button:
+            text: 'Quit'
+            on_press: app.quit_pressed(args)
