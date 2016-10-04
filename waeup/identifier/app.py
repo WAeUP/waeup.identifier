@@ -272,7 +272,8 @@ class FPScanApp(App):
             config.setdefaults(key, conf_dict)
 
     def build_settings(self, settings):
-        settings.add_json_panel("Identifier", self.config, data=get_json_settings())
+        settings.add_json_panel(
+            "Identifier", self.config, data=get_json_settings())
 
     def on_config_change(self, config, section, key, value):
         """Configuration changed.
@@ -280,8 +281,9 @@ class FPScanApp(App):
         `config` is a ConfigParser instance , while `section`, `key` and
         `value` denote the changed value.
         """
-        Logger.info("waeup.identifier: config change: {0}, {1}, {2}, {3}".format(
-            config, section, key, value))
+        Logger.info(
+            "waeup.identifier: config change: {0}, {1}, {2}, {3}".format(
+                config, section, key, value))
 
     def quit_pressed(self, instance):
         Logger.debug("waeup.identifier: 'quit' pressed")
