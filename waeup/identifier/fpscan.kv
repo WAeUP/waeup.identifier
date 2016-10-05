@@ -44,8 +44,18 @@ BoxLayout:
                         Label:
                             text: "Student ID:"
                             size_hint: 0.33, 1
-                        TextInput:
-                            multiline: False
+                        BoxLayout:
+                            orientation: "vertical"
+                            Widget:
+                            TextInput:
+                                size_hint: 1, None
+                                multiline: False
+                                padding: [2, 7, 2, 7]
+                                height: 32
+                            Widget:
+                        Widget:
+                            width: "50dp"
+                            size_hint: None, None
                     BoxLayout:
                         Button:
                             text: 'Scan your finger...'
