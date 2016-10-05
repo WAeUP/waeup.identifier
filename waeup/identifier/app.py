@@ -285,6 +285,9 @@ class FPScanApp(App):
             "waeup.identifier: config change: {0}, {1}, {2}, {3}".format(
                 config, section, key, value))
 
+    def scan_pressed(self, instance):
+        Logger.debug("waeup.identifier: 'scan' pressed")
+
     def quit_pressed(self, instance):
         Logger.debug("waeup.identifier: 'quit' pressed")
         self.stop()
