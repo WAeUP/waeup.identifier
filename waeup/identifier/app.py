@@ -297,8 +297,7 @@ class FPScanApp(App):
 
     def scan_pressed(self, instance):
         Logger.debug("waeup.identifier: 'scan' pressed")
-        screen_manager = self.get_screen_manager()
-        screen_manager.current = 'screen_scan'
+        self.screen_manager.current = 'screen_scan'
 
     def quit_pressed(self, instance):
         Logger.debug("waeup.identifier: 'quit' pressed")
