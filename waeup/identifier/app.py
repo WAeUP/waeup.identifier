@@ -267,6 +267,14 @@ class FPScanApp(App):
         Logger.debug("waeup.identifier: expect config file in %s" % path)
         return super(FPScanApp, self).get_application_config(path)
 
+    def get_screen_manager(self):
+        """Get the screen manager responsible for the main screen.
+        """
+        from kivy.uix.screenmanager import ScreenManager
+        for widget in self.root.walk():
+            if isinstance(widget, ScreenManager):
+                return widget
+
     def build_config(self, config):
         for key, conf_dict in get_default_settings():
             config.setdefaults(key, conf_dict)
@@ -287,7 +295,7 @@ class FPScanApp(App):
 
     def scan_pressed(self, instance):
         Logger.debug("waeup.identifier: 'scan' pressed")
-        screen_manager = instance[0].parent.parent.parent
+        screen_manager = self.get_screen_manager()
         screen_manager.current = 'screen_scan'
 
     def quit_pressed(self, instance):
