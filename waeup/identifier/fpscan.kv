@@ -39,9 +39,17 @@ BoxLayout:
             Screen:
                 name: "screen_scan"
                 BoxLayout:
-                    Button:
-                        text: 'Scan your finger...'
-                    Button:
-                        text: 'Cancel'
-                        on_press: screen_manager.transition.direction = 'right'
-                        on_press: screen_manager.current = 'screen_main'
+                    orientation: "vertical"
+                    BoxLayout:
+                        Label:
+                            text: "Student ID:"
+                            size_hint: 0.33, 1
+                        TextInput:
+                            multiline: False
+                    BoxLayout:
+                        Button:
+                            text: 'Scan your finger...'
+                        Button:
+                            text: 'Cancel'
+                            on_press: screen_manager.transition.direction = 'right'
+                            on_press: screen_manager.current = 'screen_main'
