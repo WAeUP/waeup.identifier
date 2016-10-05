@@ -26,6 +26,7 @@ from kivy.lang import Builder
 from kivy.logger import Logger
 from kivy.uix.button import Button
 from kivy.uix.label import Label
+from kivy.uix.screenmanager import ScreenManager
 from kivy.uix.widget import Widget
 from subprocess import Popen, PIPE
 from waeup.identifier.config import (
@@ -271,8 +272,9 @@ class FPScanApp(App):
 
     def get_screen_manager(self):
         """Get the screen manager responsible for the main screen.
+
+        There must be at most one screen manager in the widget tree.
         """
-        from kivy.uix.screenmanager import ScreenManager
         for widget in self.root.walk():
             if isinstance(widget, ScreenManager):
                 return widget
