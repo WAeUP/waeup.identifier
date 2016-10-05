@@ -256,7 +256,9 @@ class FPScanApp(App):
         from kivy.uix.settings import Settings
         self.settings_cls = Settings
         Logger.debug("waeup.identifier: Icon path set to %s" % self.icon)
-        return super(FPScanApp, self).build()
+        result = super(FPScanApp, self).build()
+        self.screen_manager = self.get_screen_manager()
+        return result
 
     def get_application_config(self):
         """Get path of app configuration file.
