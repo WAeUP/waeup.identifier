@@ -27,6 +27,7 @@ from kivy.logger import Logger
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.screenmanager import ScreenManager
+from kivy.uix.textinput import TextInput
 from kivy.uix.widget import Widget
 from subprocess import Popen, PIPE
 from waeup.identifier.config import (
@@ -244,6 +245,17 @@ class FPScanCommand(BackgroundCommand):
             raise IOError("No such path: %s" % (path, ))
         super(FPScanCommand, self).__init__(
             cmd, timeout=timeout, callback=callback)
+
+
+class StudentIdInput(TextInput):
+    """A `TextInput` turning input into upper case.
+
+    Apart from that we allow only `[A-Z0-9]` as chars.
+    """
+    def insert_text(self, substring, from_undo=False):
+        s = substring.upper()
+        s = ''.join([c for c in s if c.isalpha()])
+        return super(StudentIdInput, self).insert_text(s, from_undo=from_undo)
 
 
 class FPScanApp(App):
