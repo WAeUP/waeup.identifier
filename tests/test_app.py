@@ -6,18 +6,21 @@ import unittest
 import waeup.identifier
 from waeup.identifier.app import (
     FPScanApp, detect_scanners, check_path, fpscan, scan,
-    BackgroundCommand, FPScanCommand,
+    BackgroundCommand, FPScanCommand, RE_STUDENT_ID
     )
 from waeup.identifier.testing import (
     VirtualHomeProvider, VirtualHomingTestCase, create_fpscan,
     create_executable, create_python_script
     )
 
-#
-# Some infos about testing tk GUI stuff:
-#
-# buttons can be 'clicked' via 'invoke()'
-#
+
+def test_re_student_id():
+    # make sure the RE_STUDENT_ID expression works
+    assert RE_STUDENT_ID.match("") is None
+    assert RE_STUDENT_ID.match("aa12345") is None
+    assert RE_STUDENT_ID.match("AA1234") is None
+    assert RE_STUDENT_ID.match("AA12345A") is None
+    assert RE_STUDENT_ID.match("ZA12345") is not None
 
 
 class CheckPathTests(VirtualHomingTestCase):

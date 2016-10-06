@@ -48,6 +48,11 @@ if not Config.get('kivy', 'keyboard_mode'):
 #: Last char must not be slash.
 VALID_FILENAME = re.compile('^[a-zA-Z0-9/\._\-]+$')
 
+#: A valid student id looks like this
+#: Two or three uppercase ASCIIs followed by at least five digits
+RE_STUDENT_ID = re.compile('^[A-Z]{2,3}[0-9]{5,}$')
+
+
 #: How often do we look for new data while executing commands?
 POLL_INTERVAL = 0.1
 
