@@ -63,7 +63,7 @@ BoxLayout:
                     BoxLayout:
                         Button:
                             text: 'Scan your finger...'
-                            disabled: True
+                            disabled: app.prevent_scanning
                         Button:
                             text: 'Cancel'
                             on_press: screen_manager.transition.direction = 'right'

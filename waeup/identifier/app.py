@@ -25,6 +25,7 @@ from kivy.app import App
 from kivy.config import Config
 from kivy.lang import Builder
 from kivy.logger import Logger
+from kivy.properties import BooleanProperty
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.screenmanager import ScreenManager
@@ -266,6 +267,7 @@ class FPScanApp(App):
     detected_scanners = []
     chosen_scanner = None
     icon = '%s/waeupicon.png' % IMAGES_PATH
+    prevent_scanning = BooleanProperty(True)
 
     def build(self):
         from kivy.uix.settings import Settings
@@ -313,6 +315,7 @@ class FPScanApp(App):
 
     def on_stud_id_entered(self, *args):
         Logger.debug("waeup.identifier: stud_id changed")
+        self.prevent_scanning = False
 
     def scan_pressed(self, instance):
         Logger.debug("waeup.identifier: 'scan' pressed")
