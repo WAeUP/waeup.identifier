@@ -318,9 +318,10 @@ class FPScanApp(App):
             "waeup.identifier: config change: {0}, {1}, {2}, {3}".format(
                 config, section, key, value))
 
-    def on_stud_id_entered(self, *args):
-        Logger.debug("waeup.identifier: stud_id changed")
-        self.prevent_scanning = False
+    def on_stud_id_entered(self, instance):
+        Logger.debug("waeup.identifier: stud_id changed: %s" % instance[0].text)
+        prevent = RE_STUDENT_ID.match(instance[0].text) is None
+        self.prevent_scanning = prevent
 
     def scan_pressed(self, instance):
         Logger.debug("waeup.identifier: 'scan' pressed")
