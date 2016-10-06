@@ -26,8 +26,6 @@ from kivy.config import Config
 from kivy.lang import Builder
 from kivy.logger import Logger
 from kivy.properties import BooleanProperty
-from kivy.uix.button import Button
-from kivy.uix.label import Label
 from kivy.uix.screenmanager import ScreenManager
 from kivy.uix.textinput import TextInput
 from kivy.uix.widget import Widget
