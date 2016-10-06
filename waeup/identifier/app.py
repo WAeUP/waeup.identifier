@@ -311,6 +311,9 @@ class FPScanApp(App):
             "waeup.identifier: config change: {0}, {1}, {2}, {3}".format(
                 config, section, key, value))
 
+    def on_stud_id_entered(self, *args):
+        Logger.debug("waeup.identifier: stud_id changed")
+
     def scan_pressed(self, instance):
         Logger.debug("waeup.identifier: 'scan' pressed")
         self.screen_manager.current = 'screen_scan'
