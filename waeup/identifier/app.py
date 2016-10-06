@@ -18,6 +18,7 @@
 import os
 import re
 import socket
+import string
 import subprocess
 import threading
 from kivy.app import App
@@ -254,7 +255,8 @@ class StudentIdInput(TextInput):
     """
     def insert_text(self, substring, from_undo=False):
         s = substring.upper()
-        s = ''.join([c for c in s if c.isalpha()])
+        s = ''.join(
+            [c for c in s if c in string.ascii_letters + string.digits])
         return super(StudentIdInput, self).insert_text(s, from_undo=from_undo)
 
 
