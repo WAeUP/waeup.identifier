@@ -68,3 +68,16 @@ BoxLayout:
                             text: 'Cancel'
                             on_press: screen_manager.transition.direction = 'right'
                             on_press: screen_manager.current = 'screen_main'
+
+
+<PopupMessage@Popup>:
+    title: 'My title'
+    size_hint: 0.5, 0.5
+    BoxLayout:
+        orientation: vertical
+        Label:
+            text: "My Message"
+        Button:
+            text: 'Ok'
+            size_hint: 1, 0.2
+            on_press: dismiss()

@@ -26,6 +26,7 @@ from kivy.config import Config
 from kivy.lang import Builder
 from kivy.logger import Logger
 from kivy.properties import BooleanProperty, StringProperty
+from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import ScreenManager
 from kivy.uix.textinput import TextInput
 from kivy.uix.widget import Widget
@@ -262,6 +263,10 @@ class StudentIdInput(TextInput):
         s = ''.join(
             [c for c in s if c in string.ascii_letters + string.digits])
         return super(StudentIdInput, self).insert_text(s, from_undo=from_undo)
+
+
+class PopupMessage(Popup):
+    pass
 
 
 class FPScanApp(App):
