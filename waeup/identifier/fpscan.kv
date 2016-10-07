@@ -73,10 +73,11 @@ BoxLayout:
 <PopupMessage@Popup>:
     title: 'My title'
     size_hint: 0.5, 0.5
+    f_message: "My Message"
     BoxLayout:
         orientation: "vertical"
         Label:
-            text: "My Message"
+            text: root.f_message
         Button:
             text: 'Ok'
             size_hint: 1, 0.2
