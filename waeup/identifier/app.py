@@ -330,8 +330,8 @@ class FPScanApp(App):
         prevent = RE_STUDENT_ID.match(entered_text) is None
         self.prevent_scanning = prevent
         if entered_text and prevent:
-            # create a popup here
-            pass
+            popup = PopupMessage()
+            popup.open()
 
     def scan_pressed(self, instance):
         Logger.debug("waeup.identifier: 'scan' pressed")
