@@ -25,7 +25,7 @@ from kivy.app import App
 from kivy.config import Config
 from kivy.lang import Builder
 from kivy.logger import Logger
-from kivy.properties import BooleanProperty
+from kivy.properties import BooleanProperty, StringProperty
 from kivy.uix.screenmanager import ScreenManager
 from kivy.uix.textinput import TextInput
 from kivy.uix.widget import Widget
@@ -271,6 +271,7 @@ class FPScanApp(App):
     chosen_scanner = None
     icon = '%s/waeupicon.png' % IMAGES_PATH
     prevent_scanning = BooleanProperty(True)
+    popup_text = StringProperty('')
 
     def build(self):
         from kivy.uix.settings import Settings
