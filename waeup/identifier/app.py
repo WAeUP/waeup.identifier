@@ -266,7 +266,11 @@ class StudentIdInput(TextInput):
 
 
 class PopupMessage(Popup):
-    pass
+
+    def __init__(self, title='Title', message='', *args):
+        result = super(PopupMessage, self).__init__(*args)
+        self.title = title
+        self.f_message = message
 
 
 class FPScanApp(App):
@@ -330,9 +334,10 @@ class FPScanApp(App):
         prevent = RE_STUDENT_ID.match(entered_text) is None
         self.prevent_scanning = prevent
         if entered_text and prevent:
-            popup = PopupMessage()
-            popup.title = "Invalid Student Id"
-            popup.f_message = "The entered student id is not valid"
+            popup = PopupMessage(
+                title = "Invalid Student Id",
+                message = "The entered student id is not valid"
+                )
             popup.open()
 
     def scan_pressed(self, instance):
