@@ -331,6 +331,7 @@ class FPScanApp(App):
         self.prevent_scanning = prevent
         if entered_text and prevent:
             popup = PopupMessage()
+            popup.title = "Invalid Student Id"
             popup.open()
 
     def scan_pressed(self, instance):
