@@ -317,8 +317,12 @@ class FPScanApp(App):
                 config, section, key, value))
 
     def on_stud_id_entered(self, instance):
-        Logger.debug("waeup.identifier: stud_id changed: %s" % instance[0].text)
-        prevent = RE_STUDENT_ID.match(instance[0].text) is None
+        entered_text = instance[0].text
+        Logger.debug("waeup.identifier: stud_id changed: %s" % entered_text)
+        prevent = RE_STUDENT_ID.match(entered_text) is None
+        if entered_text and prevent:
+            # create a popup here
+            pass
         self.prevent_scanning = prevent
 
     def scan_pressed(self, instance):
