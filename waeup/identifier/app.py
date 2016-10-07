@@ -317,6 +317,8 @@ class FPScanApp(App):
                 config, section, key, value))
 
     def on_stud_id_entered(self, instance):
+        """A student id was entered.
+        """
         entered_text = instance[0].text
         Logger.debug("waeup.identifier: stud_id changed: %s" % entered_text)
         prevent = RE_STUDENT_ID.match(entered_text) is None
