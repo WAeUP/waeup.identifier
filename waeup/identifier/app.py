@@ -347,3 +347,7 @@ class FPScanApp(App):
     def quit_pressed(self, instance):
         Logger.debug("waeup.identifier: 'quit' pressed")
         self.stop()
+
+    def start_scan_pressed(self, instance):
+        Logger.debug("waeup.identifier: start scan")
+
