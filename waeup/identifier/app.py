@@ -360,3 +360,5 @@ class FPScanApp(App):
                     "set a correct path in settings and retry."),
                 ).open()
             return
+        cmd = FPScanCommand(path=path)
+        instance[0].text = "Please touch fingerprint device."
