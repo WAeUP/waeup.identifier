@@ -32,8 +32,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.widget import Widget
 from subprocess import Popen, PIPE
 from waeup.identifier.config import (
-    get_config, get_json_settings, get_default_settings,
-    get_conffile_location,
+    get_json_settings, get_default_settings, get_conffile_location,
 )
 from waeup.identifier.webservice import (
     get_url_from_config, store_fingerprint
