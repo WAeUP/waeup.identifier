@@ -359,3 +359,5 @@ class FPScanApp(App):
                 message = ("The path to `fpscan` is not valid.\n Please "
                            "set a correct path in settings and retry."),
                 ).open()
+            return
+
