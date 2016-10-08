@@ -335,8 +335,8 @@ class FPScanApp(App):
         self.prevent_scanning = prevent
         if entered_text and prevent:
             popup = PopupMessage(
-                title = "Invalid Student Id",
-                message = "The entered student id is not valid"
+                title="Invalid Student Id",
+                message="The entered student id is not valid"
                 )
             popup.open()
 
@@ -355,9 +355,9 @@ class FPScanApp(App):
         if not os.path.isfile(fpscan_path):
             Logger.debug("waeup.identifier: fpscan path is invalid.")
             PopupMessage(
-                title = "Invalid fpscan path",
-                message = ("The path to `fpscan` is not valid.\n Please "
-                           "set a correct path in settings and retry."),
+                title="Invalid fpscan path",
+                message=(
+                    "The path to `fpscan` is not valid.\n Please "
+                    "set a correct path in settings and retry."),
                 ).open()
             return
-
