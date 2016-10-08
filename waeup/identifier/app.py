@@ -352,3 +352,9 @@ class FPScanApp(App):
         Logger.debug("waeup.identifier: start scan")
         fpscan_path = self.config.get('fpscan', 'fpscan_path')
         Logger.debug("waeup.identifier: `fpscan` at %s" % fpscan_path)
+        if not os.path.isfile(fpscan_path):
+            PopupMessage(
+                title = "Invalid fpscan path",
+                message = ("The path to `fpscan` is not valid.\n Please "
+                           "set a correct path in settings and retry."),
+                ).open()
