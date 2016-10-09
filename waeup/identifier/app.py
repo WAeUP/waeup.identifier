@@ -270,6 +270,7 @@ class PopupMessage(Popup):
         result = super(PopupMessage, self).__init__(*args)
         self.title = title
         self.f_message = message
+        return result
 
 
 class FPScanApp(App):
@@ -362,3 +363,4 @@ class FPScanApp(App):
             return
         cmd = FPScanCommand(path=path)
         instance[0].text = "Please touch fingerprint device."
+
