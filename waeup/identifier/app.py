@@ -31,9 +31,8 @@ from subprocess import Popen, PIPE
 from waeup.identifier.config import (
     get_json_settings, get_default_settings, get_conffile_location,
 )
-from waeup.identifier.webservice import (
-    get_url_from_config, store_fingerprint
-)
+from waeup.identifier.webservice import store_fingerprint
+
 
 # Enable virtualkeyboard
 if not Config.get('kivy', 'keyboard_mode'):
