@@ -376,4 +376,3 @@ class FPScanApp(App):
             return
         cmd = FPScanCommand(path=path)
         instance[0].text = "Please touch fingerprint device."
-
