@@ -23,7 +23,6 @@ import subprocess
 import threading
 from kivy.app import App
 from kivy.config import Config
-from kivy.lang import Builder
 from kivy.logger import Logger
 from kivy.properties import BooleanProperty, StringProperty
 from kivy.uix.popup import Popup
