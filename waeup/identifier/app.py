@@ -261,7 +261,15 @@ class StudentIdInput(TextInput):
 
 
 class FPScanPopup(Popup):
+    """A popup in the `FPScanApp` application.
 
+    You can set your own `title`, `message` and `button_text`, but
+    consider to define derived classes and set the texts in the
+    accompanied `kv` file.
+
+    All popups in `FPScanApp` should use this popup class to share look
+    and feel.
+    """
     def __init__(self, title=None, message=None, button_text=None, *args):
         result = super(FPScanPopup, self).__init__(*args)
         if title is not None:
