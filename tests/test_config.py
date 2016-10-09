@@ -79,18 +79,18 @@ def test_get_conffile_location(home_dir):
 
 class Test_find_fpscan_binary(object):
 
-    def test_find_fpscan_binary_no_binary(home_dir):
+    def test_find_fpscan_binary_no_binary(self, home_dir):
         # we get None if there is no binary.
         assert find_fpscan_binary() is None
 
+    def test_find_fpscan_binary(self, home_dir):
+        # we get a path if a fpscan binary is in $PATH
+        fake_fpscan_path = home_dir / 'fpscan'
+        fake_fpscan_path.write('Just a fake script.')
+        assert find_fpscan_binary() == str(fake_fpscan_path)
+
 
 class ConfigTests(VirtualHomingTestCase):
-
-    def test_find_fpscan_binary(self):
-        # we get a path if a fpscan binary is in $PATH
-        fake_fpscan = os.path.join(self.path_dir, 'fpscan')
-        open(fake_fpscan, 'w').write('Just a fake script.')
-        assert find_fpscan_binary() == fake_fpscan
 
     def test_find_fpscan_binary_valid_custom(self):
         # we accept proposed paths if given and valid
