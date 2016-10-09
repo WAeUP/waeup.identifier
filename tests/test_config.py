@@ -77,9 +77,11 @@ def test_get_conffile_location(home_dir):
     assert result == str(home_dir / '.waeupident.ini')
 
 
-def test_find_fpscan_binary_no_binary(home_dir):
-    # we get None if there is no binary.
-    assert find_fpscan_binary() is None
+class Test_find_fpscan_binary(object):
+
+    def test_find_fpscan_binary_no_binary(home_dir):
+        # we get None if there is no binary.
+        assert find_fpscan_binary() is None
 
 
 class ConfigTests(VirtualHomingTestCase):
