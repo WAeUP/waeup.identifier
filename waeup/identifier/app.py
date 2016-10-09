@@ -262,10 +262,11 @@ class StudentIdInput(TextInput):
 
 class PopupMessage(Popup):
 
-    def __init__(self, title='Title', message='', *args):
+    def __init__(self, title='Title', message='', button_text='Ok', *args):
         result = super(PopupMessage, self).__init__(*args)
         self.title = title
         self.f_message = message
+        self.f_btn_text = button_text
         return result
 
 

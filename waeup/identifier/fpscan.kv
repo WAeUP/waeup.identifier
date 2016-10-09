@@ -75,12 +75,13 @@ BoxLayout:
     title: 'My title'
     size_hint: 0.5, 0.5
     f_message: "My Message"
+    f_btn_text: "Ok"
     BoxLayout:
         orientation: "vertical"
         Label:
             text: root.f_message
             markup: True
         Button:
-            text: 'Ok'
+            text: root.f_btn_text
             size_hint: 1, 0.2
             on_press: self.parent.parent.parent.parent.dismiss()
