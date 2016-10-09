@@ -34,6 +34,7 @@ def test_get_json_settings_no_default():
 
 
 class Test_get_default_settings(object):
+
     def test_get_default_settings():
         # we can get default of a single setting
         result = get_default_settings(
@@ -51,7 +52,8 @@ class Test_get_default_settings(object):
             [
                 {'section': 'foo', 'key': 'key1', 'default': 'bar1'},
                 {'section': 'foo', 'key': 'key2', 'default': 'bar2'}])
-        assert result == [("foo", dict(key1="bar1")), ("foo", dict(key2="bar2"))]
+        assert result == [
+            ("foo", dict(key1="bar1")), ("foo", dict(key2="bar2"))]
 
     def test_get_default_settings_fpscan_not_found(home_dir):
         # we treat `fpscan_path` special.
