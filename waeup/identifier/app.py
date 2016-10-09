@@ -260,10 +260,10 @@ class StudentIdInput(TextInput):
         return super(StudentIdInput, self).insert_text(s, from_undo=from_undo)
 
 
-class PopupMessage(Popup):
+class FPScanPopup(Popup):
 
     def __init__(self, title='Title', message='', button_text='Ok', *args):
-        result = super(PopupMessage, self).__init__(*args)
+        result = super(FPScanPopup, self).__init__(*args)
         self.title = title
         self.f_message = message
         self.f_btn_text = button_text
@@ -331,7 +331,7 @@ class FPScanApp(App):
         prevent = RE_STUDENT_ID.match(entered_text) is None
         self.prevent_scanning = prevent
         if entered_text and prevent:
-            popup = PopupMessage(
+            popup = FPScanPopup(
                 title="Invalid Student Id",
                 message="The entered student id is not valid"
                 )
@@ -351,7 +351,7 @@ class FPScanApp(App):
         Logger.debug("waeup.identifier: `fpscan` at %s" % path)
         if not os.path.isfile(path):
             Logger.debug("waeup.identifier: fpscan path is invalid.")
-            PopupMessage(
+            FPScanPopup(
                 title="Invalid fpscan path",
                 message=(
                     "The path to `fpscan` is not valid.\n Please "
@@ -363,7 +363,7 @@ class FPScanApp(App):
             "waeup.identifier: detected scanners. result %s" % scanners)
         if not scanners:
             Logger.debug("waeup.identifier: no scanner detected. Aborted.")
-            PopupMessage(
+            FPScanPopup(
                 title="No scanner",
                 message=(
                     "No fingerprint scanner device found.\n"
