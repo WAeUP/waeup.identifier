@@ -362,6 +362,15 @@ class FPScanApp(App):
                 ).open()
             return
         scanners = detect_scanners(path)
+        if not scanners:
+            PopupMessage(
+                title="No scanner",
+                message=(
+                    "No fingerprint scanner device found.\n"
+                    "Please attach one and retry."
+                    ),
+                ).open()
+            return
         cmd = FPScanCommand(path=path)
         instance[0].text = "Please touch fingerprint device."
 
