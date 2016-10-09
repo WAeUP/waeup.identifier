@@ -362,7 +362,9 @@ class FPScanApp(App):
                 ).open()
             return
         scanners = detect_scanners(path)
+        Logger.debug("waeup.identifier: detected scanners. result %s" % scanners)
         if not scanners:
+            Logger.debug("waeup.identifier: no scanner detected. Aborted.")
             PopupMessage(
                 title="No scanner",
                 message=(
