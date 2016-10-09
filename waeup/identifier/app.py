@@ -29,7 +29,6 @@ from kivy.properties import BooleanProperty, StringProperty
 from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import ScreenManager
 from kivy.uix.textinput import TextInput
-from kivy.uix.widget import Widget
 from subprocess import Popen, PIPE
 from waeup.identifier.config import (
     get_json_settings, get_default_settings, get_conffile_location,
