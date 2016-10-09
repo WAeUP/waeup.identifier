@@ -33,42 +33,39 @@ def test_get_json_settings_no_default():
     assert json.loads(result) == [{"key": "bar", "section": "foo"}]
 
 
-def test_get_default_settings():
-    # we can get default of a single setting
-    result = get_default_settings(
-        [{'section': 'foo', 'key': 'bar', 'default': 'baz'}, ])
-    assert result == [("foo", dict(bar="baz"))]
+class Test_get_default_settings(object):
+    def test_get_default_settings():
+        # we can get default of a single setting
+        result = get_default_settings(
+            [{'section': 'foo', 'key': 'bar', 'default': 'baz'}, ])
+        assert result == [("foo", dict(bar="baz"))]
 
+    def test_get_default_settings_ignore_no_default():
+        # we ignore settings w/o a default value
+        result = get_default_settings([{'section': 'foo', 'key': 'bar'}])
+        assert result == []
 
-def test_get_default_settings_ignore_no_default():
-    # we ignore settings w/o a default value
-    result = get_default_settings([{'section': 'foo', 'key': 'bar'}])
-    assert result == []
+    def test_get_default_settings_multi_in_section():
+        # we put several settings per section in one entry
+        result = get_default_settings(
+            [
+                {'section': 'foo', 'key': 'key1', 'default': 'bar1'},
+                {'section': 'foo', 'key': 'key2', 'default': 'bar2'}])
+        assert result == [("foo", dict(key1="bar1")), ("foo", dict(key2="bar2"))]
 
+    def test_get_default_settings_fpscan_not_found(home_dir):
+        # we treat `fpscan_path` special.
+        result = get_default_settings(
+            [{'section': 'foo', 'key': 'fpscan_path', 'default': 'bar'}])
+        assert result == [("foo", dict(fpscan_path="bar"))]
 
-def test_get_default_settings_multi_in_section():
-    # we put several settings per section in one entry
-    result = get_default_settings(
-        [
-            {'section': 'foo', 'key': 'key1', 'default': 'bar1'},
-            {'section': 'foo', 'key': 'key2', 'default': 'bar2'}])
-    assert result == [("foo", dict(key1="bar1")), ("foo", dict(key2="bar2"))]
-
-
-def test_get_default_settings_fpscan_not_found(home_dir):
-    # we treat `fpscan_path` special.
-    result = get_default_settings(
-        [{'section': 'foo', 'key': 'fpscan_path', 'default': 'bar'}])
-    assert result == [("foo", dict(fpscan_path="bar"))]
-
-
-def test_get_default_settings_fpscan_found(home_dir):
-    # we treat `fpscan_path` special and get a valid path.
-    home_dir.join("fpscan").write("just a fake script")
-    result = get_default_settings(
-        [{'section': 'foo', 'key': 'fpscan_path', 'default': 'bar'}])
-    path = str(home_dir / "fpscan")
-    assert result == [("foo", dict(fpscan_path=path))]
+    def test_get_default_settings_fpscan_found(home_dir):
+        # we treat `fpscan_path` special and get a valid path.
+        home_dir.join("fpscan").write("just a fake script")
+        result = get_default_settings(
+            [{'section': 'foo', 'key': 'fpscan_path', 'default': 'bar'}])
+        path = str(home_dir / "fpscan")
+        assert result == [("foo", dict(fpscan_path=path))]
 
 
 def test_get_conffile_location(home_dir):
