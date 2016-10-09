@@ -262,11 +262,14 @@ class StudentIdInput(TextInput):
 
 class FPScanPopup(Popup):
 
-    def __init__(self, title='Title', message='', button_text='Ok', *args):
+    def __init__(self, title=None, message=None, button_text=None, *args):
         result = super(FPScanPopup, self).__init__(*args)
-        self.title = title
-        self.f_message = message
-        self.f_btn_text = button_text
+        if title is not None:
+            self.title = title
+        if message is not None:
+            self.f_message = message
+        if button_text is not None:
+            self.f_btn_text = button_text
         return result
 
 
