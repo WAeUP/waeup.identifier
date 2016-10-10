@@ -34,19 +34,20 @@ def test_get_json_settings_no_default():
 
 
 class Test_get_default_settings(object):
+    # tests for `config.get_default_settings()`.
 
-    def test_get_default_settings(self):
+    def test_get_default_settings(self, home_dir):
         # we can get default of a single setting
         result = get_default_settings(
             [{'section': 'foo', 'key': 'bar', 'default': 'baz'}, ])
         assert result == [("foo", dict(bar="baz"))]
 
-    def test_get_default_settings_ignore_no_default(self):
+    def test_get_default_settings_ignore_no_default(self, home_dir):
         # we ignore settings w/o a default value
         result = get_default_settings([{'section': 'foo', 'key': 'bar'}])
         assert result == []
 
-    def test_get_default_settings_multi_in_section(self):
+    def test_get_default_settings_multi_in_section(self, home_dir):
         # we put several settings per section in one entry
         result = get_default_settings(
             [
