@@ -84,7 +84,8 @@ BoxLayout:
         Button:
             text: root.f_btn_text
             size_hint: 1, 0.2
-            on_press: self.parent.parent.parent.parent.dismiss()
+            on_press: root.dismiss()
+
 
 <PopupInvalidFPScanPath@FPScanPopup>:
     title: "Invalid fpscan path"
