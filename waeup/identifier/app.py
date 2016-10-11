@@ -384,5 +384,8 @@ class FPScanApp(App):
                     ),
                 ).open()
             return
-        cmd = FPScanCommand(path=path)
-        instance[0].text = "Please touch fingerprint device."
+        cmd = FPScanCommand(path=path, params=['-s'], callback=self.scan_finished)
+        cmd.run()
+
+    def scan_finished(self, *args):
+        Logger.info("waeup.identifier: scan finished.")
