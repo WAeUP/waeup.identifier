@@ -281,6 +281,13 @@ class FPScanPopup(Popup):
         return result
 
 
+class PopupInvalidFPScanPath(FPScanPopup):
+    """Popup emitting error message if `fpscan` not found.
+
+    The output texts can be set in the accompanied ``fpscan.kv``.
+    """
+
+
 class FPScanApp(App):
     """The main application.
     """
@@ -362,12 +369,7 @@ class FPScanApp(App):
         Logger.debug("waeup.identifier: `fpscan` at %s" % path)
         if not os.path.isfile(path):
             Logger.debug("waeup.identifier: fpscan path is invalid.")
-            FPScanPopup(
-                title="Invalid fpscan path",
-                message=(
-                    "The path to `fpscan` is not valid.\n Please "
-                    "set a correct path in settings and retry."),
-                ).open()
+            PopupInvalidFPScanPath().open()
             return
         scanners = detect_scanners(path)
         Logger.debug(
