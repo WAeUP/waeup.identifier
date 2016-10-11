@@ -286,6 +286,8 @@ class PopupInvalidFPScanPath(FPScanPopup):
 
     The output texts can be set in the accompanied ``fpscan.kv``.
     """
+    pass
+
 
 class PopupNoScanDevice(FPScanPopup):
     """Popup showing a warning: no scanner found
