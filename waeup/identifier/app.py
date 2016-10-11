@@ -365,6 +365,7 @@ class FPScanApp(App):
 
     def start_scan_pressed(self, instance):
         Logger.debug("waeup.identifier: start scan")
+        self._scan_button = instance[0]
         path = self.config.get('fpscan', 'fpscan_path')
         Logger.debug("waeup.identifier: `fpscan` at %s" % path)
         if not os.path.isfile(path):
@@ -385,6 +386,7 @@ class FPScanApp(App):
                 ).open()
             return
         cmd = FPScanCommand(path=path, params=['-s'], callback=self.scan_finished)
+        self._scan_button.text = "Please touch scanner.."
         cmd.start()
 
     def scan_finished(self, *args):
