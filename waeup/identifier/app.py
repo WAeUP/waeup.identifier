@@ -384,13 +384,7 @@ class FPScanApp(App):
             "waeup.identifier: detected scanners. result %s" % scanners)
         if not scanners:
             Logger.debug("waeup.identifier: no scanner detected. Aborted.")
-            FPScanPopup(
-                title="No scanner",
-                message=(
-                    "No fingerprint scanner device found.\n"
-                    "Please attach one and retry."
-                    ),
-                ).open()
+            PopupNoScanDevice().open()
             return
         cmd = FPScanCommand(path=path, params=['-s'], callback=self.scan_finished)
         self._scan_button_old_text = self._scan_button.text
