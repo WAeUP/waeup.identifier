@@ -385,7 +385,7 @@ class FPScanApp(App):
                 ).open()
             return
         cmd = FPScanCommand(path=path, params=['-s'], callback=self.scan_finished)
-        cmd.run()
+        cmd.start()
 
     def scan_finished(self, *args):
         Logger.info("waeup.identifier: scan finished.")
