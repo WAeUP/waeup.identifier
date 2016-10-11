@@ -389,9 +389,11 @@ class FPScanApp(App):
         cmd = FPScanCommand(path=path, params=['-s'], callback=self.scan_finished)
         self._scan_button_old_text = self._scan_button.text
         self._scan_button.text = "Please touch scanner..."
+        self._scan_button.disabled = True
         Logger.debug('waeup.identifier: initialized scan, awaiting finger touch')
         cmd.start()
 
     def scan_finished(self, *args):
         Logger.info("waeup.identifier: scan finished.")
         self._scan_button.text = self._scan_button_old_text
+        self._scan_button.disabled = False
