@@ -236,10 +236,10 @@ class BackgroundCommand(threading.Thread):
 
 class FPScanCommand(BackgroundCommand):
     def __init__(self, path, params=[], timeout=None, callback=None):
-        """Execute `fsscan` as background command.
+        """Execute `fpscan` as background command.
 
         `path` must be an existing binary path. `params` is a list of
-        options to use when calling fsscan.
+        options to use when calling fpscan.
         """
         cmd = [path, ] + params
         if not os.path.exists(path):
