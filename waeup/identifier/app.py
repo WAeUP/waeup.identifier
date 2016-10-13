@@ -397,3 +397,13 @@ class FPScanApp(App):
         Logger.info("waeup.identifier: scan finished.")
         self._scan_button.text = self._scan_button_old_text
         self._scan_button.disabled = False
+
+    def upload_data(self, stud_id, fp_file_path):
+        """Upload fingerprint data for `stud_id` in `fp_file_path` to server.
+        """
+        pass
+
+    def upload_finished(self, *args):
+        """Callback for fingerprint file upload.
+        """
+        pass
