@@ -398,7 +398,8 @@ class FPScanApp(App):
         Logger.info("waeup.identifier: scan finished.")
         path = os.path.join(os.getcwd(), "data.fpm")
         if not os.path.isfile(path):
-            # XXX: Scan failed
+            # Scan failed
+            PopupScanFailed().open()
             return
         self.upload_fingerprint(path)
 
