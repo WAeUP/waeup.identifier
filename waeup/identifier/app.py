@@ -391,3 +391,12 @@ class FPScanApp(App):
         """A scan has been finished.
         """
         Logger.info("waeup.identifier: scan finished.")
+        path = os.path.join(os.getcwd(), "data.fpm")
+        if not os.path.isfile(path):
+            # XXX: Scan failed
+            return
+        self.upload_fingerprint(path)
+
+    def upload_fingerprint(self, path):
+        pass
+        
