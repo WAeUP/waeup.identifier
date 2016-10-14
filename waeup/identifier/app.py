@@ -388,4 +388,6 @@ class FPScanApp(App):
         cmd.run()
 
     def scan_finished(self, *args):
+        """A scan has been finished.
+        """
         Logger.info("waeup.identifier: scan finished.")
