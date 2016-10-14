@@ -288,6 +288,11 @@ class PopupInvalidFPScanPath(FPScanPopup):
     """
 
 
+class PopupScanFailed(FPScanPopup):
+    """Popup signalling failed scan.
+    """    
+
+
 class FPScanApp(App):
     """The main application.
     """
