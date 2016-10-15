@@ -106,6 +106,12 @@ class Test_find_fpscan_binary(object):
         # we get None if given paths are invalid
         assert find_fpscan_binary('iNvAlIdPaTh') is None
 
+    def test_find_fpscan_binary_fallback(self, home_dir):
+        # we find fpscans paths in $PATH if custom ones are invalid
+        fake_fpscan = home_dir / "fpscan"
+        fake_fpscan.write('Just a fake script')
+        assert find_fpscan_binary('invalid_path') == str(fake_fpscan)
+
 
 class ConfigTests(VirtualHomingTestCase):
 
