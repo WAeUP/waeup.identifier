@@ -236,10 +236,10 @@ class BackgroundCommand(threading.Thread):
 
 class FPScanCommand(BackgroundCommand):
     def __init__(self, path, params=[], timeout=None, callback=None):
-        """Execute `fsscan` as background command.
+        """Execute `fpscan` as background command.
 
         `path` must be an existing binary path. `params` is a list of
-        options to use when calling fsscan.
+        options to use when calling fpscan.
         """
         cmd = [path, ] + params
         if not os.path.exists(path):
@@ -286,6 +286,13 @@ class PopupInvalidFPScanPath(FPScanPopup):
 
     The output texts can be set in the accompanied ``fpscan.kv``.
     """
+    pass
+
+
+class PopupNoScanDevice(FPScanPopup):
+    """Popup showing a warning: no scanner found
+    """
+    pass
 
 
 class PopupScanFailed(FPScanPopup):
@@ -370,6 +377,7 @@ class FPScanApp(App):
 
     def start_scan_pressed(self, instance):
         Logger.debug("waeup.identifier: start scan")
+        self._scan_button = instance[0]
         path = self.config.get('fpscan', 'fpscan_path')
         Logger.debug("waeup.identifier: `fpscan` at %s" % path)
         if not os.path.isfile(path):
@@ -381,21 +389,21 @@ class FPScanApp(App):
             "waeup.identifier: detected scanners. result %s" % scanners)
         if not scanners:
             Logger.debug("waeup.identifier: no scanner detected. Aborted.")
-            FPScanPopup(
-                title="No scanner",
-                message=(
-                    "No fingerprint scanner device found.\n"
-                    "Please attach one and retry."
-                    ),
-                ).open()
+            PopupNoScanDevice().open()
             return
         cmd = FPScanCommand(path=path, params=['-s'], callback=self.scan_finished)
-        cmd.run()
+        self._scan_button_old_text = self._scan_button.text
+        self._scan_button.text = "Please touch scanner..."
+        self._scan_button.disabled = True
+        Logger.debug('waeup.identifier: initialized scan, awaiting finger touch')
+        cmd.start()
 
     def scan_finished(self, *args):
         """A scan has been finished.
         """
         Logger.info("waeup.identifier: scan finished.")
+        self._scan_button.text = self._scan_button_old_text
+        self._scan_button.disabled = False
         path = os.path.join(os.getcwd(), "data.fpm")
         if not os.path.isfile(path):
             # Scan failed
@@ -407,3 +415,12 @@ class FPScanApp(App):
     def upload_fingerprint(self, path):
         pass
         
+    def upload_data(self, stud_id, fp_file_path):
+        """Upload fingerprint data for `stud_id` in `fp_file_path` to server.
+        """
+        pass
+
+    def upload_finished(self, *args):
+        """Callback for fingerprint file upload.
+        """
+        pass

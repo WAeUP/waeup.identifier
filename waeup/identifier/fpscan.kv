@@ -84,12 +84,20 @@ BoxLayout:
         Button:
             text: root.f_btn_text
             size_hint: 1, 0.2
-            on_press: self.parent.parent.parent.parent.dismiss()
+            on_press: root.dismiss()
+
 
 <PopupInvalidFPScanPath@FPScanPopup>:
     title: "Invalid fpscan path"
     f_message: "The path to `fpscan` is not valid.\n Please set a correct path in settings and retry."
 
+
 <PopupScanFailed@FPScanPopup>:
     title: "Scam failed!"
     f_message: "The fingerprint scan failed."
+
+
+<PopupNoScanDevice>:
+    title: "No scanner"
+    f_message: "No fingerprint scanner device found.\nPlease attach one and retry."
+>>>>>>> 22ae57586fa606479c331a10e7972d6254367bae
