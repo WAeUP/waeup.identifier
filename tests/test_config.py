@@ -117,16 +117,16 @@ class Test_get_config(object):
         conf = get_config()
         assert conf.get('DEFAULT', 'fpscan_path') == str(fake_fpscan)
 
-
-class ConfigTests(VirtualHomingTestCase):
-
-    def test_get_config_from_single_file(self):
+    def test_get_config_from_single_file(self, home_dir):
         # configs can be read from a file
-        conf_path = os.path.join(self.home_dir, 'config.conf')
-        open(conf_path, 'w').write('[DEFAULT]\nwaeup_user=user1\n')
-        conf = get_config(paths=[conf_path])
+        conf_path = home_dir / 'config.conf'
+        conf_path.write('[DEFAULT]\nwaeup_user=user1\n')
+        conf = get_config(paths=[str(conf_path)])
         assert conf.get('DEFAULT', 'waeup_user') == 'user1'
         assert conf.get('DEFAULT', 'waeup_passwd') == 'grok'
+
+
+class ConfigTests(VirtualHomingTestCase):
 
     def test_get_config_two_files(self):
         # configs can be read from two or more files
