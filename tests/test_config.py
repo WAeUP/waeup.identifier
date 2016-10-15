@@ -103,14 +103,10 @@ class Test_find_fpscan_binary(object):
         assert find_fpscan_binary(str(fake_fpscan_path)) == str(fake_fpscan_path)
 
 
+        assert find_fpscan_binary(fake_fpscan_path) == fake_fpscan_path
+
 
 class ConfigTests(VirtualHomingTestCase):
-
-    def test_find_fpscan_binary_valid_custom(self):
-        # we accept proposed paths if given and valid
-        fake_fpscan_path = os.path.join(self.home_dir, 'fpscan')
-        open(fake_fpscan_path, 'w').write('Just a fake')
-        assert find_fpscan_binary(fake_fpscan_path) == fake_fpscan_path
 
     def test_find_fpscan_binary_invalid(self):
         # we get None if given paths are invalid
