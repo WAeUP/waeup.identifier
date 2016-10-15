@@ -297,7 +297,7 @@ class PopupNoScanDevice(FPScanPopup):
 
 class PopupScanFailed(FPScanPopup):
     """Popup signalling failed scan.
-    """    
+    """
 
 
 class FPScanApp(App):
@@ -407,14 +407,14 @@ class FPScanApp(App):
         path = os.path.join(os.getcwd(), "data.fpm")
         if not os.path.isfile(path):
             # Scan failed
-            Logger.warn("waeup.identifier: no such file: %s" % path) 
+            Logger.warn("waeup.identifier: no such file: %s" % path)
             PopupScanFailed().open()
             return
         self.upload_fingerprint(path)
 
     def upload_fingerprint(self, path):
         pass
-        
+
     def upload_data(self, stud_id, fp_file_path):
         """Upload fingerprint data for `stud_id` in `fp_file_path` to server.
         """
