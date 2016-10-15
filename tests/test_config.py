@@ -9,18 +9,6 @@ from waeup.identifier.config import (
 from waeup.identifier.testing import VirtualHomingTestCase
 
 
-@pytest.fixture(scope="function")
-def home_dir(request, monkeypatch, tmpdir):
-    """A py.test fixture providing a temporary user home.
-
-    It also sets PATH to contain this temporary home as only entry.
-    """
-    tmpdir.mkdir("home")
-    monkeypatch.setenv("HOME", str(tmpdir / "home"))
-    monkeypatch.setenv("PATH", str(tmpdir / "home"))
-    return tmpdir / "home"
-
-
 def test_get_json_settings_empty():
     # empty settings are possible
     assert get_json_settings([]) == '[]'
@@ -113,7 +101,7 @@ class Test_find_fpscan_binary(object):
         assert find_fpscan_binary('invalid_path') == str(fake_fpscan)
 
 
-class ConfigTests(VirtualHomingTestCase):
+class Test_get_config(object):
 
     def test_get_config(self):
         # we can get valid configs
@@ -121,6 +109,8 @@ class ConfigTests(VirtualHomingTestCase):
         assert conf.get('DEFAULT', 'waeup_user') == 'grok'
         assert conf.get('DEFAULT', 'waeup_passwd') == 'grok'
         assert conf.get('DEFAULT', 'waeup_url') == 'localhost:8080'
+
+class ConfigTests(VirtualHomingTestCase):
 
     def test_get_config_fpscan_path(self):
         # we get a valid fpscan path if avail.
