@@ -23,7 +23,7 @@ def test_re_student_id():
     assert RE_STUDENT_ID.match("ZA12345") is not None
 
 
-def test_check_path_not_existing(homedir):
+def test_check_path_not_existing(home_dir):
     # the path given must exist
     with pytest.raises(ValueError):
         check_path('not-existing-path')
