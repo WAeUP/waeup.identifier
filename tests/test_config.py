@@ -110,14 +110,15 @@ class Test_get_config(object):
         assert conf.get('DEFAULT', 'waeup_passwd') == 'grok'
         assert conf.get('DEFAULT', 'waeup_url') == 'localhost:8080'
 
-class ConfigTests(VirtualHomingTestCase):
-
-    def test_get_config_fpscan_path(self):
+    def test_get_config_fpscan_path(self, home_dir):
         # we get a valid fpscan path if avail.
-        fake_fpscan = os.path.join(self.path_dir, 'fpscan')
-        open(fake_fpscan, 'w').write('Just a fake script.')
+        fake_fpscan = home_dir / "fpscan"
+        fake_fpscan.write('Just a fake script.')
         conf = get_config()
-        assert conf.get('DEFAULT', 'fpscan_path') == fake_fpscan
+        assert conf.get('DEFAULT', 'fpscan_path') == str(fake_fpscan)
+
+
+class ConfigTests(VirtualHomingTestCase):
 
     def test_get_config_from_single_file(self):
         # configs can be read from a file
