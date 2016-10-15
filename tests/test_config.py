@@ -102,15 +102,12 @@ class Test_find_fpscan_binary(object):
         fake_fpscan_path.write('Just a fake')
         assert find_fpscan_binary(str(fake_fpscan_path)) == str(fake_fpscan_path)
 
-
-        assert find_fpscan_binary(fake_fpscan_path) == fake_fpscan_path
+    def test_find_fpscan_binary_invalid(self, home_dir):
+        # we get None if given paths are invalid
+        assert find_fpscan_binary('iNvAlIdPaTh') is None
 
 
 class ConfigTests(VirtualHomingTestCase):
-
-    def test_find_fpscan_binary_invalid(self):
-        # we get None if given paths are invalid
-        assert find_fpscan_binary('iNvAlIdPaTh') is None
 
     def test_find_fpscan_binary_fallback(self):
         # we find fpscans paths in $PATH if custom ones are invalid
