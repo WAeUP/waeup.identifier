@@ -115,12 +115,6 @@ class Test_find_fpscan_binary(object):
 
 class ConfigTests(VirtualHomingTestCase):
 
-    def test_find_fpscan_binary_fallback(self):
-        # we find fpscans paths in $PATH if custom ones are invalid
-        fake_fpscan = os.path.join(self.path_dir, 'fpscan')
-        open(fake_fpscan, 'w').write('Just a fake script.')
-        assert find_fpscan_binary('invalid_path') == fake_fpscan
-
     def test_get_config(self):
         # we can get valid configs
         conf = get_config()
