@@ -145,16 +145,3 @@ class Test_get_config(object):
             if key in ['fpscan_path', ]:
                 continue
             assert key in conf_dict
-
-
-class ConfigTests(VirtualHomingTestCase):
-
-    def test_all_conf_keys_appear(self):
-        # make sure that normally CONF_KEYS appear in default config
-        conf = get_config()
-        conf_dict = dict(conf.defaults())
-        for key in CONF_KEYS:
-            # some keys are not neccessarily available...
-            if key in ['fpscan_path', ]:
-                continue
-            assert key in conf_dict
