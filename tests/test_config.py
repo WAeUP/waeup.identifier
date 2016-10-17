@@ -139,18 +139,6 @@ class Test_get_config(object):
 
 class ConfigTests(VirtualHomingTestCase):
 
-    def test_get_config_two_files(self):
-        pass
-        ## configs can be read from two or more files
-        #conf1 = os.path.join(self.home_dir, 'conf1.cfg')
-        # conf2 = os.path.join(self.home_dir, 'conf2.cfg')
-        #open(conf1, 'w').write('[DEFAULT]\nwaeup_user=user1\n')
-        #open(conf2, 'w').write('[DEFAULT]\nwaeup_user=user2\n')
-        #conf = get_config(paths=[conf1, conf2])
-        #assert conf.get('DEFAULT', 'waeup_user') == 'user2'
-        #conf = get_config(paths=[conf2, conf1])
-        #assert conf.get('DEFAULT', 'waeup_user') == 'user1'
-
     def test_all_conf_keys_appear(self):
         # make sure that normally CONF_KEYS appear in default config
         conf = get_config()
