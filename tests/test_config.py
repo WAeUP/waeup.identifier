@@ -6,7 +6,6 @@ from waeup.identifier.config import (
     get_conffile_location, find_fpscan_binary, get_config, CONF_KEYS,
     get_json_settings, get_default_settings
     )
-from waeup.identifier.testing import VirtualHomingTestCase
 
 
 def test_get_json_settings_empty():
