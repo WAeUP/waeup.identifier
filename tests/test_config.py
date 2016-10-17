@@ -136,6 +136,16 @@ class Test_get_config(object):
         conf = get_config(paths=[str(conf2), str(conf1)])
         assert conf.get('DEFAULT', 'waeup_user') == 'user1'
 
+    def test_all_conf_keys_appear(self, home_dir):
+        # make sure that normally CONF_KEYS appear in default config
+        conf = get_config()
+        conf_dict = dict(conf.defaults())
+        for key in CONF_KEYS:
+            # some keys are not neccessarily available...
+            if key in ['fpscan_path', ]:
+                continue
+            assert key in conf_dict
+
 
 class ConfigTests(VirtualHomingTestCase):
 
