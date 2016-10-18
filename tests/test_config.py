@@ -1,6 +1,5 @@
 # Tests for config module
 import json
-import os
 import pytest
 from waeup.identifier.config import (
     get_conffile_location, find_fpscan_binary, get_config, CONF_KEYS,
