@@ -198,7 +198,7 @@ def xmlrpc_put_student_fingerprints(identifier=None, fingerprints={}):
     """
     global fake_student_db
     result = False
-    if not identifier in fake_student_db.keys():
+    if identifier not in fake_student_db.keys():
         raise xmlrpc_client.Fault(
             xmlrpc_client.INVALID_METHOD_PARAMS,
             "No such student: '%s'" % identifier)
