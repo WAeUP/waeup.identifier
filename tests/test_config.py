@@ -81,13 +81,6 @@ class Test_find_fpscan_binary(object):
         assert find_fpscan_binary(
             str(fake_fpscan_path)) == str(fake_fpscan_path)
 
-    def test_find_fpscan_binary_valid_custom(self, home_dir):
-        # we accept proposed paths if given and valid
-        fake_fpscan_path = home_dir / 'fpscan'
-        fake_fpscan_path.write('Just a fake')
-        assert find_fpscan_binary(
-            str(fake_fpscan_path)) == str(fake_fpscan_path)
-
     def test_find_fpscan_binary_invalid(self, home_dir):
         # we get None if given paths are invalid
         assert find_fpscan_binary('iNvAlIdPaTh') is None
