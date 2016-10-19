@@ -391,7 +391,8 @@ class FPScanApp(App):
             Logger.debug("waeup.identifier: no scanner detected. Aborted.")
             PopupNoScanDevice().open()
             return
-        cmd = FPScanCommand(path=path, params=['-s'], callback=self.scan_finished)
+        cmd = FPScanCommand(
+            path=path, params=['-s'], callback=self.scan_finished)
         self._scan_button_old_text = self._scan_button.text
         self._scan_button.text = "Please touch scanner..."
         self._scan_button.disabled = True
