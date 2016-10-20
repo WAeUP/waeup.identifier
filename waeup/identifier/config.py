@@ -130,7 +130,7 @@ def get_config(paths=None):
     `paths`, a list of paths. If no such argument is passed in, we use
     results from :func:`get_conffile_locations`.
 
-    Returns a `configparser.ConfigParser` instance.
+    Returns a `kivy.config.ConfigParser` instance.
     """
     conf = kivy.config.ConfigParser()
     fpscan_path = find_fpscan_binary()
