@@ -112,20 +112,9 @@ class Test_get_config(object):
         # configs can be read from a file
         conf_path = home_dir / 'config.conf'
         conf_path.write('[DEFAULT]\nwaeup_user=user1\n')
-        conf = get_config(paths=[str(conf_path)])
+        conf = get_config(path=str(conf_path))
         assert conf.get('DEFAULT', 'waeup_user') == 'user1'
         assert conf.get('DEFAULT', 'waeup_passwd') == 'grok'
-
-    def test_get_config_two_files(self, home_dir):
-        # configs can be read from two or more files
-        conf1 = home_dir / 'conf1.cfg'
-        conf2 = home_dir / 'conf2.cfg'
-        conf1.write('[DEFAULT]\nwaeup_user=user1\n')
-        conf2.write('[DEFAULT]\nwaeup_user=user2\n')
-        conf = get_config(paths=[str(conf1), str(conf2)])
-        assert conf.get('DEFAULT', 'waeup_user') == 'user2'
-        conf = get_config(paths=[str(conf2), str(conf1)])
-        assert conf.get('DEFAULT', 'waeup_user') == 'user1'
 
     def test_all_conf_keys_appear(self, home_dir):
         # make sure that normally CONF_KEYS appear in default config
