@@ -17,7 +17,7 @@
 #
 import json
 import os
-from configparser import ConfigParser
+from kivy.config import ConfigParser
 
 
 #: A list of valid configuration keys.
