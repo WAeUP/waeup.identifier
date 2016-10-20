@@ -17,7 +17,7 @@
 #
 import json
 import os
-from kivy.config import ConfigParser
+import kivy.config.ConfigParser
 
 
 #: A list of valid configuration keys.
@@ -132,7 +132,7 @@ def get_config(paths=None):
 
     Returns a `configparser.ConfigParser` instance.
     """
-    conf = ConfigParser()
+    conf = kivy.config.ConfigParser()
     fpscan_path = find_fpscan_binary()
     conf['DEFAULT'] = {
         'waeup_user': 'grok',
