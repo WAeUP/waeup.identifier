@@ -6,16 +6,18 @@ from waeup.identifier.config import (
     )
 
 
-def test_get_json_settings_empty():
-    # empty settings are possible
-    assert get_json_settings([]) == '[]'
+class TestHelpers(object):
+    # tests for functions that do not need much ado.
 
+    def test_get_json_settings_empty(self):
+        # empty settings are possible
+        assert get_json_settings([]) == '[]'
 
-def test_get_json_settings_no_default():
-    # we discard `default` keys from settings
-    result = get_json_settings(
-        [{'section': 'foo', 'key': 'bar', 'default': 'baz'}, ])
-    assert json.loads(result) == [{"key": "bar", "section": "foo"}]
+    def test_get_json_settings_no_default(self):
+        # we discard `default` keys from settings
+        result = get_json_settings(
+            [{'section': 'foo', 'key': 'bar', 'default': 'baz'}, ])
+        assert json.loads(result) == [{"key": "bar", "section": "foo"}]
 
 
 class Test_get_default_settings(object):
