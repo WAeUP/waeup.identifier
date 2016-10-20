@@ -44,27 +44,27 @@ class HelperTests(unittest.TestCase):
 
     def test_get_url_from_config(self):
         # we can get valid XMLRPCable URLs from default config
-        config = get_config(paths=[])  # get default config
+        config = get_config(path=None)  # get default config
         assert get_url_from_config(config) == (
             "https://grok:grok@localhost:8080")
 
     def test_get_url_from_config_w_scheme(self):
         # a scheme set in waeup_url will be respected
-        config = get_config(paths=[])
+        config = get_config(path=None)
         config["DEFAULT"]["waeup_url"] = "http://sample.org"
         assert get_url_from_config(config) == (
             "http://grok:grok@sample.org")
 
     def test_get_url_from_config_changed_creds(self):
         # changed credentials are respected
-        config = get_config(paths=[])
+        config = get_config(path=None)
         config["DEFAULT"]["waeup_user"] = "foo"
         config["DEFAULT"]["waeup_passwd"] = "bar"
         assert get_url_from_config(config) == "https://foo:bar@localhost:8080"
 
     def test_get_url_from_config_with_paths(self):
         # app paths are taken into account
-        config = get_config(paths=[])
+        config = get_config(path=None)
         config["DEFAULT"]["waeup_url"] = "http://sample.org/app"
         assert get_url_from_config(config) == (
             "http://grok:grok@sample.org/app")
