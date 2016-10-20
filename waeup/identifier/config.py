@@ -123,11 +123,11 @@ def find_fpscan_binary(path=None):
     return None
 
 
-def get_config(paths=None):
+def get_config(path=None):
     """Get a configuration.
 
-    The paths, where config files are searched, can be given in
-    `paths`, a list of paths. If no such argument is passed in, we use
+    The path, where a config file is searched, can be given in
+    `path`, a string. If no such argument is passed in, we use
     results from :func:`get_conffile_locations`.
 
     Returns a `kivy.config.ConfigParser` instance.
@@ -142,9 +142,9 @@ def get_config(paths=None):
         }
     if fpscan_path is not None:
         conf['DEFAULT'].update(fpscan_path=fpscan_path)
-    if paths is not None:
-        conffile_location = paths
+    if path is not None:
+        conffile_location = path
     else:
-        conffile_location = [get_conffile_location()]
+        conffile_location = get_conffile_location()
     conf.read(conffile_location)
     return conf
