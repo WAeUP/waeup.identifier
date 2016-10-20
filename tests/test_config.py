@@ -19,6 +19,11 @@ class TestHelpers(object):
             [{'section': 'foo', 'key': 'bar', 'default': 'baz'}, ])
         assert json.loads(result) == [{"key": "bar", "section": "foo"}]
 
+    def test_get_conffile_location(self, home_dir):
+        # we can get a config file location path
+        result = get_conffile_location()
+        assert result == str(home_dir / '.waeupident.ini')
+
 
 class Test_get_default_settings(object):
     # tests for `config.get_default_settings()`.
@@ -56,12 +61,6 @@ class Test_get_default_settings(object):
             [{'section': 'foo', 'key': 'fpscan_path', 'default': 'bar'}])
         path = str(home_dir / "fpscan")
         assert result == [("foo", dict(fpscan_path=path))]
-
-
-def test_get_conffile_location(home_dir):
-    # we can get a config file location path
-    result = get_conffile_location()
-    assert result == str(home_dir / '.waeupident.ini')
 
 
 class Test_find_fpscan_binary(object):
