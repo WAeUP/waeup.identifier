@@ -16,7 +16,7 @@ from waeup.identifier.webservice import (
 )
 
 
-class HelperTests(unittest.TestCase):
+class TestHelpers(object):
 
     def test_get_url(self):
         # we can get completed urls from netlocations plus credentials
