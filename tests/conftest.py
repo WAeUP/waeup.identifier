@@ -14,3 +14,13 @@ def home_dir(request, monkeypatch, tmpdir):
     monkeypatch.setenv("HOME", str(tmpdir / "home"))
     monkeypatch.setenv("PATH", str(tmpdir / "home"))
     return tmpdir / "home"
+
+
+@pytest.fixture(scope="session")
+def waeup_server(request):
+    """A py.test fixture that starts an authenticating XMLRPC server.
+
+    The server mimics WAeUP servers' behavior for fingerprint-related
+    xmlrpc requests.
+    """
+    return None
