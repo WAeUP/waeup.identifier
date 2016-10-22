@@ -70,18 +70,18 @@ class TestHelpers(object):
             "http://grok:grok@sample.org/app")
 
 
-def test_waeup_server_fixture_works(waeup_server):
-    # Ensure there is a (fake) waeup server running  in background.
-    # Should be started by `waeup_server` fixture once per session.
-    proxy = xmlrpcclient.ServerProxy(
-        "http://mgr:mgrpw@localhost:61614")
-    assert proxy.ping(42) == ['pong', 42]
+class TestWebservice(object):
 
+    def test_waeup_server_fixture_works(self, waeup_server):
+        # Ensure there is a (fake) waeup server running  in background.
+        # Should be started by `waeup_server` fixture once per session.
+        proxy = xmlrpcclient.ServerProxy(
+            "http://mgr:mgrpw@localhost:61614")
+        assert proxy.ping(42) == ['pong', 42]
 
-def test_waeup_proxy_fixture_works(waeup_proxy):
-    # Ensure wecan get a working XMLRPC server proxy
-    assert waeup_proxy.ping(42) == ['pong', 42]
-
+    def test_waeup_proxy_fixture_works(self, waeup_proxy):
+        # Ensure wecan get a working XMLRPC server proxy
+        assert waeup_proxy.ping(42) == ['pong', 42]
 
 
 class WebserviceTests(unittest.TestCase):
