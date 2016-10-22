@@ -121,10 +121,6 @@ class WebserviceTests(unittest.TestCase):
                 },
             )
 
-    def test_internal_ping(self):
-        # make sure the fake xmlrpc server works
-        assert self.proxy.ping(42) == ['pong', 42]
-
     def test_internal_auth(self):
         # make sure our fake xmlrpc server requires authentication
         proxy = xmlrpcclient.ServerProxy(
