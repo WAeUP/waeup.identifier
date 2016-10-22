@@ -70,6 +70,13 @@ class TestHelpers(object):
             "http://grok:grok@sample.org/app")
 
 
+def test_waeup_server_fixture_works(waeup_server):
+    # We can reac
+    proxy = xmlrpcclient.ServerProxy(
+        "http://mgr:mgrpw@localhost:61614")
+    assert proxy.ping(42) == ['pong', 42]
+
+
 class WebserviceTests(unittest.TestCase):
 
     server = None
