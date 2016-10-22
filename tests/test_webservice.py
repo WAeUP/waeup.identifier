@@ -72,9 +72,7 @@ class TestHelpers(object):
 
 def test_waeup_server_fixture_works(waeup_server):
     # We can reach local (fake) waeup server with `waeup_server` fixture.
-    proxy = xmlrpcclient.ServerProxy(
-        "http://mgr:mgrpw@localhost:61614")
-    assert proxy.ping(42) == ['pong', 42]
+    assert waeup_server.ping(42) == ['pong', 42]
 
 
 class WebserviceTests(unittest.TestCase):

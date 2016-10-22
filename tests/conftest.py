@@ -3,6 +3,7 @@
 # py.test finds them automatically if put in a file called `conftest.py`.
 import pytest
 import threading
+import xmlrpc.client as xmlrpcclient
 from waeup.identifier.testing import AuthenticatingXMLRPCServer
 
 
@@ -29,5 +30,7 @@ def waeup_server(request):
     server_thread = threading.Thread(target=server.serve_forever)
     server_thread.daemon = True
     server_thread.start()
+    proxy = xmlrpcclient.ServerProxy(
+        "http://mgr:mgrpw@localhost:61614")
     request.addfinalizer(server.shutdown)
-    return (server, server_thread)
+    return proxy
