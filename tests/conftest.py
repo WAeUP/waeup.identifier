@@ -2,6 +2,8 @@
 #
 # py.test finds them automatically if put in a file called `conftest.py`.
 import pytest
+import threading
+from waeup.identifier.testing import AuthenticatingXMLRPCServer
 
 
 @pytest.fixture(scope="function")
@@ -16,11 +18,19 @@ def home_dir(request, monkeypatch, tmpdir):
     return tmpdir / "home"
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")
 def waeup_server(request):
     """A py.test fixture that starts an authenticating XMLRPC server.
 
     The server mimics WAeUP servers' behavior for fingerprint-related
     xmlrpc requests.
     """
-    return None
+    server = AuthenticatingXMLRPCServer("127.0.0.1", 61614)
+    server_thread = threading.Thread(target=server.serve_forever)
+    server_thread.daemon = True
+    server_thread.start()
+    def shutdown():
+        print("SHUTDOWN")
+        server.shutdown()
+    request.addfinalizer(shutdown)
+    return (server, server_thread)
