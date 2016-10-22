@@ -18,7 +18,7 @@ def home_dir(request, monkeypatch, tmpdir):
     return tmpdir / "home"
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope="session")
 def waeup_server(request):
     """A py.test fixture that starts an authenticating XMLRPC server.
 
