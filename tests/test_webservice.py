@@ -1,3 +1,4 @@
+import pytest
 import shutil
 import socket
 import tempfile
@@ -83,6 +84,13 @@ class TestWebservice(object):
         # Ensure wecan get a working XMLRPC server proxy
         assert waeup_proxy.ping(42) == ['pong', 42]
 
+    def test_internal_auth(self, waeup_server):
+        # make sure our fake xmlrpc server requires authentication
+        proxy = xmlrpcclient.ServerProxy(
+            "http://localhost:61614")
+        with pytest.raises(xmlrpcclient.ProtocolError):
+            proxy.ping(42)
+
 
 class WebserviceTests(unittest.TestCase):
 
@@ -120,13 +128,6 @@ class WebserviceTests(unittest.TestCase):
                 "1": xmlrpcclient.Binary(b"FP1Fake"),
                 },
             )
-
-    def test_internal_auth(self):
-        # make sure our fake xmlrpc server requires authentication
-        proxy = xmlrpcclient.ServerProxy(
-            "http://localhost:61615")
-        self.assertRaises(
-            xmlrpcclient.ProtocolError, proxy.ping, 42)
 
     def test_internal_methods(self):
         # the following methods are available
