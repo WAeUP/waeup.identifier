@@ -37,6 +37,11 @@ def waeup_server(request):
 @pytest.fixture(scope="function")
 def waeup_proxy(request, waeup_server):
     """A proxy for XMLRPC calls to a local (fake) Kofa server.
+
+    Automatically fires up a `waeup_server` instance for the running
+    session. You will normally use `waeup_proxy` instead of
+    `waeup_server` as the proxy allows direct talking to the server via
+    methods.
     """
     proxy = xmlrpcclient.ServerProxy(
         "http://mgr:mgrpw@localhost:61614")
