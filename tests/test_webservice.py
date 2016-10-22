@@ -100,6 +100,29 @@ class TestWebservice(object):
             'reset_student_db', 'system.listMethods',
             'system.methodHelp', 'system.methodSignature']
 
+    def test_internal_put_student_fingerprints(self, waeup_proxy):
+        # make sure the faked method is faked properly
+        waeup_proxy.create_student('AB123456')
+        # invalid student id
+        with pytest.raises(xmlrpcclient.Fault):
+            waeup_proxy.put_student_fingerprints('invalid-id')
+        # fingerprint dict not a dict
+        with pytest.raises(xmlrpcclient.Fault):
+            waeup_proxy.put_student_fingerprints('AB123456', 'not-a-dict')
+        # invalid fingerprint file type
+        with pytest.raises(xmlrpcclient.Fault):
+            waeup_proxy.put_student_fingerprints('AB123456', {'1': 12})
+        # invalid file format
+        with pytest.raises(xmlrpcclient.Fault):
+            waeup_proxy.put_student_fingerprints(
+                'AB123456', {'1': xmlrpcclient.Binary(b'not-an-fpm-file')})
+        # valid fingerprint dict
+        assert waeup_proxy.put_student_fingerprints(
+            'AB123456', {'1': xmlrpcclient.Binary(b'FP1-faked-fpm-file')}
+            ) is True
+        # empty fingerprint dict
+        assert waeup_proxy.put_student_fingerprints('AB123456', {}) is False
+
 
 class WebserviceTests(unittest.TestCase):
 
@@ -137,36 +160,6 @@ class WebserviceTests(unittest.TestCase):
                 "1": xmlrpcclient.Binary(b"FP1Fake"),
                 },
             )
-
-    def test_internal_put_student_fingerprints(self):
-        # make sure the faked method is faked properly
-        self.proxy.create_student('AB123456')
-        # invalid student id
-        self.assertRaises(
-            xmlrpcclient.Fault,
-            self.proxy.put_student_fingerprints, 'invalid-id')
-        # fingerprint dict not a dict
-        self.assertRaises(
-            xmlrpcclient.Fault,
-            self.proxy.put_student_fingerprints, 'AB123456', 'not-a-dict')
-        # invalid fingerprint file type
-        self.assertRaises(
-            xmlrpcclient.Fault,
-            self.proxy.put_student_fingerprints, 'AB123456', {'1': 12})
-        # invalid file format
-        self.assertRaises(
-            xmlrpcclient.Fault,
-            self.proxy.put_student_fingerprints, 'AB123456', {
-                '1': xmlrpcclient.Binary(b'not-an-fpm-file')}
-            )
-        # valid fingerprint dict
-        assert self.proxy.put_student_fingerprints(
-            'AB123456', {
-                '1': xmlrpcclient.Binary(b'FP1-faked-fpm-file')}
-            ) is True
-        # empty fingerprint dict
-        assert self.proxy.put_student_fingerprints(
-            'AB123456', {}) is False
 
     def test_internal_get_student_fingerprints(self):
         # the faked get_student_fingerprint method works as
