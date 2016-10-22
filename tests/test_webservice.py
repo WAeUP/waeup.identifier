@@ -78,6 +78,12 @@ def test_waeup_server_fixture_works(waeup_server):
     assert proxy.ping(42) == ['pong', 42]
 
 
+def test_waeup_proxy_fixture_works(waeup_proxy):
+    # Ensure wecan get a working XMLRPC server proxy
+    assert waeup_proxy.ping(42) == ['pong', 42]
+
+
+
 class WebserviceTests(unittest.TestCase):
 
     server = None
