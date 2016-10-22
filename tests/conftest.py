@@ -29,8 +29,5 @@ def waeup_server(request):
     server_thread = threading.Thread(target=server.serve_forever)
     server_thread.daemon = True
     server_thread.start()
-    def shutdown():
-        print("SHUTDOWN")
-        server.shutdown()
-    request.addfinalizer(shutdown)
+    request.addfinalizer(server.shutdown)
     return (server, server_thread)
