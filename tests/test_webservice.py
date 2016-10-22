@@ -91,6 +91,15 @@ class TestWebservice(object):
         with pytest.raises(xmlrpcclient.ProtocolError):
             proxy.ping(42)
 
+    def test_internal_methods(self, waeup_proxy):
+        # the following methods are available
+        assert sorted(waeup_proxy.system.listMethods()) == [
+            'create_student',
+            'get_student_fingerprints', 'ping',
+            'put_student_fingerprints',
+            'reset_student_db', 'system.listMethods',
+            'system.methodHelp', 'system.methodSignature']
+
 
 class WebserviceTests(unittest.TestCase):
 
@@ -128,15 +137,6 @@ class WebserviceTests(unittest.TestCase):
                 "1": xmlrpcclient.Binary(b"FP1Fake"),
                 },
             )
-
-    def test_internal_methods(self):
-        # the following methods are available
-        assert sorted(self.proxy.system.listMethods()) == [
-            'create_student',
-            'get_student_fingerprints', 'ping',
-            'put_student_fingerprints',
-            'reset_student_db', 'system.listMethods',
-            'system.methodHelp', 'system.methodSignature']
 
     def test_internal_put_student_fingerprints(self):
         # make sure the faked method is faked properly
