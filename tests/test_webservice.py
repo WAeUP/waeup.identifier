@@ -148,6 +148,55 @@ class TestWebservice(object):
         assert result2["img"].data == b"FakedPNGFile"
         assert result2["fingerprints"]["1"].data == b"FP1Fake"
 
+    def test_store_fingerprint(self, waeup_proxy, tmpdir):
+        # we can store a fingerprint
+        waeup_proxy.create_student('AB123456')
+        fpm_file_path = create_fake_fpm_file(str(tmpdir))
+        result = store_fingerprint(
+            "http://mgr:mgrpw@localhost:61614", "AB123456", 1, fpm_file_path)
+        assert result is True
+
+    def test_store_fingerprint_unauth(self, waeup_proxy, tmpdir):
+        # tries to store fingerprints unauthorized will be blocked
+        waeup_proxy.create_student('AB123456')
+        fpm_file_path = create_fake_fpm_file(str(tmpdir))
+        result = store_fingerprint(
+            "http://localhost:61614", "AB123456", 1, fpm_file_path)
+        assert result == "Error: 401 Unauthorized"
+
+    def test_store_fingerprint_invalid_server(self, tmpdir):
+        # trying to connect to invalid servers will raise socket errors.
+        fpm_file_path = create_fake_fpm_file(str(tmpdir))
+        with pytest.raises(socket.error):
+            store_fingerprint(
+                "http://localhost:12345", "AB123456", 1, fpm_file_path)
+
+    def test_get_fingerprints(self, waeup_proxy):
+        # we can retrieve stored fingerprints
+        self.populate_db(waeup_proxy)
+        result = get_fingerprints(
+            "http://mgr:mgrpw@localhost:61614", "AB123456")
+        assert isinstance(result, dict)
+        assert result.get("email", None) == "foo@sample.org"
+        assert result.get("firstname", None) == "foo"
+        assert result.get("lastname", None) == "bar"
+        assert result.get("img", None) is not None
+        img = result["img"].data
+        assert img == b"FakedPNGFile"
+        assert result.get("img_name", None) == "passport.png"
+        assert isinstance(result.get("fingerprints", None), dict)
+        fprints = result.get("fingerprints")
+        assert "1" in fprints.keys()
+        fprint = fprints["1"].data
+        assert fprint == b"FP1Fake"
+
+    def test_get_fingerprints_unauth(self, waeup_proxy):
+        # we cannot get fingerprints w/o being authorized
+        self.populate_db(waeup_proxy)
+        result = get_fingerprints(
+            "http://illegal:mgrpw@localhost:61614", "AB123456")
+        assert result == "Error: 401 Unauthorized"
+
 
 class WebserviceTests(unittest.TestCase):
 
@@ -185,58 +234,6 @@ class WebserviceTests(unittest.TestCase):
                 "1": xmlrpcclient.Binary(b"FP1Fake"),
                 },
             )
-
-    def test_store_fingerprint(self):
-        # we can store a fingerprint
-        self.proxy.create_student('AB123456')
-        fpm_file_path = create_fake_fpm_file(self.workdir)
-        result = store_fingerprint(
-            "http://mgr:mgrpw@localhost:61615", "AB123456", 1, fpm_file_path)
-        assert result is True
-
-    def test_store_fingerprint_unauth(self):
-        # tries to store fingerprints unauthorized will be blocked
-        self.proxy.create_student('AB123456')
-        fpm_file_path = create_fake_fpm_file(self.workdir)
-        result = store_fingerprint(
-            "http://localhost:61615", "AB123456", 1, fpm_file_path)
-        assert result == "Error: 401 Unauthorized"
-
-    def test_store_fingerprint_invalid_server(self):
-        # trying to connect to invalid servers will raise socket errors.
-        fpm_file_path = create_fake_fpm_file(self.workdir)
-        self.assertRaises(socket.error, store_fingerprint,
-                          "http://localhost:12345", "AB123456", 1,
-                          fpm_file_path)
-
-    def test_get_fingerprints(self):
-        # we can retrieve stored fingerprints
-        self.populate_db()
-        result = get_fingerprints(
-            "http://mgr:mgrpw@localhost:61615",
-            "AB123456")
-        assert isinstance(result, dict)
-        assert result.get("email", None) == "foo@sample.org"
-        assert result.get("firstname", None) == "foo"
-        assert result.get("lastname", None) == "bar"
-        assert result.get("img", None) is not None
-        img = result["img"].data
-        assert img == b"FakedPNGFile"
-        assert result.get("img_name", None) == "passport.png"
-        assert isinstance(result.get("fingerprints", None), dict)
-        fprints = result.get("fingerprints")
-        assert "1" in fprints.keys()
-        fprint = fprints["1"].data
-        assert fprint == b"FP1Fake"
-
-    def test_get_fingerprints_unauth(self):
-        # we cannot get fingerprints w/o being authorized
-        self.populate_db()
-        result = get_fingerprints(
-            "http://illegal:mgrpw@localhost:61615",
-            "AB123456"
-            )
-        assert result == "Error: 401 Unauthorized"
 
     def test_get_fingerprints_invalid_server(self):
         # we cannot get fingerprints w/o being authorized
