@@ -30,7 +30,12 @@ def waeup_server(request):
     server_thread = threading.Thread(target=server.serve_forever)
     server_thread.daemon = True
     server_thread.start()
+    request.addfinalizer(server.shutdown)
+    return (server, server_thread)
+
+
+@pytest.fixture(scope="function")
+def waeup_proxy(request, waeup_server):
     proxy = xmlrpcclient.ServerProxy(
         "http://mgr:mgrpw@localhost:61614")
-    request.addfinalizer(server.shutdown)
     return proxy
