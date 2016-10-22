@@ -197,6 +197,12 @@ class TestWebservice(object):
             "http://illegal:mgrpw@localhost:61614", "AB123456")
         assert result == "Error: 401 Unauthorized"
 
+    def test_get_fingerprints_invalid_server(self, waeup_proxy):
+        # trying to connect to invalid servers will raise socket errors.
+        self.populate_db(waeup_proxy)
+        with pytest.raises(socket.error):
+            get_fingerprints("http://mgr:mgrpw@localhost:12345", "AB123456")
+
 
 class WebserviceTests(unittest.TestCase):
 
@@ -233,14 +239,4 @@ class WebserviceTests(unittest.TestCase):
             {
                 "1": xmlrpcclient.Binary(b"FP1Fake"),
                 },
-            )
-
-    def test_get_fingerprints_invalid_server(self):
-        # we cannot get fingerprints w/o being authorized
-        self.populate_db()
-        self.assertRaises(
-            socket.error,
-            get_fingerprints,
-            "http://illegal:mgrpw@localhost:12345",
-            "AB123456"
             )
