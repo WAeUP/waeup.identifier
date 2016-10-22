@@ -36,6 +36,10 @@ def waeup_server(request):
 
 @pytest.fixture(scope="function")
 def waeup_proxy(request, waeup_server):
+    """A proxy for XMLRPC calls to a local (fake) Kofa server.
+    """
     proxy = xmlrpcclient.ServerProxy(
         "http://mgr:mgrpw@localhost:61614")
+    proxy.reset_student_db()                      # clean up before test
+    request.addfinalizer(proxy.reset_student_db)  # clean up after
     return proxy
