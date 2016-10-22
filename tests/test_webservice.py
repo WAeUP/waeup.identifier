@@ -73,6 +73,16 @@ class TestHelpers(object):
 
 class TestWebservice(object):
 
+    def populate_db(self, proxy):
+        # create student in db
+        proxy.create_student(
+            'AB123456', "foo@sample.org", "foo", "bar",
+            "passport.png", xmlrpcclient.Binary(b"FakedPNGFile"),
+            {
+                "1": xmlrpcclient.Binary(b"FP1Fake"),
+                },
+            )
+
     def test_waeup_server_fixture_works(self, waeup_server):
         # Ensure there is a (fake) waeup server running  in background.
         # Should be started by `waeup_server` fixture once per session.
@@ -123,6 +133,21 @@ class TestWebservice(object):
         # empty fingerprint dict
         assert waeup_proxy.put_student_fingerprints('AB123456', {}) is False
 
+    def test_internal_get_student_fingerprints(self, waeup_proxy):
+        # the faked get_student_fingerprint method works as
+        # as the Kofa original.
+        self.populate_db(waeup_proxy)
+        result1 = waeup_proxy.get_student_fingerprints("InvalidID")
+        assert result1 == dict()
+        result2 = waeup_proxy.get_student_fingerprints("AB123456")
+        assert isinstance(result2, dict)
+        assert result2["email"] == "foo@sample.org"
+        assert result2["firstname"] == "foo"
+        assert result2["lastname"] == "bar"
+        assert result2["img_name"] == "passport.png"
+        assert result2["img"].data == b"FakedPNGFile"
+        assert result2["fingerprints"]["1"].data == b"FP1Fake"
+
 
 class WebserviceTests(unittest.TestCase):
 
@@ -160,21 +185,6 @@ class WebserviceTests(unittest.TestCase):
                 "1": xmlrpcclient.Binary(b"FP1Fake"),
                 },
             )
-
-    def test_internal_get_student_fingerprints(self):
-        # the faked get_student_fingerprint method works as
-        # as the Kofa original.
-        self.populate_db()
-        result1 = self.proxy.get_student_fingerprints("InvalidID")
-        assert result1 == dict()
-        result2 = self.proxy.get_student_fingerprints("AB123456")
-        assert isinstance(result2, dict)
-        assert result2["email"] == "foo@sample.org"
-        assert result2["firstname"] == "foo"
-        assert result2["lastname"] == "bar"
-        assert result2["img_name"] == "passport.png"
-        assert result2["img"].data == b"FakedPNGFile"
-        assert result2["fingerprints"]["1"].data == b"FP1Fake"
 
     def test_store_fingerprint(self):
         # we can store a fingerprint
