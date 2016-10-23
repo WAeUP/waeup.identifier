@@ -21,6 +21,7 @@ import string
 import subprocess
 import threading
 from kivy.app import App
+from kivy.clock import mainthread
 from kivy.config import Config
 from kivy.logger import Logger
 from kivy.properties import BooleanProperty, StringProperty
@@ -400,8 +401,12 @@ class FPScanApp(App):
             'waeup.identifier: initialized scan, awaiting finger touch')
         cmd.start()
 
+    @mainthread
     def scan_finished(self, *args):
         """A scan has been finished.
+
+        This is a callback function which might be called from a
+        separate thread. Therefore it is decorated with `mainthread`.
         """
         Logger.info("waeup.identifier: scan finished.")
         self._scan_button.text = self._scan_button_old_text
