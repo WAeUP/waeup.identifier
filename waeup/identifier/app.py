@@ -249,9 +249,12 @@ class FPScanCommand(BackgroundCommand):
             cmd, timeout=timeout, callback=callback)
 
 
-def call_in_background(target, *args, **kwargs):
+def call_in_background(target, callback, *args, **kwargs):
+    def run(*args, **kwargs):
+        result = target(*args, **kwargs)
+        callback(result)
     thread = threading.Thread(
-        target=target, args=args, kwargs=kwargs, daemon=True)
+        target=run, args=args, kwargs=kwargs, daemon=True)
     thread.start()
     return thread
 
