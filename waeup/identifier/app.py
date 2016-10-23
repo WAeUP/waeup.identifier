@@ -32,7 +32,7 @@ from subprocess import Popen, PIPE
 from waeup.identifier.config import (
     get_json_settings, get_default_settings, get_conffile_location,
 )
-from waeup.identifier.webservice import store_fingerprint
+from waeup.identifier.webservice import store_fingerprint, get_url
 
 
 # Enable virtualkeyboard
@@ -431,7 +431,14 @@ class FPScanApp(App):
         self.upload_fingerprint(path)
 
     def upload_fingerprint(self, path):
-        pass
+        student_id = self.root.f_student_id
+        Logger.info("waeup.identifier: uploading fingerprint for '%s'" % student_id)
+        username = self.config.get('Server', 'waeup_user')
+        password = self.config.get('Server', 'waeup_passwd')
+        netloc = self.config.get('Server', 'waeup_url')
+        url = get_url(netloc, username, password)
+        call_in_background(
+            store_fingerprint, self.upload_finished, url, student_id, 1, path)
 
     def upload_data(self, stud_id, fp_file_path):
         """Upload fingerprint data for `stud_id` in `fp_file_path` to server.
