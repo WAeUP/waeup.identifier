@@ -124,7 +124,7 @@ Programmatically, the fake kofa server can be started like this:
 
   >>> import threading
   >>> from waeup.identifier.testing import AuthenticatingXMLRPCServer
-  >>> server = AuthenticatingXMLRPCServer('127.0.0.1', 61616)
+  >>> server = AuthenticatingXMLRPCServer('127.0.0.1', 16161)
   >>> server_thread = threading.Thread(
   ...     target=server.serve_forever
   ...     )
@@ -133,10 +133,10 @@ Programmatically, the fake kofa server can be started like this:
 
 When the server runs, you can try to connect to it via `xmlrpclib`
 (Python 2.x) or `xmlrpc.client` (Python 3.x). Please note, that the
-`fake_kofa_server` by default listens on localhost port 14096.
+`fake_kofa_server` by default listens on localhost port 616161.
 
   >>> from xmlrpc.client import ServerProxy  # Python 3.x only
-  >>> s = ServerProxy("http://mgr:mgrpw@localhost:61616")
+  >>> s = ServerProxy("http://mgr:mgrpw@localhost:16161")
   >>> s.ping(42)
   ['pong', 42]
 
