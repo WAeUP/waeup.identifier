@@ -249,6 +249,13 @@ class FPScanCommand(BackgroundCommand):
             cmd, timeout=timeout, callback=callback)
 
 
+def call_in_background(target, *args, **kwargs):
+    thread = threading.Thread(
+        target=target, args=args, kwargs=kwargs, daemon=True)
+    thread.start()
+    return thread
+
+
 class StudentIdInput(TextInput):
     """A `TextInput` turning input into upper case.
 
