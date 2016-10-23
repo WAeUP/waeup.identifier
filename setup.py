@@ -9,7 +9,7 @@ tests_path = os.path.join(os.path.dirname(__file__), 'tests')
 
 
 tests_require = [
-    'pytest >= 2.0.3',
+    'pytest >= 2.8',
     'pytest-cov',
 ]
 
