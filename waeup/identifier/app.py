@@ -365,7 +365,6 @@ class FPScanApp(App):
         """A student id was entered.
         """
         entered_text = instance[0].text
-        Logger.debug("waeup.identifier: stud_id changed: %s" % entered_text)
         prevent = RE_STUDENT_ID.match(entered_text) is None
         self.prevent_scanning = prevent
         if entered_text and prevent:
@@ -374,6 +373,8 @@ class FPScanApp(App):
                 message="The entered student id is not valid"
                 )
             popup.open()
+        self.root.f_student_id = entered_text
+        Logger.debug("waeup.identifier: stud_id changed: %s" % entered_text)
 
     def scan_pressed(self, instance):
         Logger.debug("waeup.identifier: 'scan' pressed")
