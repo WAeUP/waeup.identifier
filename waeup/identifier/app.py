@@ -445,7 +445,8 @@ class FPScanApp(App):
         """
         pass
 
-    def upload_finished(self, *args):
+    @mainthread
+    def upload_finished(self, upload_result):
         """Callback for fingerprint file upload.
         """
-        pass
+        Logger.info("waeup.identifier: fingerprint upload finished: %r" % upload_result)
