@@ -460,3 +460,4 @@ class FPScanApp(App):
                 title="Data upload failed",
                 message="Fingerprint upload failed.\nError message:\n%s" % upload_result)
         popup.open()
+        return
