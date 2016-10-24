@@ -437,7 +437,8 @@ class FPScanApp(App):
 
     def upload_fingerprint(self, path):
         student_id = self.root.f_student_id
-        Logger.info("waeup.identifier: uploading fingerprint for '%s'" % student_id)
+        Logger.info(
+            "waeup.identifier: uploading fingerprint for '%s'" % student_id)
         username = self.config.get('Server', 'waeup_user')
         password = self.config.get('Server', 'waeup_passwd')
         netloc = self.config.get('Server', 'waeup_url')
@@ -451,13 +452,15 @@ class FPScanApp(App):
     def upload_finished(self, upload_result):
         """Callback for fingerprint file upload.
         """
-        Logger.info("waeup.identifier: fingerprint upload finished: %r" % upload_result)
+        Logger.info(
+            "waeup.identifier: fingerprint upload finished: %r" %
+            upload_result)
         if upload_result is True:
             # upload was successful
             PopupUploadSuccessful().open()
             return
         popup = FPScanPopup(
-                title="Data upload failed",
-                message="Fingerprint upload failed.\nError message:\n%s" % upload_result)
+            title="Data upload failed",
+            message="Fingerprint upload failed.\nError message:\n%s" %
+            upload_result)
         popup.open()
-        return
