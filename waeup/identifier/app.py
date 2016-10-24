@@ -442,11 +442,6 @@ class FPScanApp(App):
             args=(url, student_id, 1, path),
             callback=self.upload_finished)
 
-    def upload_data(self, stud_id, fp_file_path):
-        """Upload fingerprint data for `stud_id` in `fp_file_path` to server.
-        """
-        pass
-
     @mainthread
     def upload_finished(self, upload_result):
         """Callback for fingerprint file upload.
