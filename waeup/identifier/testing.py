@@ -270,8 +270,24 @@ def start_fake_kofa():
 
     The fake server provides only a copy of the XMLRPC API of WAeUP
     Kofa. Useful for testing.
+
+    With ``-- -p`` also a couple of fake student entries are created on
+    startup.
+
+    The double dash ``--`` tells `kivy` not to care for all
+    following parameters, while `-p` tells us to populate the fake
+    database with the said entries.
     """
     server = AuthenticatingXMLRPCServer('127.0.0.1', 61616)
     print("Starting server at 127.0.0.1:61616")
+    if "-p" not in sys.argv:
+        print("No entries created. Restart with `-- -p' to create.")
+    else:
+        # create some fake entries
+        for (stud_id, email, firstname, lastname) in [
+                ("AA11111", "alice@sample.org", "Alice", "Align"),
+                ("BB11111", "bob@simple.edu", "Bob", "Bash"), ]:
+            xmlrpc_create_student(stud_id, email, firstname, lastname)
+            print("Created fake entry: %s" % stud_id)
     print("Press ^C (Ctrl-c) to abort.")
     server.serve_forever()
