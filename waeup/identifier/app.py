@@ -452,3 +452,7 @@ class FPScanApp(App):
         """Callback for fingerprint file upload.
         """
         Logger.info("waeup.identifier: fingerprint upload finished: %r" % upload_result)
+        if upload_result is True:
+            # upload was successful
+            PopupUploadSuccessful().open()
+            return
