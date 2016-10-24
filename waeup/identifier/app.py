@@ -311,6 +311,11 @@ class PopupScanFailed(FPScanPopup):
     """
 
 
+class PopupUploadSuccessful(FPScanPopup):
+    """Popup signalling successful fingerprint data upload.
+    """
+
+
 class FPScanApp(App):
     """The main application.
     """
