@@ -249,9 +249,9 @@ class FPScanCommand(BackgroundCommand):
             cmd, timeout=timeout, callback=callback)
 
 
-def call_in_background(target, callback, *args, **kwargs):
+def call_in_background(callable, args=(), kwargs={}, callback=None):
     def run(*args, **kwargs):
-        result = target(*args, **kwargs)
+        result = callable(*args, **kwargs)
         callback(result)
     thread = threading.Thread(
         target=run, args=args, kwargs=kwargs, daemon=True)
@@ -438,7 +438,9 @@ class FPScanApp(App):
         netloc = self.config.get('Server', 'waeup_url')
         url = get_url(netloc, username, password)
         call_in_background(
-            store_fingerprint, self.upload_finished, url, student_id, 1, path)
+            callable=store_fingerprint,
+            args=(url, student_id, 1, path),
+            callback=self.upload_finished)
 
     def upload_data(self, stud_id, fp_file_path):
         """Upload fingerprint data for `stud_id` in `fp_file_path` to server.
