@@ -94,6 +94,8 @@ def store_fingerprint(url, student_id, finger_num, data_file_path):
         result = "Error %s: %s" % (err.faultCode, err.faultString)
     except xmlrpcclient.ProtocolError as err:
         result = "Error: %s %s" % (err.errcode, err.errmsg)
+    except Exception as err:
+        result = "Error: %s" % err
     return result
 
 
@@ -108,4 +110,6 @@ def get_fingerprints(url, student_id):
         result = "Error %s: %s" % (err.faultCode, err.faultString)
     except xmlrpcclient.ProtocolError as err:
         result = "Error: %s %s" % (err.errcode, err.errmsg)
+    except Exception as err:
+        result = "Error: %s" % err
     return result
