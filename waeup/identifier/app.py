@@ -324,6 +324,7 @@ class FPScanApp(App):
     icon = '%s/waeupicon.png' % IMAGES_PATH
     prevent_scanning = BooleanProperty(True)
     popup_text = StringProperty('')
+    cmd_running = None
 
     def build(self):
         from kivy.uix.settings import Settings
@@ -390,6 +391,9 @@ class FPScanApp(App):
 
     def quit_pressed(self, instance):
         Logger.debug("waeup.identifier: 'quit' pressed")
+        if self.cmd_running is not None:
+            Logger.debug("waeup.identifier: kill running subprocess...")
+            self.cmd_running.p.kill()
         self.stop()
 
     def start_scan_pressed(self, instance):
@@ -408,14 +412,14 @@ class FPScanApp(App):
             Logger.debug("waeup.identifier: no scanner detected. Aborted.")
             PopupNoScanDevice().open()
             return
-        cmd = FPScanCommand(
+        self.cmd_running = FPScanCommand(
             path=path, params=['-s'], callback=self.scan_finished)
         self._scan_button_old_text = self._scan_button.text
         self._scan_button.text = "Please touch scanner..."
         self._scan_button.disabled = True
         Logger.debug(
             'waeup.identifier: initialized scan, awaiting finger touch')
-        cmd.start()
+        self.cmd_running.start()
 
     @mainthread
     def scan_finished(self, *args):
