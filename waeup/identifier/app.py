@@ -398,6 +398,9 @@ class FPScanApp(App):
 
     def cancel_scan(self, instance):
         Logger.debug("waeup.identifier: user canceled scan")
+        if self.cmd_running:
+            self.cmd_running.p.kill()
+            self.cmd_running = None
 
     def start_scan_pressed(self, instance):
         Logger.debug("waeup.identifier: start scan")
