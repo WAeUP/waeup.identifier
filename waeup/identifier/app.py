@@ -458,6 +458,8 @@ class FPScanApp(App):
         if upload_result is True:
             # upload was successful
             PopupUploadSuccessful().open()
+            screen_mgr = self.get_screen_manager()
+            screen_mgr.current = "screen_main"
             return
         popup = FPScanPopup(
             title="Data upload failed",
