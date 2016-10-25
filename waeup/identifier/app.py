@@ -325,6 +325,7 @@ class FPScanApp(App):
     prevent_scanning = BooleanProperty(True)
     popup_text = StringProperty('')
     cmd_running = None
+    scan_canceled = False
 
     def build(self):
         from kivy.uix.settings import Settings
@@ -399,6 +400,7 @@ class FPScanApp(App):
     def cancel_scan(self, instance):
         Logger.debug("waeup.identifier: user canceled scan")
         if self.cmd_running:
+            self.scan_canceled = True
             self.cmd_running.p.kill()
             self.cmd_running = None
 
@@ -435,6 +437,9 @@ class FPScanApp(App):
         separate thread. Therefore it is decorated with `mainthread`.
         """
         Logger.info("waeup.identifier: scan finished.")
+        if self.scan_canceled:
+            self.scan_canceled = False
+            return
         self._scan_button.text = self._scan_button_old_text
         self._scan_button.disabled = False
         path = os.path.join(os.getcwd(), "data.fpm")
