@@ -436,6 +436,10 @@ class FPScanApp(App):
         self.upload_fingerprint(path)
 
     def upload_fingerprint(self, path):
+        """Do the actual upload.
+
+        `path` is the path to the `.fpm` file to be uploaded.
+        """
         student_id = self.root.f_student_id
         Logger.info(
             "waeup.identifier: uploading fingerprint for '%s'" % student_id)
