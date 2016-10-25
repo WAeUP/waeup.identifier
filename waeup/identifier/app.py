@@ -455,14 +455,15 @@ class FPScanApp(App):
         Logger.info(
             "waeup.identifier: fingerprint upload finished: %r" %
             upload_result)
-        if upload_result is True:
-            # upload was successful
-            PopupUploadSuccessful().open()
-            screen_mgr = self.get_screen_manager()
-            screen_mgr.current = "screen_main"
+        if upload_result is not True:
+            # upload failed
+            FPScanPopup(
+                title="Data upload failed",
+                message="Fingerprint upload failed.\nError message:\n%s" %
+                upload_result).open()
             return
-        popup = FPScanPopup(
-            title="Data upload failed",
-            message="Fingerprint upload failed.\nError message:\n%s" %
-            upload_result)
-        popup.open()
+        # upload succeeded
+        PopupUploadSuccessful().open()
+        screen_mgr = self.get_screen_manager()
+        screen_mgr.transition.direction = "right"
+        screen_mgr.current = "screen_main"
