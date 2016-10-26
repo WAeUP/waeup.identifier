@@ -402,6 +402,11 @@ class FPScanApp(App):
         """
         Logger.debug(
             "waeup.identifier: mode change %r -> %r" % (self.old_mode, value))
+        stud_id_label = self.get_widget_by_id('label_stud_id')
+        if value == "scan":
+            stud_id_label.text = "Student ID:\n[color=999]of student to register[/color]"
+        elif value == "verify":
+            stud_id_label.text = "Student ID:\n[color=999]of student to verify[/color]"
         self.old_mode = value
 
     def scan_pressed(self, instance):
