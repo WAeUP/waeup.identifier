@@ -423,7 +423,8 @@ class FPScanApp(App):
         Logger.debug("waeup.identifier: 'quit' pressed")
         if self.cmd_running is not None:
             Logger.debug("waeup.identifier: kill running subprocess...")
-            self.cmd_running.p.kill()
+            self.cmd_running.kill()
+            self.cmd_running = None
         self.stop()
 
     def cancel_scan(self, instance):
@@ -467,6 +468,7 @@ class FPScanApp(App):
         separate thread. Therefore it is decorated with `mainthread`.
         """
         Logger.info("waeup.identifier: scan finished.")
+        self.cmd_running = None
         if self.scan_canceled:
             self.scan_canceled = False
             return
