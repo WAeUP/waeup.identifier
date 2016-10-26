@@ -355,6 +355,15 @@ class FPScanApp(App):
             if isinstance(widget, ScreenManager):
                 return widget
 
+    def get_widget_by_id(self, kv_id):
+        """Lookup widget with kv id `kv_id`.
+
+        Return widget if found, none else.
+        """
+        for widget in self.root.walk():
+            if kv_id in widget.ids:
+                return widget.ids[kv_id]
+
     def build_config(self, config):
         for key, conf_dict in get_default_settings():
             config.setdefaults(key, conf_dict)
