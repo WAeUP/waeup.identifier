@@ -414,6 +414,17 @@ class FPScanApp(App):
         self.mode = "scan"
         self.screen_manager.current = 'screen_scan'
 
+    def kill_running_cmd(self):
+        """Kill any running subprocess.
+        """
+        if self.cmd_running is None:
+            return
+        Logger.debug("waeup.identifier: kill running subprocess...")
+        self.cmd_running.callback = None
+        self.cmd_running._kill()
+        Logger.debug("waeup.identifier: done.")
+        self.cmd_running = None
+
     def verify_pressed(self, instance):
         Logger.debug("waeup.identifier: 'verify' pressed")
         self.mode = "verify"
@@ -421,18 +432,13 @@ class FPScanApp(App):
 
     def quit_pressed(self, instance):
         Logger.debug("waeup.identifier: 'quit' pressed")
-        if self.cmd_running is not None:
-            Logger.debug("waeup.identifier: kill running subprocess...")
-            self.cmd_running.kill()
-            self.cmd_running = None
+        self.kill_running_cmd()
         self.stop()
 
     def cancel_scan(self, instance):
         Logger.debug("waeup.identifier: user canceled scan")
-        if self.cmd_running:
-            self.scan_canceled = True
-            self.cmd_running.p.kill()
-            self.cmd_running = None
+        self.kill_running_cmd()
+        self.scan_canceled = True
         self.mode = "main"
 
     def start_scan_pressed(self, instance):
