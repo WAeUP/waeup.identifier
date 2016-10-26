@@ -525,3 +525,4 @@ class FPScanApp(App):
         screen_mgr.transition.direction = "right"
         screen_mgr.current = "screen_main"
         self.root.f_student_id = ''
+        self.mode = 'main'
