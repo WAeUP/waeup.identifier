@@ -326,6 +326,7 @@ class FPScanApp(App):
     popup_text = StringProperty('')
     cmd_running = None
     scan_canceled = False
+    mode = StringProperty('main')
 
     def build(self):
         from kivy.uix.settings import Settings
@@ -386,8 +387,15 @@ class FPScanApp(App):
         self.root.f_student_id = entered_text
         Logger.debug("waeup.identifier: stud_id changed: %s" % entered_text)
 
+    def on_mode(self, instance, value):
+        """This should be called whenever `mode` changes.
+        """
+        Logger.debug(
+            "waeup.identifier: mode change - %r" % value)
+
     def scan_pressed(self, instance):
         Logger.debug("waeup.identifier: 'scan' pressed")
+        self.mode = "scan"
         self.screen_manager.current = 'screen_scan'
 
     def quit_pressed(self, instance):
@@ -403,6 +411,7 @@ class FPScanApp(App):
             self.scan_canceled = True
             self.cmd_running.p.kill()
             self.cmd_running = None
+        self.mode = "main"
 
     def start_scan_pressed(self, instance):
         Logger.debug("waeup.identifier: start scan")
