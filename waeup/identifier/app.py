@@ -409,6 +409,11 @@ class FPScanApp(App):
         self.mode = "scan"
         self.screen_manager.current = 'screen_scan'
 
+    def verify_pressed(self, instance):
+        Logger.debug("waeup.identifier: 'verify' pressed")
+        self.mode = "verify"
+        self.screen_manager.current = 'screen_scan'
+
     def quit_pressed(self, instance):
         Logger.debug("waeup.identifier: 'quit' pressed")
         if self.cmd_running is not None:
