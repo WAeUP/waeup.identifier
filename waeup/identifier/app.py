@@ -418,11 +418,13 @@ class FPScanApp(App):
         if value == "scan":
             self.root.btn_scan_text = 'Scan'
             self.root.prevent_scanning = True
-            stud_id_label.text = "Student ID:\n[color=999]of student to register[/color]"
+            stud_id_label.text = (
+                "Student ID:\n[color=999]of student to register[/color]")
         elif value == "verify":
             self.root.btn_scan_text = 'Verify'
             self.root.prevent_scanning = True
-            stud_id_label.text = "Student ID:\n[color=999]of student to verify[/color]"
+            stud_id_label.text = (
+                "Student ID:\n[color=999]of student to verify[/color]")
         elif value == "main":
             self.kill_running_cmd()
             self.scan_canceled = False
