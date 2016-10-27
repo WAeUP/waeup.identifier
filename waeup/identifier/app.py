@@ -405,8 +405,12 @@ class FPScanApp(App):
         stud_id_label = self.get_widget_by_id('label_stud_id')
         self.root.f_student_id = ''
         if value == "scan":
+            self.root.btn_scan_text = 'Scan'
+            self.root.prevent_scanning = True
             stud_id_label.text = "Student ID:\n[color=999]of student to register[/color]"
         elif value == "verify":
+            self.root.btn_scan_text = 'Verify'
+            self.root.prevent_scanning = True
             stud_id_label.text = "Student ID:\n[color=999]of student to verify[/color]"
         self.old_mode = value
 
