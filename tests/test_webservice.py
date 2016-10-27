@@ -200,5 +200,6 @@ class TestWebservice(object):
     def test_get_fingerprints_invalid_server(self, waeup_proxy):
         # trying to connect to invalid servers will raise socket errors.
         self.populate_db(waeup_proxy)
-        result = get_fingerprints("http://mgr:mgrpw@localhost:12345", "AB123456")
+        result = get_fingerprints(
+            "http://mgr:mgrpw@localhost:12345", "AB123456")
         assert result == "Error: [Errno 111] Connection refused"
