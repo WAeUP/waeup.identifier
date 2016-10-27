@@ -423,6 +423,9 @@ class FPScanApp(App):
             self.root.btn_scan_text = 'Verify'
             self.root.prevent_scanning = True
             stud_id_label.text = "Student ID:\n[color=999]of student to verify[/color]"
+        elif value == "main":
+            self.kill_running_cmd()
+            self.scan_canceled = False
         self.old_mode = value
 
     def on_scan_pressed(self, instance):
