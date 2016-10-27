@@ -451,7 +451,6 @@ class FPScanApp(App):
 
     def start_scan_pressed(self, instance):
         Logger.debug("waeup.identifier: start scan")
-        self._scan_button = instance[0]
         path = self.config.get('fpscan', 'fpscan_path')
         Logger.debug("waeup.identifier: `fpscan` at %s" % path)
         if not os.path.isfile(path):
@@ -467,9 +466,9 @@ class FPScanApp(App):
             return
         self.cmd_running = FPScanCommand(
             path=path, params=['-s'], callback=self.scan_finished)
-        self._scan_button_old_text = self._scan_button.text
-        self._scan_button.text = "Please touch scanner..."
-        self._scan_button.disabled = True
+        self._scan_button_old_text = self.root.btn_scan_text
+        self.root.btn_scan_text = "Please touch scanner..."
+        self.prevent_scanning = True
         Logger.debug(
             'waeup.identifier: initialized scan, awaiting finger touch')
         self.cmd_running.start()
@@ -486,8 +485,8 @@ class FPScanApp(App):
         if self.scan_canceled:
             self.scan_canceled = False
             return
-        self._scan_button.text = self._scan_button_old_text
-        self._scan_button.disabled = False
+        self.root.btn_scan_text = self._scan_button_old_text
+        self.prevent_scanning = False
         path = os.path.join(os.getcwd(), "data.fpm")
         if not os.path.isfile(path):
             # Scan failed
