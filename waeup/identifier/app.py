@@ -403,6 +403,7 @@ class FPScanApp(App):
         Logger.debug(
             "waeup.identifier: mode change %r -> %r" % (self.old_mode, value))
         stud_id_label = self.get_widget_by_id('label_stud_id')
+        self.root.f_student_id = ''
         if value == "scan":
             stud_id_label.text = "Student ID:\n[color=999]of student to register[/color]"
         elif value == "verify":
@@ -524,5 +525,4 @@ class FPScanApp(App):
         screen_mgr = self.get_screen_manager()
         screen_mgr.transition.direction = "right"
         screen_mgr.current = "screen_main"
-        self.root.f_student_id = ''
         self.mode = 'main'
