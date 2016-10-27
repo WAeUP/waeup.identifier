@@ -414,7 +414,7 @@ class FPScanApp(App):
             stud_id_label.text = "Student ID:\n[color=999]of student to verify[/color]"
         self.old_mode = value
 
-    def scan_pressed(self, instance):
+    def on_scan_pressed(self, instance):
         Logger.debug("waeup.identifier: 'scan' pressed")
         self.mode = "scan"
         self.screen_manager.current = 'screen_scan'
@@ -430,12 +430,12 @@ class FPScanApp(App):
         Logger.debug("waeup.identifier: done.")
         self.cmd_running = None
 
-    def verify_pressed(self, instance):
+    def on_verify_pressed(self, instance):
         Logger.debug("waeup.identifier: 'verify' pressed")
         self.mode = "verify"
         self.screen_manager.current = 'screen_scan'
 
-    def quit_pressed(self, instance):
+    def on_quit_pressed(self, instance):
         Logger.debug("waeup.identifier: 'quit' pressed")
         self.kill_running_cmd()
         self.stop()
