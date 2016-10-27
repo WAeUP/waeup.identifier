@@ -364,6 +364,17 @@ class FPScanApp(App):
             if kv_id in widget.ids:
                 return widget.ids[kv_id]
 
+    def kill_running_cmd(self):
+        """Kill any running subprocess.
+        """
+        if self.cmd_running is None:
+            return
+        Logger.debug("waeup.identifier: kill running subprocess...")
+        self.cmd_running.callback = None
+        self.cmd_running._kill()
+        Logger.debug("waeup.identifier: done.")
+        self.cmd_running = None
+
     def build_config(self, config):
         for key, conf_dict in get_default_settings():
             config.setdefaults(key, conf_dict)
@@ -418,17 +429,6 @@ class FPScanApp(App):
         Logger.debug("waeup.identifier: 'scan' pressed")
         self.mode = "scan"
         self.screen_manager.current = 'screen_scan'
-
-    def kill_running_cmd(self):
-        """Kill any running subprocess.
-        """
-        if self.cmd_running is None:
-            return
-        Logger.debug("waeup.identifier: kill running subprocess...")
-        self.cmd_running.callback = None
-        self.cmd_running._kill()
-        Logger.debug("waeup.identifier: done.")
-        self.cmd_running = None
 
     def on_verify_pressed(self, instance):
         Logger.debug("waeup.identifier: 'verify' pressed")
