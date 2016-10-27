@@ -2,7 +2,7 @@
 BoxLayout:
     orientation: 'vertical'
     f_student_id: ''
-    btn_scan: 'Scan'
+    btn_scan_text: 'Scan'
     ActionBar:
         pos_hint: {'top': 1}
         ActionView:
@@ -66,7 +66,7 @@ BoxLayout:
                             size_hint: None, None
                     BoxLayout:
                         Button:
-                            text: root.btn_scan
+                            text: root.btn_scan_text
                             disabled: app.prevent_scanning
                             on_press: app.start_scan_pressed(args)
                         Button:
