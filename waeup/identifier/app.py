@@ -431,6 +431,10 @@ class FPScanApp(App):
         self.old_mode = value
 
     def quit_app(self):
+        """Quit application on user request.
+
+        Kill any subprocesses and stop the main loop.
+        """
         Logger.debug("waeup.identifier: quit requested by user. Terminating")
         self.kill_running_cmd()
         self.stop()
