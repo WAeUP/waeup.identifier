@@ -39,7 +39,7 @@ BoxLayout:
                         on_press: app.mode = 'verify'
                     Button:
                         text: 'Quit'
-                        on_press: app.on_quit_app_pressed(args)
+                        on_press: app.quit_app()
 
             Screen:
                 name: "screen_scan"

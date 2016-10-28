@@ -430,8 +430,8 @@ class FPScanApp(App):
             self.scan_canceled = False
         self.old_mode = value
 
-    def on_quit_app_pressed(self, instance):
-        Logger.debug("waeup.identifier: 'quit' pressed")
+    def quit_app(self):
+        Logger.debug("waeup.identifier: quit requested by user. Terminating")
         self.kill_running_cmd()
         self.stop()
 
