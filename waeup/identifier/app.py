@@ -430,11 +430,6 @@ class FPScanApp(App):
             self.scan_canceled = False
         self.old_mode = value
 
-    def on_scan_pressed(self, instance):
-        Logger.debug("waeup.identifier: 'scan' pressed")
-        self.mode = "scan"
-        self.screen_manager.current = 'screen_scan'
-
     def on_verify_pressed(self, instance):
         Logger.debug("waeup.identifier: 'verify' pressed")
         self.mode = "verify"
