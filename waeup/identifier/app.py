@@ -451,7 +451,7 @@ class FPScanApp(App):
         self.scan_canceled = True
         self.mode = "main"
 
-    def start_scan_pressed(self, instance):
+    def on_start_scan_pressed(self, instance):
         Logger.debug("waeup.identifier: start scan")
         path = self.config.get('fpscan', 'fpscan_path')
         Logger.debug("waeup.identifier: `fpscan` at %s" % path)
