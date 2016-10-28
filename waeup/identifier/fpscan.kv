@@ -30,7 +30,8 @@ BoxLayout:
                     Button:
                         text: 'Scan fingerprints'
                         on_press: screen_manager.transition.direction = 'left'
-                        on_press: app.on_scan_pressed(args)
+                        on_press: screen_manager.current = 'screen_scan'
+                        on_press: app.mode = 'scan'
                     Button:
                         text: 'Verify fingerprints'
                         on_press: screen_manager.transition.direction = 'left'
