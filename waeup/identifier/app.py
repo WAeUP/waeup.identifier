@@ -440,6 +440,10 @@ class FPScanApp(App):
         self.stop()
 
     def cancel_scan(self, instance):
+        """Cancel a running scan.
+
+        Kill running subprocesses (if any).
+        """
         Logger.debug("waeup.identifier: user canceled scan")
         self.kill_running_cmd()
         self.scan_canceled = True
