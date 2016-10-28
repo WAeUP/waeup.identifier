@@ -39,8 +39,7 @@ BoxLayout:
                         on_press: app.mode = 'verify'
                     Button:
                         text: 'Quit'
-                        on_press: screen_manager.transition.direction = 'left'
-                        on_press: app.on_quit_pressed(args)
+                        on_press: app.on_quit_app_pressed(args)
 
             Screen:
                 name: "screen_scan"
