@@ -115,10 +115,22 @@ server tries to mimic WAeUP Kofa XMLRPC API while being much more
 lightweight. It can be started using::
 
   (py34) $ fake_kofa_server
+  Starting server at 127.0.0.1:61616
+  No entries created. Restart with `-- -p' to create.
+  Press ^C (Ctrl-c) to abort.
 
 and will listen for XMLRPC requests on localhost port 61616. It
 requires basic authentication with ``mgr`` as username and ``mgrpw``
 as password.
+
+You can also start the server with a prepopulated db (which will
+vanish when the server stops) like this::
+
+  (py34) $ fake_kofa_server -- -p
+  Starting server at 127.0.0.1:61616
+  Created fake entry: AA11111
+  Created fake entry: BB11111
+  Press ^C (Ctrl-c) to abort.
 
 Programmatically, the fake kofa server can be started like this:
 
