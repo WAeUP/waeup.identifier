@@ -450,6 +450,8 @@ class FPScanApp(App):
         self.mode = "main"
 
     def start_scan(self):
+        """Start a fingerprint scan.
+        """
         Logger.debug("waeup.identifier: start scan")
         path = self.config.get('fpscan', 'fpscan_path')
         Logger.debug("waeup.identifier: `fpscan` at %s" % path)
