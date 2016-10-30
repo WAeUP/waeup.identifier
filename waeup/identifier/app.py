@@ -565,3 +565,8 @@ class FPScanApp(App):
                 message="Could not get comparison data from server.\nError message:\n%s" %
                 download_result).open()
             return
+        if '1' not in download_result.keys():
+            FPScanPopup(
+                title="No fingerprints available",
+                message="For this student there are no fingerprints stored.").open()
+            return
