@@ -558,4 +558,10 @@ class FPScanApp(App):
         Logger.debug(
             "waeup.identifier: download finished. Result: %r" % (
                 download_result))
-
+        if not isinstance(download_result, dict):
+            # download failed: connection problem
+            FPScanPopup(
+                title="Data download failed",
+                message="Could not get comparison data from server.\nError message:\n%s" %
+                download_result).open()
+            return
