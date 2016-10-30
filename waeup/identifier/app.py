@@ -551,4 +551,11 @@ class FPScanApp(App):
         call_in_background(
             callable=get_fingerprints,
             args=(url, student_id),
-            callback=None)
+            callback=self.download_finished)
+
+    @mainthread
+    def download_finished(self, download_result):
+        Logger.debug(
+            "waeup.identifier: download finished. Result: %r" % (
+                download_result))
+
