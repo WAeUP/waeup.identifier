@@ -497,6 +497,9 @@ class FPScanApp(App):
             Logger.warn("waeup.identifier: no such file: %s" % path)
             PopupScanFailed().open()
             return
+        if self.mode == 'verify':
+            self.download_fingerprint(path)
+            return
         self.upload_fingerprint(path)
 
     def upload_fingerprint(self, path):
@@ -536,3 +539,16 @@ class FPScanApp(App):
         screen_mgr.transition.direction = "right"
         screen_mgr.current = "screen_main"
         self.mode = 'main'
+
+    def download_fingerprint(self, path):
+        student_id = self.root.f_student_id
+        Logger.info(
+            "waeup.identifier: downloading fingerprint of '%s'" % student_id)
+        username = self.config.get('Server', 'waeup_user')
+        password = self.config.get('Server', 'waeup_passwd')
+        netloc = self.config.get('Server', 'waeup_url')
+        url = get_url(netloc, username, password)
+        call_in_background(
+            callable=get_fingerprints,
+            args=(url, student_id),
+            callback=None)
