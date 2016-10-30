@@ -32,7 +32,9 @@ from subprocess import Popen, PIPE
 from waeup.identifier.config import (
     get_json_settings, get_default_settings, get_conffile_location,
 )
-from waeup.identifier.webservice import store_fingerprint, get_url
+from waeup.identifier.webservice import (
+    store_fingerprint, get_url, get_fingerprints,
+)
 
 
 # Enable virtualkeyboard
