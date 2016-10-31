@@ -451,9 +451,16 @@ class FPScanApp(App):
         self.scan_canceled = True
         self.mode = "main"
 
+    def prepare_scan(self):
+        if self.mode == 'verify':
+            self.download_fingerprints()
+        self.start_scan()
+
     def start_scan(self):
         """Start a fingerprint scan.
         """
+        if self.mode == 'verify':
+            self.download_fingerprint(path)
         Logger.debug("waeup.identifier: start scan")
         path = self.config.get('fpscan', 'fpscan_path')
         Logger.debug("waeup.identifier: `fpscan` at %s" % path)
@@ -497,10 +504,8 @@ class FPScanApp(App):
             Logger.warn("waeup.identifier: no such file: %s" % path)
             PopupScanFailed().open()
             return
-        if self.mode == 'verify':
-            self.download_fingerprint(path)
-            return
-        self.upload_fingerprint(path)
+        if self.mode == 'scan':
+            self.upload_fingerprint(path)
 
     def upload_fingerprint(self, path):
         """Do the actual upload.
