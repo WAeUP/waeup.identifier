@@ -69,7 +69,7 @@ BoxLayout:
                         Button:
                             text: root.btn_scan_text
                             disabled: app.prevent_scanning
-                            on_press: app.start_scan()
+                            on_press: app.prepare_scan()
                         Button:
                             text: 'Cancel'
                             on_press: app.cancel_scan(args)
