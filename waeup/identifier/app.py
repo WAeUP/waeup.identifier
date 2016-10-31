@@ -453,7 +453,7 @@ class FPScanApp(App):
 
     def prepare_scan(self):
         if self.mode == 'verify':
-            self.download_fingerprints()
+            self.download_fingerprint()
         self.start_scan()
 
     def start_scan(self):
