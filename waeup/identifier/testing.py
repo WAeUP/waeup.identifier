@@ -223,6 +223,8 @@ def xmlrpc_put_student_fingerprints(identifier=None, fingerprints={}):
                 xmlrpc_client.INVALID_METHOD_PARAMS,
                 "Invalid file format for finger %s" % num)
         result = True
+    # everything fine. Now store uploaded fingerprints.
+    fake_student_db[identifier]["fingerprints"].update(fingerprints)
     return result
 
 
