@@ -575,3 +575,6 @@ class FPScanApp(App):
                 title="No fingerprints available",
                 message="For this student there are no fingerprints stored.").open()
             return
+        path = os.path.join(os.getcwd(), "data.fpm")
+        with open(path, 'wb') as fd:
+            fd.write(fingerprint.data)
