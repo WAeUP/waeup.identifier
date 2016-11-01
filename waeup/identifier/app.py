@@ -488,11 +488,13 @@ class FPScanApp(App):
         self.cmd_running.start()
 
     @mainthread
-    def scan_finished(self, *args):
+    def scan_finished(self, scan_command):
         """A scan has been finished.
 
         This is a callback function which might be called from a
         separate thread. Therefore it is decorated with `mainthread`.
+
+        `scan_command` is the calling `FPScanCommand`.
         """
         Logger.info("waeup.identifier: scan finished.")
         self.cmd_running = None
