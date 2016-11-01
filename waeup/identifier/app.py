@@ -250,6 +250,9 @@ class FPScanCommand(BackgroundCommand):
         super(FPScanCommand, self).__init__(
             cmd, timeout=timeout, callback=callback)
 
+    def get_result(self):
+        return self.stdout_data.strip().replace("\n", " ")
+
 
 def call_in_background(callable, args=(), kwargs={}, callback=None):
     def run(*args, **kwargs):
@@ -509,8 +512,9 @@ class FPScanApp(App):
             Logger.warn("waeup.identifier: no such file: %s" % path)
             PopupScanFailed().open()
             return
-        if self.mode == 'scan':
-            self.upload_fingerprint(path)
+        if self.mode == 'verify':
+            return
+        self.upload_fingerprint(path)
 
     def upload_fingerprint(self, path):
         """Do the actual upload.
