@@ -515,6 +515,7 @@ class FPScanApp(App):
             PopupScanFailed().open()
             return
         if self.mode == 'verify':
+            self.handle_verify(scan_command.get_result())
             return
         self.upload_fingerprint(path)
 
@@ -590,3 +591,8 @@ class FPScanApp(App):
         path = os.path.join(os.getcwd(), "data.fpm")
         with open(path, 'wb') as fd:
             fd.write(fingerprint.data)
+
+    def handle_verify(self, result):
+        Logger.debug(
+            "waeup.identifier: verification finished (%s)" % result)
+        return
