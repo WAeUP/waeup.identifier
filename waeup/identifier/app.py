@@ -595,4 +595,12 @@ class FPScanApp(App):
     def handle_verify(self, result):
         Logger.debug(
             "waeup.identifier: verification finished (%s)" % result)
+        if result == 'ok':
+            FPScanPopup(
+                title="Verification succeeded",
+                message="Fingerprints [b]match[/b]").open()
+        else:
+            FPScanPopup(
+                title="Verification failed",
+                message="Could not identify").open()
         return
