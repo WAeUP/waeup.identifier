@@ -474,13 +474,17 @@ class FPScanApp(App):
             Logger.debug("waeup.identifier: no scanner detected. Aborted.")
             PopupNoScanDevice().open()
             return
+        mode_opt = '-s'
+        if self.mode == 'verify':
+            mode_opt = '-c'
         self.cmd_running = FPScanCommand(
-            path=path, params=['-s'], callback=self.scan_finished)
+            path=path, params=[mode_opt], callback=self.scan_finished)
         self._scan_button_old_text = self.root.btn_scan_text
         self.root.btn_scan_text = "Please touch scanner..."
         self.prevent_scanning = True
         Logger.debug(
-            'waeup.identifier: initialized scan, awaiting finger touch')
+            'waeup.identifier: initialized scan, awaiting finger touch (mode %s)' % (
+                mode_opt))
         self.cmd_running.start()
 
     @mainthread
