@@ -251,7 +251,9 @@ class FPScanCommand(BackgroundCommand):
             cmd, timeout=timeout, callback=callback)
 
     def get_result(self):
-        return self.stdout_data.strip().replace("\n", " ")
+        """Return stdout output with newlines turned into spaces.
+        """
+        return self.stdout_data.decode().strip().replace("\n", " ")
 
 
 def call_in_background(callable, args=(), kwargs={}, callback=None):
