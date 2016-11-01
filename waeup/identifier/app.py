@@ -488,8 +488,9 @@ class FPScanApp(App):
         self.root.btn_scan_text = "Please touch scanner..."
         self.prevent_scanning = True
         Logger.debug(
-            'waeup.identifier: initialized scan, awaiting finger touch (mode %s)' % (
-                mode_opt))
+            (
+                'waeup.identifier: initialized scan, awaiting finger '
+                'touch (mode %s)' % mode_opt))
         self.cmd_running.start()
 
     @mainthread
@@ -547,8 +548,10 @@ class FPScanApp(App):
             # upload failed
             FPScanPopup(
                 title="Data upload failed",
-                message="Fingerprint upload to server failed.\nError message:\n%s" %
-                upload_result).open()
+                message=(
+                    "Fingerprint upload to server failed.\n"
+                    "Error message:\n%s" % upload_result),
+            ).open()
             return
         # upload succeeded
         PopupUploadSuccessful().open()
@@ -579,14 +582,17 @@ class FPScanApp(App):
             # download failed: connection problem
             FPScanPopup(
                 title="Data download failed",
-                message="Could not get comparison data from server.\nError message:\n%s" %
-                download_result).open()
+                message=(
+                    "Could not get comparison data from server.\n"
+                    "Error message:\n%s" % download_result),
+                ).open()
             return
         fingerprint = download_result.get('fingerprints', {}).get('1', '')
         if not fingerprint:
             FPScanPopup(
                 title="No fingerprints available",
-                message="For this student there are no fingerprints stored.").open()
+                message="For this student there are no fingerprints stored."
+                ).open()
             return
         path = os.path.join(os.getcwd(), "data.fpm")
         with open(path, 'wb') as fd:
