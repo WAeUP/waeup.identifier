@@ -17,11 +17,6 @@ runs on ordinary laptops and desktop computers.
 While a fingerprint scanner device is not strictly neccessary to run
 `waeup.identifier`, it also makes not much sense without.
 
-.. warning:: We are going to give Kivy_ a try. As install is much more
-             complicated with Kivy_, some or all of the following
-             information might be wrong, misleading, or in other ways
-             unhelpful.
-
 
 Kivy Install
 ------------
