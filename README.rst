@@ -7,8 +7,15 @@ Identify WAeUP students biometrically.
 .. image:: https://travis-ci.org/WAeUP/waeup.identifier.svg?branch=master
    :target: https://travis-ci.org/WAeUP/waeup.identifier
 
-Provides a package that helps with fingerprint scanning/verifying,
-which are stored in WAeUP student portals.
+Scan/verify fingerprints of Kofa_ students. `waeup.identifier` uploads
+taken fingerprints and can verify student fingerprints after that. Kofa_
+is an open source student management portal from WAeUP_ .
+
+`waeup.identifier` is designed to be run on a RaspberryPI 3, but also
+runs on ordinary laptops and desktop computers.
+
+While a fingerprint scanner device is not strictly neccessary to run
+`waeup.identifier`, it also makes not much sense without.
 
 .. warning:: We are going to give Kivy_ a try. As install is much more
              complicated with Kivy_, some or all of the following
@@ -18,6 +25,8 @@ which are stored in WAeUP student portals.
 
 Kivy Install
 ------------
+
+This package requires a Kivy_ install.
 
 There are many ways to install kivy on your system. Please see the
 Kivy_ homepage for a detailed discussion.
@@ -158,3 +167,5 @@ See WAeUP Kofa docs or local webservice tests for method details.
 
 
 .. _Kivy: http://kivy.org/
+.. _Kofa: https://pypi.python.org/pypi/waeup.kofa
+.. _WAeUP: https://waeup.org/
