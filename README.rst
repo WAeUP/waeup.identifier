@@ -17,34 +17,14 @@ Requirements
 
 You need Kivy_ and fpscan_ installed.
 
+There are many ways to install `kivy` on your system. Please see the
+Kivy_ homepage for a detailed discussion.
+
 `waeup.identifier` is designed to be run on a RaspberryPI 3, but also
 runs on ordinary laptops and desktop computers.
 
 While a fingerprint scanner device is not strictly neccessary to run
 `waeup.identifier`, it also makes not much sense to run it without.
-
-
-Kivy Install
-------------
-
-This package requires a Kivy_ install.
-
-There are many ways to install kivy on your system. Please see the
-Kivy_ homepage for a detailed discussion.
-
-The shortest way to install it on Ubuntu 14.04. might be::
-
-  $ sudo apt-add-repository ppa:kivy-team/kivy
-  $ sudo apt-get update
-  $ sudo apt-get install python3-kivy
-  $ sudo apt-get install kivy-examples
-
-If that works for you, everything is fine.
-
-In tests we install Kivy_ differently. We put it into a
-`virtualenv`. For us this is less effort as we use `ansible` for
-provision of our testing hosts. Please see the extended documentation
-for details.
 
 
 User Install
