@@ -38,12 +38,10 @@ from waeup.identifier.webservice import (
 
 
 # Enable virtualkeyboard
-try:
+if Config is not None:
+    # when building sphinx docs, `Config` is None. How come?
     if not Config.get('kivy', 'keyboard_mode'):
         Config.set('kivy', 'keyboard_mode', 'systemandmulti')
-except AttributeError:
-    # XXX: sphinx complains here when building docs. why?
-    pass
 
 #: The set of chars allowed in filenames we handle.
 #: Last char must not be slash.
