@@ -11,11 +11,17 @@ Scan/verify fingerprints of Kofa_ students. `waeup.identifier` uploads
 taken fingerprints and can verify student fingerprints after that. Kofa_
 is an open source student management portal from WAeUP_ .
 
+
+Requirements
+------------
+
+You need Kivy_ and fpscan_ installed.
+
 `waeup.identifier` is designed to be run on a RaspberryPI 3, but also
 runs on ordinary laptops and desktop computers.
 
 While a fingerprint scanner device is not strictly neccessary to run
-`waeup.identifier`, it also makes not much sense without.
+`waeup.identifier`, it also makes not much sense to run it without.
 
 
 Kivy Install
@@ -161,6 +167,7 @@ See WAeUP Kofa docs or local webservice tests for method details.
   >>> server.shutdown()
 
 
+.. _fpscan: https://github.com/ulif/fpscan
 .. _Kivy: http://kivy.org/
 .. _Kofa: https://pypi.python.org/pypi/waeup.kofa
 .. _WAeUP: https://waeup.org/
