@@ -51,6 +51,11 @@ It is recommended to setup sources in a virtual environment::
   $ source py34/bin/activate
   (py34) $
 
+Then, install `Cython` and Kivy_:
+
+  (py34) $ pip install Cython
+  (py34) $ pip install kivy
+
 Get the sources::
 
   (py34) $ git clone https://github.com/WAeUP/waeup.identifier.git
