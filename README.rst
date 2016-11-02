@@ -56,6 +56,8 @@ Then, install `Cython` and Kivy_:
   (py34) $ pip install Cython
   (py34) $ pip install kivy
 
+Please note that especially Kivy_ requires a lot of special libraries to run.
+
 Get the sources::
 
   (py34) $ git clone https://github.com/WAeUP/waeup.identifier.git
@@ -66,8 +68,8 @@ Install packages for testing/developing::
   (py34) $ python setup.py dev
 
 This will also install the ``waeup_identifier`` script in your virtual
-environment ``bin/`` dir (do *not* use the ``install`` command of
-``setup.py`` for this; it will break your devel environment).
+environment ``bin/`` dir (and a `fake_kofa_server` script, usefull for
+testing).
 
 Running tests::
 
