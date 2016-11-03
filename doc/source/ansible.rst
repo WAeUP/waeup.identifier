@@ -1,0 +1,2 @@
+
+.. include:: ../../ansible/README.rst

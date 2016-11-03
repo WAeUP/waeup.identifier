@@ -20,7 +20,7 @@ Contents:
    :maxdepth: 2
 
    install.rst
-
+   ansible.rst
 
 
 .. automodule:: waeup.identifier
