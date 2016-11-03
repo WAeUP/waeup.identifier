@@ -126,9 +126,24 @@ Because `fpscan`_ is available as source code only, the
 users home, then builds and installs `fpscan`_.
 
 
+Install `kivy`_
+---------------
+
+Preparation:
+
+- Ansible must be installed locally
+- The target system should be reachable via ansible (see above)
+
+This playbook installs `kivy`_ in a virtualenv on the target machine.
+
+The virtualenv will be created by `ansible`_ and is by default located
+in the remote user's home dir. It can be set via the playbook var
+``venv_path``.
+
 
 .. _ansible: https://www.ansible.com/
 .. _fpscan: https://github.com/ulif/fpscan/
+.. _kivy: https://kivy.org/
 .. _RaspberryPI: https://raspberrypi.org
 
 .. [1] On Ubuntu 12.04 you have to install `python-software-properties`
