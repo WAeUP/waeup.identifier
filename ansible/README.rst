@@ -5,7 +5,8 @@ We provide some `ansible`_ playbooks to ease installation and
 provisioning on RaspberryPI_ (raspbian) or other Debian-based distros.
 
 All `ansible`_-related stuff can be found in the projects ``ansible/``
-subdir.
+subdir. In the following we show how to provision a running
+RaspberryPI_ connected to the same network as your local machine.
 
 
 Get ansible_
@@ -33,16 +34,10 @@ command. [1]_
   $ sudo apt-get install ansible
 
 
-The `hosts` file is an ansible_ inventory file. The IP set in it must
-match the real IP of your local raspberry pi.
+Check SSH Connectivity
+----------------------
 
-It also sets a username to connect to the device. If you use another
-username, replace `pi`.
-
-Check Basic Ansible Connectivity
---------------------------------
-
-First, make sure you can SSH into your RaspberryPI as user ``pi``::
+First, make sure you can SSH into your RaspberryPI_ as user ``pi`` [2]_ ::
 
   $ ssh -l pi 192.168.45.244
 
@@ -51,7 +46,11 @@ First, make sure you can SSH into your RaspberryPI as user ``pi``::
 Do not skip this step as it prepares SSH to flawlessly connect to your device
 (storing the host id, etc.).
 
-Then see, if `ansible` can connect to your RaspberryPI::
+
+Check Basic Ansible Connectivity
+--------------------------------
+
+Then see, if `ansible`_ can connect to your RaspberryPI::
 
   $ ansible -i 192.168.32.86, all -k -u pi -m setup
 
@@ -69,6 +68,12 @@ can instead do::
 
 These should list plenty of infos about your raspberry in green
 color. Red means: something went wrong.
+
+The `hosts` file is an ansible_ inventory file. The IP set in it must
+match the real IP of your local raspberry pi.
+
+It also sets a username to connect to the device. If you use another
+one, replace `pi` with the username you really use.
 
 
 Initial Provisioning
@@ -104,3 +109,6 @@ This playbook will also clone the `waeup.identifier` repository.
 
 .. [1] On Ubuntu 12.04 you have to install `python-software-properties`
        instead of `software-properties-common`
+.. [2] ``pi`` is the default user in Raspbian. If you created a
+       different user to connect to your Raspberry PI, you should of
+       course use that.
