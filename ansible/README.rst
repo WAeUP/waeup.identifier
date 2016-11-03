@@ -4,6 +4,9 @@ Installing and Provisioning with ansible
 We provide some `ansible`_ playbooks to ease installation and
 provisioning on RaspberryPI_ (raspbian) or other Debian-based distros.
 
+The RaspberryPI is assumed to have the default 7" touch screen
+attached.
+
 All `ansible`_-related stuff can be found in the projects ``ansible/``
 subdir. In the following we show how to provision a running
 RaspberryPI_ connected to the same network as your local machine.
@@ -50,7 +53,8 @@ Do not skip this step as it prepares SSH to flawlessly connect to your device
 Check Basic Ansible Connectivity
 --------------------------------
 
-Then see, if `ansible`_ can connect to your RaspberryPI::
+Then see, if `ansible`_ can connect as user ``pi`` to your
+RaspberryPI::
 
   $ ansible -i 192.168.32.86, all -k -u pi -m setup
 
@@ -58,7 +62,8 @@ Please note the trailing comma after the IP number.
 
 Again, use the real IP of your RaspberryPI instead of
 ``192.168.32.86`` (don't forget the trailung comma). You will be asked
-for the SSH password.
+for the SSH password and replace ``pi`` with your real user if you do
+not use the default.
 
 If you have an `hosts` file with appropriate settings (IP and
 username) and configured passwordless login on your Raspberry PI, you
@@ -70,14 +75,14 @@ These should list plenty of infos about your raspberry in green
 color. Red means: something went wrong.
 
 The `hosts` file is an ansible_ inventory file. The IP set in it must
-match the real IP of your local raspberry pi.
+match the real IP of your local Raspberry PI.
 
 It also sets a username to connect to the device. If you use another
 one, replace `pi` with the username you really use.
 
 
-Initial Provisioning
---------------------
+Initial Provisioning of a RaspberryPI
+-------------------------------------
 
 Preparation:
 
@@ -104,7 +109,26 @@ The playbook will ask for the SSH password of the user set with ``-u``
 This playbook will also clone the `waeup.identifier` repository.
 
 
+Install `fpscan`_
+-----------------
+
+Preparation:
+
+- Ansible must be installed locally
+- The target system should be reachable via ansible (see above)
+
+The `fpscan`_ commandline utility is a little C program for creating
+fingerprint scans. `waeup.identifier` deploys it to do the actual
+scans.
+
+Because `fpscan`_ is available as source code only, the
+``install_fpscan_playbook.yml`` creates a local build dir in the SSH
+users home, then builds and installs `fpscan`_.
+
+
+
 .. _ansible: https://www.ansible.com/
+.. _fpscan: https://github.com/ulif/fpscan/
 .. _RaspberryPI: https://raspberrypi.org
 
 .. [1] On Ubuntu 12.04 you have to install `python-software-properties`
