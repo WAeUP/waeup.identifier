@@ -51,7 +51,7 @@ It is recommended to setup sources in a virtual environment::
   $ source py34/bin/activate
   (py34) $
 
-Then, install `Cython` and Kivy_:
+Then, install `Cython` and Kivy_::
 
   (py34) $ pip install Cython
   (py34) $ pip install kivy
