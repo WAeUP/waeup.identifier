@@ -27,6 +27,7 @@ While a fingerprint scanner device is not strictly neccessary to run
 `waeup.identifier`, it also makes not much sense to run it without.
 
 
+
 User Install
 ------------
 
@@ -51,7 +52,7 @@ It is recommended to setup sources in a virtual environment::
   $ source py34/bin/activate
   (py34) $
 
-Then, install `Cython` and Kivy_::
+Then, install `Cython` and Kivy_ (in that order)::
 
   (py34) $ pip install Cython
   (py34) $ pip install kivy
