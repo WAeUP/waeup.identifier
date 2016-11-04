@@ -9,7 +9,7 @@ Welcome to WAeUP Identifier's documentation!
 Version: |release|
 ------------------
 
-'WAeUP Identifier' is a software for scanning and verifying
+`WAeUP Identifier` is a software for scanning and verifying
 fingerprints stored on a WAeUP Kofa portal. It is designed to work as
 a graphical application even on Raspberry PIs.
 
@@ -23,14 +23,9 @@ Contents:
    ansible.rst
 
 
-.. automodule:: waeup.identifier
-   :members:
-
-
 Indices and tables
 ==================
 
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
