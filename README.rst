@@ -68,7 +68,7 @@ Install packages for testing/developing::
   (py34) $ python setup.py dev
 
 This will also install the ``waeup_identifier`` script in your virtual
-environment ``bin/`` dir (and a `fake_kofa_server` script, usefull for
+environment ``bin/`` dir (and a `fake_kofa_server` script, useful for
 testing).
 
 Running tests::
