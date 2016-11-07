@@ -1,5 +1,5 @@
 graft doc
-prune doc/build
+prune docs/build
 graft waeup
 graft tests
 include *.rst *.cfg *.ini *.txt *.html *.sh htaccess
