@@ -3,8 +3,9 @@ import os
 import sys
 import multiprocessing  # neccessary to keep setuptools quiet in tests
 
-
-version = '1.0.dev0'
+# This is the authorative version number of this package
+version = '1.0.dev0'   # on changes, also update CHANGES.rst and
+                       # docs/sources/conf.py
 tests_path = os.path.join(os.path.dirname(__file__), 'tests')
 
 

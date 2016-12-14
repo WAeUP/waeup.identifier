@@ -15,7 +15,6 @@
 
 import sys
 import os
-import pkg_resources
 import re
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -66,7 +65,7 @@ copyright = '2014, Uli Fouquet'
 # built documents.
 #
 # The full version, including alpha/beta/rc tags.
-release = pkg_resources.get_distribution('waeup.identifier').version
+release = '1.0.dev0'  # must be the same as in `setup.py`
 # The short X.Y version.
 version = release
 if version.endswith('dev'):
