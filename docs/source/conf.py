@@ -58,7 +58,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'WAeUP Identifier'
-copyright = '2014, Uli Fouquet'
+copyright = '2016, WAeUP Germany and Uli Fouquet'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
