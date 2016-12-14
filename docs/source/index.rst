@@ -19,6 +19,7 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
+   readme.rst
    install.rst
    ansible.rst
 
