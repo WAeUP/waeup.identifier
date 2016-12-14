@@ -11,6 +11,9 @@ Scan/verify fingerprints of Kofa_ students. `waeup.identifier` uploads
 taken fingerprints and can verify student fingerprints after that. Kofa_
 is an open source student management portal from WAeUP_ .
 
+Full documentation is available at
+
+  https://waeupidentifier.readthedocs.io
 
 Requirements
 ------------
