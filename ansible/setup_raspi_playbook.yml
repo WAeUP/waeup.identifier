@@ -39,7 +39,7 @@
     git:
         repo: https://github.com/WAeUP/waeup.identifier
         dest: "{{ repo_path }}"
-        update: no
+        update: yes
 
   - name: Ensure $HOME/.kivy/ dir exists
     become: false
@@ -67,7 +67,6 @@
         option: "hid_%(name)s"
         value: "probesysfs,provider=hidinput"
 
-  # create desktop entry
   - name: Create desktop entry
     become: false
     copy:
