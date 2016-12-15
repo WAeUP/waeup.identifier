@@ -72,3 +72,4 @@
     copy:
         src: "waeup-identifier.desktop.tmpl"
         dest: "/home/pi/Desktop/waeup-identifier.desktop"
+        force: yes
