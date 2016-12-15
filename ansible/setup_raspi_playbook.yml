@@ -22,23 +22,24 @@
 
   - name: Disable client-wise LC settings with SSH
     lineinfile:
-      dest=/etc/ssh/sshd_config
-      line="# AcceptEnv LANG LC_*"
-      regexp="^AcceptEnv (.*)"
-      backrefs=yes
+        dest: /etc/ssh/sshd_config
+        line: "# AcceptEnv LANG LC_*"
+        regexp: "^AcceptEnv (.*)"
+        backrefs: yes
 
   - name: Install git
     package:
-      name={{ item }}
-      state=present
+        name: "{{ item }}"
+        state: present
     with_items:
-      - git
+        - git
 
   - name: Clone waeup.identifier git repository
     become: false
-    git: repo=https://github.com/WAeUP/waeup.identifier
-         dest="{{ repo_path }}"
-         update=no
+    git:
+        repo: https://github.com/WAeUP/waeup.identifier
+        dest: "{{ repo_path }}"
+        update: no
 
   - name: Ensure $HOME/.kivy/ dir exists
     become: false
@@ -51,15 +52,17 @@
   # this setting is for official raspi touchscreen.
   - name: Tweak kivy mtdev config.ini setting
     become: false
-    ini_file: dest=/home/{{ ansible_ssh_user }}/.kivy/config.ini
-              section=input
-              option="mtdev_%(name)s"
-              value=probesysfs,provider=mtdev
+    ini_file:
+        dest: "/home/{{ ansible_ssh_user }}/.kivy/config.ini"
+        section: "input"
+        option: "mtdev_%(name)s"
+        value: "probesysfs,provider=mtdev"
 
   # this setting is for official raspi touchscreen.
   - name: Tweak kivy hid config.ini setting
     become: false
-    ini_file: dest=/home/{{ ansible_ssh_user }}/.kivy/config.ini
-              section=input
-              option="hid_%(name)s"
-              value=probesysfs,provider=hidinput
+    ini_file:
+        dest: "/home/{{ ansible_ssh_user }}/.kivy/config.ini"
+        section: "input"
+        option: "hid_%(name)s"
+        value: "probesysfs,provider=hidinput"
