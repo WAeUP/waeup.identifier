@@ -66,3 +66,10 @@
         section: "input"
         option: "hid_%(name)s"
         value: "probesysfs,provider=hidinput"
+
+  # create desktop entry
+  - name: Create desktop entry
+    become: false
+    copy:
+        src: "waeup-identifier.desktop.tmpl"
+        dest: "/home/pi/Desktop/waeup-identifier.desktop"
