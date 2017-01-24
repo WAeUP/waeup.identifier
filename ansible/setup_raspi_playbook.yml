@@ -94,3 +94,26 @@
       - { regexp: '^HostKey /etc/ssh/ssh_host_ecdsa_key',
           line: '# HostKey /etc/ssh/ssh_host_ecdsa_key' }
     notify: "restart sshd"
+
+  - name: "sshd_config - set key bits to 4096"
+    lineinfile:
+      dest=/etc/ssh/sshd_config
+      backrefs=yes
+      line='ServerKeyBits 4096'
+      regexp='^ServerKeyBits 1024'
+      state=present
+    notify: "restart sshd"
+
+  - name: "sshd_config - set secure ciphers from bettercrypto.org"
+    lineinfile:
+      dest=/etc/ssh/sshd_config
+      line='Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes128-ctr'
+      state=present
+    notify: "restart sshd"
+
+  - name: "sshd_config - set secure MACs from bettercrypto.org"
+    lineinfile:
+      dest=/etc/ssh/sshd_config
+      line='MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160'
+      state=present
+    notify: "restart sshd"
