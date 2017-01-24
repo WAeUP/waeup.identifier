@@ -13,6 +13,14 @@
   become_user: root
   vars:
     - repo_path: /home/{{ ansible_ssh_user }}/waeup.identifier
+
+  handlers:
+  - name: "restart sshd"
+    service:
+      name="ssh"
+      enabled=yes
+      state=restarted
+
   tasks:
   - name: Update system
     apt: upgrade=safe update_cache=yes
@@ -73,3 +81,16 @@
         src: "waeup-identifier.desktop.tmpl"
         dest: "/home/pi/Desktop/waeup-identifier.desktop"
         force: yes
+
+  - name: "sshd_config - disable weak keys"
+    lineinfile:
+      dest=/etc/ssh/sshd_config
+      backrefs=yes
+      line={{ item.line }}
+      regexp={{ item.regexp }}
+    with_items:
+      - { regexp: '^HostKey /etc/ssh/ssh_host_dsa_key',
+          line: '# HostKey /etc/ssh/ssh_host_dsa_key' }
+      - { regexp: '^HostKey /etc/ssh/ssh_host_ecdsa_key',
+          line: '# HostKey /etc/ssh/ssh_host_ecdsa_key' }
+    notify: "restart sshd"
