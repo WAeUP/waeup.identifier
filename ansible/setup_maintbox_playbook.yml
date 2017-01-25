@@ -17,3 +17,5 @@
   - name: Create system user
     user:
       name: "{{ maint_user }}"
+      system: yes
+      state: present
