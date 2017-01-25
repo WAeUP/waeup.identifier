@@ -1,0 +1,19 @@
+---
+# This ansible-playbook prepares a maintenance server
+# for connections from client Raspberry pis.
+#
+# Sample:
+#
+#   $ ansible-playbook -i <SERVER-IP>, -k setup_maintbox_playbook.yml
+#
+- hosts: all
+  become: true
+  become_user: root
+  vars:
+    # username for maintenance. Used only for connections from raspis.
+    - maint_user: "raspi_maint"
+
+  tasks:
+  - name: Create system user
+    user:
+      name: "{{ maint_user }}"
