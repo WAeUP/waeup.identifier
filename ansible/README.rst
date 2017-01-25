@@ -109,6 +109,24 @@ The playbook will ask for the SSH password of the user set with ``-u``
 This playbook will also clone the `waeup.identifier` repository.
 
 
+Remote Maintenance (optional)
+-----------------------------
+
+If you want to prepare your freshly provisioned RaspberryPI for remote
+maintenance, you can run the `setup_ssh_playbook.yml`::
+
+  $ ansible-playbook -i 192.168.122.12, -u pi -k setup_ssh_playbook.yml
+
+This will secure the SSH daemon configuration and create an EC25519
+SSH key that can be used to login into a remote maintenance box.
+
+The remote box has to be prepared as well for the new
+client. Therefore, on the remote box, we normally allow only creation
+of an SSH reverse tunnel back to the RaspberryPI device. This
+poor-mans' teamviewer allows us to log into the RaspberryPI from some
+central machine if only the device has an internet connection.
+
+
 Install `fpscan`_
 -----------------
 
