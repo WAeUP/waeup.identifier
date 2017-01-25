@@ -14,13 +14,6 @@
   vars:
     - repo_path: /home/{{ ansible_ssh_user }}/waeup.identifier
 
-  handlers:
-  - name: "restart sshd"
-    service:
-      name="ssh"
-      enabled=yes
-      state=restarted
-
   tasks:
   - name: Update system
     apt: upgrade=safe update_cache=yes
