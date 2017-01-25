@@ -13,6 +13,8 @@
   become_user: root
   vars:
     - repo_path: /home/{{ ansible_ssh_user }}/waeup.identifier
+    # a unique and memorizable name
+    - device_id: "test-raspi1"
 
   handlers:
   - name: "restart sshd"
@@ -22,6 +24,13 @@
       state=restarted
 
   tasks:
+  - name: Create SSH key, type ed25519
+    user:
+      name: "{{ ansible_ssh_user }}"
+      generate_ssh_key: yes
+      ssh_key_type: "ed25519"
+      ssh_key_comment: "{{ ansible_ssh_user }}@{{ device_id }}"
+
   - name: "sshd_config - disable weak keys"
     lineinfile:
       dest=/etc/ssh/sshd_config
