@@ -41,3 +41,15 @@
           #PermitOpen localhost:62222
           ForceCommand echo 'This account can only be used for reverse tunneling'
     notify: restart sshd
+
+  - name: Forbid agent forwarding for all clients in ssh_config (client config)
+    blockinfile:
+      dest: /etc/ssh/ssh_config
+      block: |
+        Host *
+          #AllowTcpForwarding yes
+          #X11Forwarding no
+          #PermitTunnel no
+          #GatewayPorts no
+          ForwardAgent no
+    notify: restart sshd
