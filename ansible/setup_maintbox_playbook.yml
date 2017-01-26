@@ -20,3 +20,16 @@
       shell: "/bin/false"
       system: yes
       state: present
+
+  - name: Restrict permissions for "{{ maint_user }}" in sshd_config
+    blockinfile:
+      dest: /etc/ssh/sshd_config
+      block: |
+        Match User {{ maint_user }}
+          #AllowTcpForwarding yes
+          #X11Forwarding no
+          #PermitTunnel no
+          #GatewayPorts no
+          AllowAgentForwarding no
+          #PermitOpen localhost:62222
+          ForceCommand echo 'This account can only be used for reverse tunneling'
