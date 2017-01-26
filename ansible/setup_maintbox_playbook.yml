@@ -10,8 +10,8 @@
   become: true
   become_user: root
   vars:
-    # username for maintenance. Used only for connections from raspis.
-    - maint_user: "raspi_maint"
+    # Username, used only for reverse SSH connections from raspis.
+    - maint_user: "reverse"
 
   tasks:
   - name: Create system user
