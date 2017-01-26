@@ -17,5 +17,6 @@
   - name: Create system user
     user:
       name: "{{ maint_user }}"
+      shell: "/bin/false"
       system: yes
       state: present
