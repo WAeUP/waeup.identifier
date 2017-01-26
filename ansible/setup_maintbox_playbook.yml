@@ -13,6 +13,13 @@
     # Username, used only for reverse SSH connections from raspis.
     - maint_user: "reverse"
 
+  handlers:
+  - name: "restart sshd"
+    service:
+      name="ssh"
+      enabled=yes
+      state=restarted
+
   tasks:
   - name: Create system user
     user:
@@ -33,3 +40,4 @@
           AllowAgentForwarding no
           #PermitOpen localhost:62222
           ForceCommand echo 'This account can only be used for reverse tunneling'
+    notify: restart sshd
