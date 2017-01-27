@@ -126,6 +126,15 @@ of an SSH reverse tunnel back to the RaspberryPI device. This
 poor-mans' teamviewer allows us to log into the RaspberryPI from some
 central machine if only the device has an internet connection.
 
+The remote machine (not the RaspberryPI) can be provisioned for this
+purpose with the `setup_maintbox_playbook.yml`::
+
+  $ ansible-playbook -i <REMOTE-BOX-IP>, -u <REMOTE-USER> -k -K setup_maintbox_playbook.yml
+
+Here we have to provide an SSH password (``-k``) and a sudo password
+(``-K``). Leave these options out, if you have other authentication
+methods activated on your remote server.
+
 
 Install `fpscan`_
 -----------------
