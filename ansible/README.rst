@@ -135,6 +135,17 @@ Here we have to provide an SSH password (``-k``) and a sudo password
 (``-K``). Leave these options out, if you have other authentication
 methods activated on your remote server.
 
+The playbook will create a user `reverse` that is only allowed to
+connect to create a reverse SSH tunnel back to itself.
+
+.. note:: You have to copy the SSH key generated on the raspberry
+          device over to the server manually!
+
+          This could be done like this::
+
+            (pi@raspberry) $ scp /home/pi/.ssh/id_ed25519.pub remote_user@remote_maint.box:
+            (remote_user@remote_maint_box) $ sudo cat id_ed25519.pub >> /home/reverse/.ssh/authorized_keys
+
 
 Install `fpscan`_
 -----------------
