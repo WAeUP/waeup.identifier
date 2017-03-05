@@ -1,18 +1,21 @@
 ---
 # this ansible playbook installs fpscan from source.
 - hosts: all
-  become: yes
+  become: no
   become_user: root
   vars:
     - fpscan_repo_path: /home/{{ ansible_ssh_user }}/fpscan
   tasks:
   - name: Update cache if not done in last 24 hours.
+    become: true
     apt: update_cache=yes cache_valid_time=86400
 
   - name: Aptitude safe-upgrade
+    become: true
     apt: upgrade=safe
 
   - name: Install system packages
+    become: true
     package:
       name={{ item }}
       state=present
@@ -25,8 +28,8 @@
   - name: Clone fpscan git repository
     become: false
     git: repo=https://github.com/ulif/fpscan
-         dest="{{ fpscan_repo_path }}"
-         update=no
+       dest="{{ fpscan_repo_path }}"
+       update=no
 
   - name: Autoreconf fpscan
     become: false
