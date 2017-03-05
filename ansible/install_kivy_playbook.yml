@@ -16,8 +16,8 @@
 
   - name: Install system packages
     package:
-      name={{ item }}
-      state=present
+      name: "{{ item }}"
+      state: present
     with_items:
       - python3-pip
       - build-essential
@@ -38,9 +38,9 @@
 
   - name: Upgrade pip, virtualenv, setuptools
     pip:
-      name={{ item }}
-      state=latest
-      executable=pip3
+      name: "{{ item }}"
+      state: latest
+      executable: pip3
     with_items:
       - pip
       - virtualenv
@@ -55,23 +55,23 @@
   - name: Install Cython in virtualenv
     become: no
     pip:
-      name=Cython
-      version={{ cython_version }}
-      state=present
-      virtualenv="{{ venv_path }}"
+      name: Cython
+      version: "{{ cython_version }}"
+      state: present
+      virtualenv: "{{ venv_path }}"
 
   - name: Install kivy in virtualenv
     become: no
     pip:
-      name=kivy
-      version={{ kivy_version }}
-      state=present
-      virtualenv="{{ venv_path }}"
+      name: kivy
+      version: "{{ kivy_version }}"
+      state: present
+      virtualenv: "{{ venv_path }}"
 
   # looks like pillow is not always needed, but travis won't work without.
   - name: Install pillow in virtualenv
     become: no
     pip:
-      name=pillow
-      state=latest
-      virtualenv="{{ venv_path }}"
+      name: pillow
+      state: latest
+      virtualenv: "{{ venv_path }}"
