@@ -22,7 +22,7 @@ Vagrant.configure(2) do |config|
     config.vm.provision "shell", inline: "apt-get install --yes python-apt"
     machine.vm.provision "ansible" do |ansible|
       ansible.verbose = "v"
-      ansible.playbook = "ansible/install-kivy-playbook.yml"
+      ansible.playbook = "ansible/install_kivy_playbook.yml"
     end
   end
 end
