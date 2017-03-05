@@ -146,8 +146,8 @@ connect to create a reverse SSH tunnel back to itself.
             (pi@raspberry) $ scp /home/pi/.ssh/id_ed25519.pub remote_user@remote_maint.box:
             (remote_user@remote_maint_box) $ sudo cat id_ed25519.pub >> /home/reverse/.ssh/authorized_keys
 
-	  Please note that the `remote_user` is different from the
-	  `reverse` user on the remote host.
+          Please note that the `remote_user` is different from the
+          `reverse` user on the remote host.
 
 
 Install `fpscan`_
