@@ -8,17 +8,20 @@
   tasks:
   - name: Update cache if not done in last 24 hours.
     become: true
-    apt: update_cache=yes cache_valid_time=86400
+    apt:
+      update_cache: yes
+      cache_valid_time: 86400
 
   - name: Aptitude safe-upgrade
     become: true
-    apt: upgrade=safe
+    apt:
+      upgrade: safe
 
   - name: Install system packages
     become: true
     package:
-      name={{ item }}
-      state=present
+      name: "{{ item }}"
+      state: present
     with_items:
       - libfprint-dev
       - git
@@ -27,29 +30,30 @@
 
   - name: Clone fpscan git repository
     become: false
-    git: repo=https://github.com/ulif/fpscan
-       dest="{{ fpscan_repo_path }}"
-       update=no
+    git:
+      repo: https://github.com/ulif/fpscan
+      dest: "{{ fpscan_repo_path }}"
+      update: no
 
   - name: Autoreconf fpscan
     become: false
     command: autoreconf -fvi
-      chdir={{ fpscan_repo_path }}
-      creates={{ fpscan_repo_path }}/configure
+      chdir: "{{ fpscan_repo_path }}"
+      creates: "{{ fpscan_repo_path }}"/configure
 
   - name: Configure fpscan
     become: false
     command: ./configure
-      chdir={{ fpscan_repo_path }}
-      creates={{ fpscan_repo_path }}/Makefile
+      chdir: "{{ fpscan_repo_path }}"
+      creates: "{{ fpscan_repo_path }}"/Makefile
 
   - name: Make fpscan
     become: false
     command: make
-      chdir={{ fpscan_repo_path }}
-      creates={{ fpscan_repo_path }}/src/fpscan
+      chdir: "{{ fpscan_repo_path }}"
+      creates: "{{ fpscan_repo_path }}"/src/fpscan
 
   - name: Install fpscan
     become: true
     command: make install
-      chdir={{ fpscan_repo_path }}
+      chdir: "{{ fpscan_repo_path }}"
