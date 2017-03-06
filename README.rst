@@ -23,12 +23,16 @@ You need Kivy_ and fpscan_ installed.
 There are many ways to install `kivy` on your system. Please see the
 Kivy_ homepage for a detailed discussion.
 
-`waeup.identifier` is designed to be run on a RaspberryPI 3, but also
+`waeup.identifier` is designed to be run on a RaspberryPI_ 3, but also
 runs on ordinary laptops and desktop computers.
 
 While a fingerprint scanner device is not strictly neccessary to run
 `waeup.identifier`, it also makes not much sense to run it without.
 
+.. note:: To ease install on RaspberryPI_ we provide a bunch of playbooks for
+          use with `ansible`_. The ansible playbooks can also be used for
+          provisioning other machines. See the ``ansible/`` subdir of
+          `waeup.identifier` for details.
 
 
 User Install
@@ -158,7 +162,9 @@ See WAeUP Kofa docs or local webservice tests for method details.
   >>> server.shutdown()
 
 
+.. _ansible: https://www.ansible.com/
 .. _fpscan: https://github.com/ulif/fpscan
 .. _Kivy: http://kivy.org/
 .. _Kofa: https://pypi.python.org/pypi/waeup.kofa
+.. _RaspberryPI: https://raspberrypi.org
 .. _WAeUP: https://waeup.org/
