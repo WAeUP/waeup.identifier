@@ -24,7 +24,7 @@
       state=restarted
 
   tasks:
-  - name: Create SSH key, type ed25519
+  - name: Create SSH key for ansible user, type ed25519
     user:
       name: "{{ ansible_ssh_user }}"
       generate_ssh_key: yes
