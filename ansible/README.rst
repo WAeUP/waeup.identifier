@@ -108,6 +108,17 @@ The playbook will ask for the SSH password of the user set with ``-u``
 
 This playbook will also clone the `waeup.identifier` repository.
 
+.. note:: The raspberry-pi setup will take *huge* amounts of time for updating,
+          depending on your internet connection and SD-card quality.
+
+          If you ssh into your raspi device once and run::
+
+            $ sudo apt-get update
+            $ sudo aptitude safe-upgrade
+
+          you will be able to track changes and can check whether everything is
+          still working. A later `ansible` run will be much shorter then.
+
 
 Remote Maintenance (optional)
 -----------------------------
