@@ -24,5 +24,9 @@ Vagrant.configure(2) do |config|
       ansible.verbose = "v"
       ansible.playbook = "ansible/install_kivy_playbook.yml"
     end
+    machine.vm.provision "ansible" do |ansible|
+      ansible.verbose = "v"
+      ansible.playbook = "ansible/install_fpscan_playbook.yml"
+    end
   end
 end
