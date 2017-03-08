@@ -38,22 +38,26 @@
   - name: Autoreconf fpscan
     become: false
     command: autoreconf -fvi
+    args:
       chdir: "{{ fpscan_repo_path }}"
-      creates: "{{ fpscan_repo_path }}"/configure
+      creates: "{{ fpscan_repo_path }}/configure"
 
   - name: Configure fpscan
     become: false
     command: ./configure
+    args:
       chdir: "{{ fpscan_repo_path }}"
-      creates: "{{ fpscan_repo_path }}"/Makefile
+      creates: "{{ fpscan_repo_path }}/Makefile"
 
   - name: Make fpscan
     become: false
     command: make
+    args:
       chdir: "{{ fpscan_repo_path }}"
-      creates: "{{ fpscan_repo_path }}"/src/fpscan
+      creates: "{{ fpscan_repo_path }}/src/fpscan"
 
   - name: Install fpscan
     become: true
     command: make install
+    args:
       chdir: "{{ fpscan_repo_path }}"
