@@ -14,6 +14,7 @@
   vars:
     - repo_path: /home/{{ ansible_ssh_user }}/waeup.identifier
     - device_id: "test-raspi1"
+    - reverse_ssh_host: "192.168.23.23"
 
   tasks:
   - name: Update system
@@ -86,5 +87,13 @@
         src: "start_reverse_ssh.sh"
         dest: "/home/{{ ansible_ssh_user }}/start_reverse_ssh.sh"
         force: no
+
+
+  - name: Set remote reverse SSH host
+    become: false
+    lineinfile:
+        dest: "/home/{{ ansible_ssh_user }}/start_reverse_ssh.sh"
+        line: "REMOTE_HOST={{ reverse_ssh_host }}"
+        regexp: "^REMOTE_HOST="
 
 - include: setup_ssh_playbook.yml
