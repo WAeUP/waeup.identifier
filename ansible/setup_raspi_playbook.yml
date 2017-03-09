@@ -4,7 +4,7 @@
 #
 # Sample:
 #
-#   $ ansible-playbook -i hosts -u pi -k setup_raspi_playbook.yml
+#   $ ansible-playbook -i hosts -u pi -e 'device_id=myraspi_01' -k setup_raspi_playbook.yml
 #
 # Make sure, that the IP in `hosts` is the real raspberry-pi.
 #
@@ -13,6 +13,7 @@
   become_user: root
   vars:
     - repo_path: /home/{{ ansible_ssh_user }}/waeup.identifier
+    - device_id: "test-raspi1"
 
   tasks:
   - name: Update system
