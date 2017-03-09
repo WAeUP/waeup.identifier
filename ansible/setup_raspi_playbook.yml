@@ -72,7 +72,7 @@
     become: false
     copy:
         src: "waeup-identifier.desktop.tmpl"
-        dest: "/home/pi/Desktop/waeup-identifier.desktop"
+        dest: "/home/{{ ansible_ssh_user }}/Desktop/waeup-identifier.desktop"
         force: yes
 
 - include: setup_ssh_playbook.yml
