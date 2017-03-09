@@ -4,7 +4,7 @@
 #
 # Sample:
 #
-#   $ ansible-playbook -i hosts -u pi -e 'device_id=myraspi_01' -k setup_raspi_playbook.yml
+#   $ ansible-playbook -i hosts -u pi -e 'device_id=myraspi_01 reverse_ssh_host=192.168.42.42 reverse_ssh_port=22001' -k setup_raspi_playbook.yml
 #
 # Make sure, that the IP in `hosts` is the real raspberry-pi.
 #
@@ -15,6 +15,7 @@
     - repo_path: /home/{{ ansible_ssh_user }}/waeup.identifier
     - device_id: "test-raspi1"
     - reverse_ssh_host: "192.168.23.23"
+    - reverse_ssh_port: "22001"
 
   tasks:
   - name: Update system
@@ -95,5 +96,12 @@
         dest: "/home/{{ ansible_ssh_user }}/start_reverse_ssh.sh"
         line: "REMOTE_HOST={{ reverse_ssh_host }}"
         regexp: "^REMOTE_HOST="
+
+  - name: Set remote reverse SSH port
+    become: false
+    lineinfile:
+        dest: "/home/{{ ansible_ssh_user }}/start_reverse_ssh.sh"
+        line: "REVERSE_PORT={{ reverse_ssh_port }}"
+        regexp: "^REVERSE_PORT="
 
 - include: setup_ssh_playbook.yml
