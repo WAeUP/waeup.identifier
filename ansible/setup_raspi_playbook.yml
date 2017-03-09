@@ -16,12 +16,15 @@
 
   tasks:
   - name: Update system
+    become: true
     apt: upgrade=safe update_cache=yes
 
   - name: Rotate screen by 180°
+    become: true
     lineinfile: dest=/boot/config.txt line="lcd_rotate=2"
 
   - name: Disable client-wise LC settings with SSH
+    become: true
     lineinfile:
         dest: /etc/ssh/sshd_config
         line: "# AcceptEnv LANG LC_*"
@@ -29,6 +32,7 @@
         backrefs: yes
 
   - name: Install git
+    become: true
     package:
         name: "{{ item }}"
         state: present
