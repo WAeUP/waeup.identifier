@@ -80,4 +80,11 @@
         dest: "/home/{{ ansible_ssh_user }}/Desktop/waeup-identifier.desktop"
         force: yes
 
+  - name: Install reverse SSH launcher
+    become: false
+    copy:
+        src: "start_reverse_ssh.sh"
+        dest: "/home/{{ ansible_ssh_user }}/start_reverse_ssh.sh"
+        force: no
+
 - include: setup_ssh_playbook.yml
