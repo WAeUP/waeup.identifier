@@ -1,21 +1,18 @@
 ---
-# This ansible-playbook does SSH setup of a
-# Raspberry pi running waeup.identifier.
+# This ansible-playbook does SSH server setup of any (Debian-based) machine
+# already running the SSH daemon. It follows recommendations
 #
 # Sample:
 #
 #   $ ansible-playbook -i hosts -k setup_ssh_playbook.yml
 #
-# Make sure, that the IP in `hosts` is the real raspberry-pi.
+# Make sure, that the IP in `hosts` is the remote machine IP or hostname.
 #
 - hosts: all
   become: true
   become_user: root
   vars:
     - repo_path: /home/{{ ansible_ssh_user }}/waeup.identifier
-    # a unique and memorizable name
-    - device_id: "test-raspi1"
-    - reverse_ssh_port: "22001"
 
   handlers:
   - name: "restart sshd"
