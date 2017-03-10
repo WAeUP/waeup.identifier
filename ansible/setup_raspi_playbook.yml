@@ -75,7 +75,7 @@
         option: "hid_%(name)s"
         value: "probesysfs,provider=hidinput"
 
-  - name: Create desktop entry
+  - name: Create desktop entry for waeup.identifier
     become: false
     copy:
         src: "waeup-identifier.desktop.tmpl"
@@ -110,5 +110,12 @@
         dest: "/home/{{ ansible_ssh_user }}/start_reverse_ssh.sh"
         line: "REVERSE_PORT={{ reverse_ssh_port }}"
         regexp: "^REVERSE_PORT="
+
+  - name: Create desktop entry for reverse-ssh starter
+    become: false
+    copy:
+        src: "start_reverse_ssh.desktop.tmpl"
+        dest: "/home/{{ ansible_ssh_user }}/Desktop/start_reverse_ssh.desktop"
+        force: yes
 
 - include: setup_ssh_playbook.yml
