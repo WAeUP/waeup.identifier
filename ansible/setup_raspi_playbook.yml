@@ -18,14 +18,6 @@
     - reverse_ssh_port: "22001"
 
   tasks:
-  # setting these facts make the vars defined above visible in included
-  # playbooks.
-  - name: Set reverse ssh data and device id as facts
-    set_fact:
-        device_id: "{{ device_id }}"
-        reverse_ssh_host: "{{ reverse_ssh_host }}"
-        reverse_ssh_port: "{{ reverse_ssh_port }}"
-
   - name: Update system
     become: true
     apt: upgrade=safe update_cache=yes
