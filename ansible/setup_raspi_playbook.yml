@@ -105,7 +105,6 @@
         force: no
         mode: 0740
 
-
   - name: Set remote reverse SSH host
     become: false
     lineinfile:
