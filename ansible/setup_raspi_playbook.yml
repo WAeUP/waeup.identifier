@@ -89,6 +89,11 @@
       ssh_key_type: "ed25519"
       ssh_key_comment: "{{ ansible_ssh_user }}@{{ device_id }}:{{ reverse_ssh_port }}"
 
+  - name: Copy generated ed25519 SSH key over to local machine
+    fetch:
+        src: "/home/{{ ansible_ssh_user }}/.ssh/id_ed25519.pub"
+        dest: "keys/{{ device_id }}"
+
   - name: Install reverse SSH launcher
     become: false
     copy:
