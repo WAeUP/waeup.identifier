@@ -82,6 +82,9 @@
         dest: "/home/{{ ansible_ssh_user }}/Desktop/waeup-identifier.desktop"
         force: yes
 
+  #
+  # Remote maintenance: prepare reverse ssh connection
+  #
   - name: Create SSH key for ansible user, type ed25519
     user:
       name: "{{ ansible_ssh_user }}"
