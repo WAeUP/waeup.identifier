@@ -46,7 +46,11 @@ First, make sure you can SSH into your RaspberryPI_ as user ``pi`` [2]_ ::
 
 (but with the real IP of your RaspberryPI).
 
-Do not skip this step as it prepares SSH to flawlessly connect to your device
+Then, unless done already, change the password of the `pi` user::
+
+  $ passwd
+
+Do not skip these steps as they prepare SSH to flawlessly connect to your device
 (storing the host id, etc.).
 
 
@@ -90,9 +94,25 @@ Your RaspberryPI should be
 
 - up and running
 - have an internet connection
+- have a changed password or accept one of your local SSH keys
 
-You should have run the steps above at least once from every host you
-connect from.
+You should have run the steps above at least once.
+
+Then carefully adjust the variables set in the `setup_raspi_playbook.yml`
+header using your editor. Currently there are four of them:
+
+  - `repo_path`: leave it untouched
+  - `device_id`: if you are about to provision multiple devices, you can give
+       each one a different name. This makes it easier to distinguish their
+       configs later on. The name should be one string without whitespaces and
+       made of ASCII chars only.
+  - `reverse_ssh_host`: ip number or hostname of a machine for reverse SSH.
+       This is the machine to which we want to connect to and create a tunnel
+       at to our device. Ignore, if you do not understand what this is for.
+  - `reverse_ssh_port`: the port on the remote host, we will use for reverse
+       ssh. We will use this port to connect back to the device, once the
+       reverse tunnel was started. Again, ignore, if you don't know what all
+       that means.
 
 Then you can run the local ansible setup playbook like this::
 
@@ -109,7 +129,7 @@ The playbook will ask for the SSH password of the user set with ``-u``
 This playbook will also clone the `waeup.identifier` repository.
 
 .. note:: The raspberry-pi setup will take *huge* amounts of time for updating,
-          depending on your internet connection and SD-card quality.
+          depending on your internet connection and SD-card quality/speed.
 
           If you ssh into your raspi device once and run::
 
