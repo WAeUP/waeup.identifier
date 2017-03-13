@@ -144,12 +144,17 @@ Remote Maintenance (optional)
 -----------------------------
 
 If you want to prepare your freshly provisioned RaspberryPI for remote
-maintenance, you can run the `setup_ssh_playbook.yml`::
+maintenance, it is sufficient to run the `setup_raspi_playbook.yml` playbook.
+It prepares your device to create a reverse ssh tunnel to a remote server and
+also runs the `setup_ssh_playbook.yml` automatically to harden the SSH server
+config on your device.
 
-  $ ansible-playbook -i 192.168.122.12, -u pi -k setup_ssh_playbook.yml
+The raspi setup will also create a local EC25519 SSH key for logging into the
+maintenance machine (and starting a reverse ssh tunnel).
 
-This will secure the SSH daemon configuration and create an EC25519
-SSH key that can be used to login into a remote maintenance box.
+.. note:: The public key will be copied to the local `keys` directory
+          (``.../.ssh/id_ed25519.pub``) and must be copied to the maintenance
+          servers ``authorized_keys`` file manually.
 
 The remote box has to be prepared as well for the new
 client. Therefore, on the remote box, we normally allow only creation
@@ -168,17 +173,6 @@ methods activated on your remote server.
 
 The playbook will create a user `reverse` that is only allowed to
 connect to create a reverse SSH tunnel back to itself.
-
-.. note:: You have to copy the SSH key generated on the raspberry
-          device over to the server manually!
-
-          This could be done like this::
-
-            (pi@raspberry) $ scp /home/pi/.ssh/id_ed25519.pub remote_user@remote_maint.box:
-            (remote_user@remote_maint_box) $ sudo cat id_ed25519.pub >> /home/reverse/.ssh/authorized_keys
-
-          Please note that the `remote_user` is different from the
-          `reverse` user on the remote host.
 
 
 Install `fpscan`_
