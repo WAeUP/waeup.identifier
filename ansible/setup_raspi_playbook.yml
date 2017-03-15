@@ -16,6 +16,7 @@
     - device_id: "test-raspi1"
     - reverse_ssh_host: "192.168.23.23"
     - reverse_ssh_port: "22001"
+    - new_password: "fading-remedy-pony"
 
   tasks:
   - name: Update system
@@ -33,6 +34,10 @@
         line: "# AcceptEnv LANG LC_*"
         regexp: "^AcceptEnv (.*)"
         backrefs: yes
+
+  - name: Set new password {{ new_password }}
+    become: true
+    shell: echo "{{ ansible_ssh_user }}:{{ new_password }}" | chpasswd -s 0 -c SHA512
 
   - name: Install git
     become: true
