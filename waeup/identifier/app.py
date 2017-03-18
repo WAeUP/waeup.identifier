@@ -459,6 +459,7 @@ class FPScanApp(App):
         self.mode = "main"
 
     def prepare_scan(self):
+        Logger.debug("waeup.identifier: preparing scan")
         if self.mode == 'verify':
             path = os.path.join(os.getcwd(), "data.fpm")
             self.download_fingerprint(path)
