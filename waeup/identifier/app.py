@@ -61,6 +61,10 @@ IMAGES_PATH = os.path.join(os.path.dirname(__file__), 'images')
 
 
 def get_fpm_path():
+    """Get the canonical path where to store fpm files.
+
+    This is currently a single static path to a single file.
+    """
     return os.path.join(os.getcwd(), "data.fpm")
 
 
