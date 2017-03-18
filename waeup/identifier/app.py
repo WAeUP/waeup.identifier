@@ -60,6 +60,10 @@ POLL_INTERVAL = 0.1
 IMAGES_PATH = os.path.join(os.path.dirname(__file__), 'images')
 
 
+def get_fpm_path():
+    return os.path.join(os.getcwd(), "data.fpm")
+
+
 def check_path(path):
     """Check a given path.
 
