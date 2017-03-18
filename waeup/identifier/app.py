@@ -465,8 +465,7 @@ class FPScanApp(App):
     def prepare_scan(self):
         Logger.debug("waeup.identifier: preparing scan")
         if self.mode == 'verify':
-            path = os.path.join(os.getcwd(), "data.fpm")
-            self.download_fingerprint(path)
+            self.download_fingerprint(get_fpm_path())
         else:
             self.start_scan()
 
@@ -517,7 +516,7 @@ class FPScanApp(App):
             return
         self.root.btn_scan_text = self._scan_button_old_text
         self.prevent_scanning = False
-        path = os.path.join(os.getcwd(), "data.fpm")
+        path = get_fpm_path()
         if not os.path.isfile(path):
             # Scan failed
             Logger.warn("waeup.identifier: no such file: %s" % path)
@@ -602,7 +601,7 @@ class FPScanApp(App):
                 message="For this student there are no fingerprints stored."
                 ).open()
             return
-        path = os.path.join(os.getcwd(), "data.fpm")
+        path = get_fpm_path()
         with open(path, 'wb') as fd:
             fd.write(fingerprint.data)
         if self.mode == 'verify':
