@@ -462,7 +462,8 @@ class FPScanApp(App):
         if self.mode == 'verify':
             path = os.path.join(os.getcwd(), "data.fpm")
             self.download_fingerprint(path)
-        self.start_scan()
+        else:
+            self.start_scan()
 
     def start_scan(self):
         """Start a fingerprint scan.
@@ -599,6 +600,8 @@ class FPScanApp(App):
         path = os.path.join(os.getcwd(), "data.fpm")
         with open(path, 'wb') as fd:
             fd.write(fingerprint.data)
+        if self.mode == 'verify':
+            self.start_scan()
 
     def handle_verify(self, result):
         Logger.debug(
