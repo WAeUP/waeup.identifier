@@ -113,6 +113,10 @@ header using your editor. Currently there are four of them:
        ssh. We will use this port to connect back to the device, once the
        reverse tunnel was started. Again, ignore, if you don't know what all
        that means.
+  - `new_password`: the password to set for the connecting ssh user. The
+       default password we set is ``fading-remedy-pony``. It is not safe to
+       leave this password unchanged.
+  - `set_password`: set to ``false`` if you don't want to set the password.
 
 Then you can run the local ansible setup playbook like this::
 
@@ -120,7 +124,7 @@ Then you can run the local ansible setup playbook like this::
 
 Please note the trailing comma after the IP number.
 
-The username ``pi`` and the IP number must, of course be set to match
+The username ``pi`` and the IP number must, of coursei, be set to match
 your local settings.
 
 The playbook will ask for the SSH password of the user set with ``-u``
