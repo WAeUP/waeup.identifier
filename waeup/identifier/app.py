@@ -49,7 +49,7 @@ VALID_FILENAME = re.compile('^[a-zA-Z0-9/\._\-]+$')
 
 #: A valid student id looks like this
 #: Two or three uppercase ASCIIs followed by at least five digits
-RE_STUDENT_ID = re.compile('^[A-Z]{2,3}[0-9]{5,}$')
+RE_STUDENT_ID = re.compile('^[A-Z]{1,3}[0-9]{5,}$')
 
 
 #: How often do we look for new data while executing commands?
