@@ -617,9 +617,9 @@ class FPScanApp(App):
         if result == 'ok':
             FPScanPopup(
                 title="Verification succeeded",
-                message="Fingerprints [b]match[/b]").open()
+                message="Fingerprints MATCH").open()
         else:
             FPScanPopup(
                 title="Verification failed",
-                message="Could not identify").open()
+                message="Verification FAILED").open()
         return
