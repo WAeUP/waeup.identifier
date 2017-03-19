@@ -12,6 +12,16 @@ subdir. In the following we show how to provision a running
 RaspberryPI_ connected to the same network as your local machine.
 
 
+Overview
+--------
+
+If you want to provision a RaspberryPI device, start with the
+`setup_raspi_playbook.yml` playbook. This will prepare fresh Raspbian installs
+for upcoming unstalls and do some safety measures.
+
+Afterwards, continue with the other playbooks.
+
+
 Get ansible_
 ------------
 
