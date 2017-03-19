@@ -4,7 +4,8 @@ config_version = 0
 [input]
 mouse = mouse
 %(name)s = probesysfs,provider=hidinput
-# the following settings should help with raspberry touchscreen.
-# see https://kivy.org/docs/installation/installation-rpi.html#using-official-rpi-touch-display
+## the following settings should help with raspberry touchscreen.
+## see https://kivy.org/docs/installation/installation-rpi.html#using-official-rpi-touch-display
 mtdev_%(name)s = probesysfs,provider=mtdev
-hid_%(name)s = probesysfs,provider=hidinput
+## the following line, when enabled, might produce double chars.
+# hid_%(name)s = probesysfs,provider=hidinput

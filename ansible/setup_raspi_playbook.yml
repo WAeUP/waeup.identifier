@@ -73,14 +73,14 @@
         option: "mtdev_%(name)s"
         value: "probesysfs,provider=mtdev"
 
-  # this setting is for official raspi touchscreen.
-  - name: Tweak kivy hid config.ini setting
+  # this setting is for official raspi touchscreen
+  - name: Remove any hid_%(name)s setting in kivy config.ini
     become: false
     ini_file:
         dest: "/home/{{ ansible_ssh_user }}/.kivy/config.ini"
         section: "input"
         option: "hid_%(name)s"
-        value: "probesysfs,provider=hidinput"
+        state: absent
 
   - name: Create desktop entry for waeup.identifier
     become: false
