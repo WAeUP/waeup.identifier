@@ -22,6 +22,7 @@ def test_re_student_id():
     assert RE_STUDENT_ID.match("AA1234") is None
     assert RE_STUDENT_ID.match("AA12345A") is None
     assert RE_STUDENT_ID.match("ZA12345") is not None
+    assert RE_STUDENT_ID.match("A1233456") is not None
 
 
 def test_check_path_not_existing(home_dir):
