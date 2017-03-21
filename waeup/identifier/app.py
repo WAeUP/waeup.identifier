@@ -340,7 +340,6 @@ class FPScanApp(App):
     chosen_scanner = None
     icon = '%s/waeupicon.png' % IMAGES_PATH
     prevent_scanning = BooleanProperty(True)
-    popup_text = StringProperty('')
     cmd_running = None
     scan_canceled = False
     mode = StringProperty('main')
