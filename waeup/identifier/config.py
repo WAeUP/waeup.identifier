@@ -21,30 +21,13 @@ from kivy.config import ConfigParser
 
 
 #: A list of valid configuration keys.
-CONF_KEYS = ['fpscan_path', 'waeup_url', 'waeup_user',
-             'waeup_passwd']
+CONF_KEYS = ['fpscan_path', 'waeup_url']
 
 
 CONF_SETTINGS = [
     {
         "type": "title",
         "title": "Server",
-    },
-    {
-        "type": "string",
-        "title": "WAeUP Username",
-        "desc": "Username to connect to WAeUP server",
-        "section": "Server",
-        "key": "waeup_user",
-        "default": "grok",
-    },
-    {
-        "type": "string",
-        "title": "WAeUP Password",
-        "desc": "Password to connect to WAeUP server",
-        "section": "Server",
-        "key": "waeup_passwd",
-        "default": "grok",
     },
     {
         "type": "string",
@@ -135,8 +118,6 @@ def get_config(path=None):
     conf = ConfigParser()
     fpscan_path = find_fpscan_binary()
     conf['DEFAULT'] = {
-        'waeup_user': 'grok',
-        'waeup_passwd': 'grok',
         'waeup_url': 'localhost:8080',
         'save_passwd': '0',
         }

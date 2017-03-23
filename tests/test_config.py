@@ -98,8 +98,6 @@ class Test_get_config(object):
     def test_get_config(self):
         # we can get valid configs
         conf = get_config()
-        assert conf.get('DEFAULT', 'waeup_user') == 'grok'
-        assert conf.get('DEFAULT', 'waeup_passwd') == 'grok'
         assert conf.get('DEFAULT', 'waeup_url') == 'localhost:8080'
 
     def test_get_config_fpscan_path(self, home_dir):
@@ -112,10 +110,17 @@ class Test_get_config(object):
     def test_get_config_from_single_file(self, home_dir):
         # configs can be read from a file
         conf_path = home_dir / 'config.conf'
-        conf_path.write('[DEFAULT]\nwaeup_user=user1\n')
+        conf_path.write('[DEFAULT]\nfpscan_path=some_value\n')
         conf = get_config(path=str(conf_path))
-        assert conf.get('DEFAULT', 'waeup_user') == 'user1'
-        assert conf.get('DEFAULT', 'waeup_passwd') == 'grok'
+        assert conf.get('DEFAULT', 'fpscan_path') == 'some_value'
+        assert conf.get('DEFAULT', 'waeup_url') == 'localhost:8080'
+
+    def test_get_config_from_single_file_overwrites(self, home_dir):
+        # configs can be read from a file, its values overwrite existing ones
+        conf_path = home_dir / 'config.conf'
+        conf_path.write('[DEFAULT]\nwaeup_url=otherhost:8181\n')
+        conf = get_config(path=str(conf_path))
+        assert conf.get('DEFAULT', 'waeup_url') == 'otherhost:8181'
 
     def test_all_conf_keys_appear(self, home_dir):
         # make sure that normally CONF_KEYS appear in default config
