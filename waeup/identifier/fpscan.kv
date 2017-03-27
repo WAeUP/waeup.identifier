@@ -13,6 +13,11 @@ BoxLayout:
                 with_previous: True
             ActionOverflow:
             ActionButton:
+                text: 'Credentials'
+                on_release: screen_manager.transition.direction = 'down'
+                on_release: screen_manager.current = 'screen_creds'
+                on_release: app.mode = "creds"
+            ActionButton:
                 text: 'Settings'
                 icon: 'atlas://data/images/defaulttheme/overflow'
                 on_release: app.open_settings()
@@ -75,6 +80,45 @@ BoxLayout:
                             on_press: app.cancel_scan(args)
                             on_press: screen_manager.transition.direction = 'right'
                             on_press: screen_manager.current = 'screen_main'
+            Screen:
+                name: "screen_creds"
+                BoxLayout:
+                    orientation: "vertical"
+                    BoxLayout:
+                        BoxLayout:
+                            orientation: "vertical"
+                            size_hint: 0.33, 1
+                            Label:
+                                text: "Portal Username"
+                            Label:
+                                text: "Portal Password"
+                        BoxLayout:
+                            orientation: "vertical"
+                            BoxLayout:
+                                orientation: "vertical"
+                                Widget:
+                                TextInput:
+                                    text: ""
+                                    hint_text: "Enter your Kofa username here"
+                                Widget:
+                            BoxLayout:
+                                orientation: "vertical"
+                                Widget:
+                                TextInput:
+                                    text: ""
+                                    hint_text: "Enter your Kofa password here"
+                                    password: True
+                                Widget:
+                    Widget:
+                        size_hint: 1, 0.3
+                    BoxLayout:
+                        Button:
+                            text: "Apply"
+                        Button:
+                            text: "Cancel"
+                            on_press: screen_manager.transition.direction = 'up'
+                            on_press: screen_manager.current = app.last_screen
+                            on_press: app.mode = app.old_mode
 
 
 <FPScanPopup@Popup>:

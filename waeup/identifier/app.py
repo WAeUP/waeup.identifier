@@ -344,6 +344,7 @@ class FPScanApp(App):
     scan_canceled = False
     mode = StringProperty('main')
     old_mode = 'main'
+    last_screen = 'screen_main'
 
     def build(self):
         from kivy.uix.settings import Settings
@@ -441,10 +442,16 @@ class FPScanApp(App):
             self.root.prevent_scanning = True
             stud_id_label.text = (
                 "Student ID:\n[color=999]of student to verify[/color]")
+        elif value == "creds":
+            pass
         elif value == "main":
             self.kill_running_cmd()
             self.scan_canceled = False
-        self.old_mode = value
+        if self.old_mode != value:
+            self.old_mode = value
+        if self.screen_manager.current != self.last_screen:
+            self.last_screen = str(self.screen_manager.current)
+
 
     def quit_app(self):
         """Quit application on user request.
