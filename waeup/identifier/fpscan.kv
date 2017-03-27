@@ -2,6 +2,8 @@
 BoxLayout:
     orientation: 'vertical'
     f_student_id: ''
+    f_waeup_password: ''
+    f_waeup_username: ''
     btn_scan_text: 'Scan'
     ActionBar:
         pos_hint: {'top': 1}
@@ -99,15 +101,17 @@ BoxLayout:
                                 orientation: "vertical"
                                 Widget:
                                 TextInput:
-                                    text: ""
+                                    text: root.f_waeup_username
                                     hint_text: "Enter your Kofa username here"
+                                    multiline: False
                                 Widget:
                             BoxLayout:
                                 orientation: "vertical"
                                 Widget:
                                 TextInput:
-                                    text: ""
+                                    text: root.f_waeup_password
                                     hint_text: "Enter your Kofa password here"
+                                    multiline: False
                                     password: True
                                 Widget:
                         Widget:
