@@ -14,6 +14,7 @@ BoxLayout:
             ActionOverflow:
             ActionButton:
                 text: 'Credentials'
+                icon: app.creds_icon
                 on_release: screen_manager.transition.direction = 'down'
                 on_release: screen_manager.current = 'screen_creds'
                 on_release: app.mode = "creds"

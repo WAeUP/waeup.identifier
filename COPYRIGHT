@@ -17,6 +17,7 @@ License: GPL-3+
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Files: waeup/identifier/images/network-transmit-receive.png
+       waeup/identifier/images/emblem-readonly.png
 Copyright: Sam Hewitt <sam@snwh.org>
 License: CC-BY-SA-4
  This work is licenced under the terms of the Creative Commons Attribution-ShareAlike 4.0 license. You are free to:
