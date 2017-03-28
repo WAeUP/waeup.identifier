@@ -346,6 +346,8 @@ class FPScanApp(App):
     mode = StringProperty('main')
     old_mode = 'main'
     last_screen = 'screen_main'
+    waeup_username = ''
+    waeup_password = ''
 
     def build(self):
         from kivy.uix.settings import Settings
@@ -444,15 +446,13 @@ class FPScanApp(App):
             stud_id_label.text = (
                 "Student ID:\n[color=999]of student to verify[/color]")
         elif value == "creds":
-            pass
+            Logger.debug("waeup.identifier: enter creds mode")
         elif value == "main":
             self.kill_running_cmd()
             self.scan_canceled = False
-        if self.old_mode != value:
-            self.old_mode = value
+        self.old_mode = value
         if self.screen_manager.current != self.last_screen:
             self.last_screen = str(self.screen_manager.current)
-
 
     def quit_app(self):
         """Quit application on user request.
@@ -546,8 +546,8 @@ class FPScanApp(App):
         student_id = self.root.f_student_id
         Logger.info(
             "waeup.identifier: uploading fingerprint for '%s'" % student_id)
-        username = self.config.get('Server', 'waeup_user')
-        password = self.config.get('Server', 'waeup_passwd')
+        username = self.waeup_username
+        password = self.waeup_password
         netloc = self.config.get('Server', 'waeup_url')
         url = get_url(netloc, username, password)
         call_in_background(

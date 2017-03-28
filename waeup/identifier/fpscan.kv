@@ -2,8 +2,6 @@
 BoxLayout:
     orientation: 'vertical'
     f_student_id: ''
-    f_waeup_password: ''
-    f_waeup_username: ''
     btn_scan_text: 'Scan'
     ActionBar:
         pos_hint: {'top': 1}
@@ -17,6 +15,8 @@ BoxLayout:
             ActionButton:
                 text: 'Credentials'
                 icon: app.creds_icon
+                on_release: input_waeup_username.text = app.waeup_username
+                on_release: input_waeup_password.text = app.waeup_password
                 on_release: screen_manager.transition.direction = 'down'
                 on_release: screen_manager.current = 'screen_creds'
                 on_release: app.mode = "creds"
@@ -83,6 +83,7 @@ BoxLayout:
                             on_press: app.cancel_scan(args)
                             on_press: screen_manager.transition.direction = 'right'
                             on_press: screen_manager.current = 'screen_main'
+                            on_press: app.prevent_scanning = True
             Screen:
                 name: "screen_creds"
                 BoxLayout:
@@ -101,7 +102,8 @@ BoxLayout:
                                 orientation: "vertical"
                                 Widget:
                                 TextInput:
-                                    text: root.f_waeup_username
+                                    id: input_waeup_username
+                                    text: app.waeup_username
                                     hint_text: "Enter your Kofa username here"
                                     multiline: False
                                 Widget:
@@ -109,7 +111,8 @@ BoxLayout:
                                 orientation: "vertical"
                                 Widget:
                                 TextInput:
-                                    text: root.f_waeup_password
+                                    id: input_waeup_password
+                                    text: app.waeup_password
                                     hint_text: "Enter your Kofa password here"
                                     multiline: False
                                     password: True
@@ -121,6 +124,11 @@ BoxLayout:
                     BoxLayout:
                         Button:
                             text: "Apply"
+                            on_press: app.waeup_username = input_waeup_username.text
+                            on_press: app.waeup_password = input_waeup_password.text
+                            on_press: app.mode = app.old_mode
+                            on_press: screen_manager.transition.direction = 'up'
+                            on_press: screen_manager.current = app.last_screen
                         Button:
                             text: "Cancel"
                             on_press: screen_manager.transition.direction = 'up'
