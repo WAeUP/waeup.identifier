@@ -546,10 +546,8 @@ class FPScanApp(App):
         student_id = self.root.f_student_id
         Logger.info(
             "waeup.identifier: uploading fingerprint for '%s'" % student_id)
-        username = self.waeup_username
-        password = self.waeup_password
         netloc = self.config.get('Server', 'waeup_url')
-        url = get_url(netloc, username, password)
+        url = get_url(netloc, self.waeup_username, self.waeup_password)
         call_in_background(
             callable=store_fingerprint,
             args=(url, student_id, 1, path),
@@ -582,10 +580,8 @@ class FPScanApp(App):
         student_id = self.root.f_student_id
         Logger.info(
             "waeup.identifier: downloading fingerprint of '%s'" % student_id)
-        username = self.config.get('Server', 'waeup_user')
-        password = self.config.get('Server', 'waeup_passwd')
         netloc = self.config.get('Server', 'waeup_url')
-        url = get_url(netloc, username, password)
+        url = get_url(netloc, self.waeup_username, self.waeup_password)
         call_in_background(
             callable=get_fingerprints,
             args=(url, student_id),
