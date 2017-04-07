@@ -538,6 +538,12 @@ class FPScanApp(App):
             return
         self.upload_fingerprint(path)
 
+    def get_server_url(self):
+        """Create the URL to communicate with the Kofa server.
+        """
+        netloc = self.config.get('Server', 'waeup_url')
+        return get_url(netloc, self.waeup_username, self.waeup_password)
+
     def upload_fingerprint(self, path):
         """Do the actual upload.
 
@@ -546,11 +552,9 @@ class FPScanApp(App):
         student_id = self.root.f_student_id
         Logger.info(
             "waeup.identifier: uploading fingerprint for '%s'" % student_id)
-        netloc = self.config.get('Server', 'waeup_url')
-        url = get_url(netloc, self.waeup_username, self.waeup_password)
         call_in_background(
             callable=store_fingerprint,
-            args=(url, student_id, 1, path),
+            args=(self.get_server_url(), student_id, 1, path),
             callback=self.upload_finished)
 
     @mainthread
@@ -580,11 +584,9 @@ class FPScanApp(App):
         student_id = self.root.f_student_id
         Logger.info(
             "waeup.identifier: downloading fingerprint of '%s'" % student_id)
-        netloc = self.config.get('Server', 'waeup_url')
-        url = get_url(netloc, self.waeup_username, self.waeup_password)
         call_in_background(
             callable=get_fingerprints,
-            args=(url, student_id),
+            args=(self.get_server_url(), student_id),
             callback=self.download_finished)
 
     @mainthread
