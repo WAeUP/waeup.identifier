@@ -89,6 +89,13 @@
         dest: "/home/{{ ansible_ssh_user }}/Desktop/waeup-identifier.desktop"
         force: yes
 
+  - name: Create menu entry for waeup.identifier
+    become: false
+    copy:
+        src: "waeup-identifier.desktop.tmpl"
+        dest: "/home/{{ ansible_ssh_user }}/.local/share/applications/waeup-identifier.desktop"
+        force: yes
+
   #
   # Remote maintenance: prepare reverse ssh connection
   #
