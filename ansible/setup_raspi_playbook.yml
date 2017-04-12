@@ -19,6 +19,11 @@
     - set_password: true
     - new_password: "fading-remedy-pony"
 
+  handlers:
+  - name: restart lxpanel
+    become: false
+    shell: DISPLAY=":0.0" lxpanelctl restart
+
   tasks:
   - name: Update system
     become: true
@@ -95,6 +100,7 @@
         src: "waeup-identifier.desktop.tmpl"
         dest: "/home/{{ ansible_ssh_user }}/.local/share/applications/waeup-identifier.desktop"
         force: yes
+    notify: restart lxpanel
 
   #
   # Remote maintenance: prepare reverse ssh connection
