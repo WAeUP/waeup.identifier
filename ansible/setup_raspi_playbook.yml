@@ -18,6 +18,7 @@
     - reverse_ssh_port: "22001"
     - set_password: true
     - new_password: "fading-remedy-pony"
+    - remove_bloatware: true
 
   handlers:
   - name: restart lxpanel
@@ -28,6 +29,16 @@
   - name: Update system
     become: true
     apt: upgrade=safe update_cache=yes
+
+  - name: Remove large packages not needed
+    become: true
+    package:
+      name: "{{ item }}"
+      state: absent
+    with_items:
+      - "wolfram-engine"
+      - "libreoffice*"
+    when: remove_bloatware == true
 
   - name: Rotate screen by 180°
     become: true
