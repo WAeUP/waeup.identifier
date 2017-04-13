@@ -127,6 +127,9 @@ header using your editor. Currently there are four of them:
        default password we set is ``fading-remedy-pony``. It is not safe to
        leave this password unchanged.
   - `set_password`: set to ``false`` if you don't want to set the password.
+  - `remove_bloatware`: set to ``false`` if you want to keep large
+       softwarepackages like `mathematica`, `wolfram-engine`, or `libreoffice`.
+       We remove these otherwise, if they should be installed.
 
 Then you can run the local ansible setup playbook like this::
 
