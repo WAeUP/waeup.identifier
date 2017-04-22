@@ -25,6 +25,12 @@
     become: false
     shell: DISPLAY=":0.0" lxpanelctl restart
 
+  - name: restart lightdm
+    become: true
+    service:
+        name: lightdm
+        state: restarted
+
   tasks:
   - name: Update system
     become: true
@@ -112,6 +118,14 @@
         dest: "/home/{{ ansible_ssh_user }}/.local/share/applications/waeup-identifier.desktop"
         force: yes
     notify: restart lxpanel
+
+  - name: Set standard background
+    become: false
+    copy:
+        src: "desktop-items-0.conf.tmpl"
+        dest: "/home/{{ ansible_ssh_user }}/.config/pcmanfm/LXDE-pi/desktop-items-0.conf"
+        force: yes
+    notify: restart lightdm
 
   #
   # Remote maintenance: prepare reverse ssh connection
