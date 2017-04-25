@@ -171,4 +171,12 @@
         dest: "/home/{{ ansible_ssh_user }}/Desktop/start_reverse_ssh.desktop"
         force: yes
 
+  - name: Create menu entry for reverse-ssh starter
+    become: false
+    copy:
+        src: "start_reverse_ssh.desktop.tmpl"
+        dest: "/home/{{ ansible_ssh_user }}/.local/share/applications/start_reverse_ssh.desktop"
+        force: yes
+    notify: restart lxpanel
+
 - include: setup_ssh_playbook.yml
