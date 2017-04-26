@@ -147,7 +147,7 @@
     copy:
         src: "start_reverse_ssh.sh"
         dest: "/home/{{ ansible_ssh_user }}/start_reverse_ssh.sh"
-        force: no
+        force: yes
         mode: 0740
 
   - name: Set remote reverse SSH host
