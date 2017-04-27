@@ -338,7 +338,7 @@ class FPScanApp(App):
     """
     detected_scanners = []
     chosen_scanner = None
-    icon = '%s/waeupicon.png' % IMAGES_PATH
+    icon = '%s/fingerprint-gui_24x24.png' % IMAGES_PATH
     creds_icon = '%s/emblem-readonly.png' % IMAGES_PATH
     prevent_scanning = BooleanProperty(True)
     cmd_running = None
