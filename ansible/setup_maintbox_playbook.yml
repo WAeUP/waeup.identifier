@@ -28,6 +28,22 @@
       system: yes
       state: present
 
+  - name: Create .ssh dir for reverse user
+    file:
+      dest: /home/{{ maint_user }}/.ssh
+      state: directory
+      owner: "{{ maint_user }}"
+      group: "{{ maint_user }}"
+      mode: 0700
+
+  - name: Create empty authorized_keys file
+    file:
+      dest: /home/{{ maint_user }}/.ssh/authorized_keys
+      state: touch
+      owner: "{{ maint_user }}"
+      group: "{{ maint_user }}"
+      mode: 0600
+
   - name: Restrict permissions for "{{ maint_user }}" in sshd_config
     blockinfile:
       dest: /etc/ssh/sshd_config
