@@ -218,6 +218,17 @@ Inside the new users home we create a `.ssh` directory that contains an empty
 `authorized_keys` file. The permissions of these files are set properly to ease
 later addition of real keys.
 
+On the server we need the *public* key of the RaspberryPI to be added to the
+`reverse` user's ``authorized_keys`` file. For each device provisioned above
+you can find a public in the local `keys` directory. It is named
+``id_ed25519.pub`` and its content has to be added to the `authorized_keys`
+file on the server. That could rougly be done like this::
+
+  (laptop) $ scp keys/<PATH-TO>/id_ed25119.pub remote_user@server:/home/remote_user
+  (laptop) $ ssh remote_user@server
+  (server) $ sudo bash -c "cat id_ed25519.pub >> /home/reverse/.ssh/authorized_keys"
+
+
 
 Install `fpscan`_
 -----------------
