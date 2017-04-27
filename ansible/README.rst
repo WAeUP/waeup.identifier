@@ -160,6 +160,21 @@ This playbook will also clone the `waeup.identifier` repository.
 Remote Maintenance (optional)
 -----------------------------
 
+Once the fingerprinting device is up and running, we might want to get access
+to it from remote locations. For this purpose we provide some sort of "poor
+mans Teamviewer" deploying reverse SSH tunnels.
+
+It roughly works like this: the RaspberryPI connects via SSH to a remote
+server, laying a reverse tunnel open on that remote machine. As long as the
+tunnel exists, any admin on the remote server then can connect to your device
+w/o the need to know about the IP address, just as if the remote machine would
+be a local one.
+
+How does the setup for this type of remote maintenance work?
+
+Remote Maintenance Client Setup (optional)
+------------------------------------------
+
 If you want to prepare your freshly provisioned RaspberryPI for remote
 maintenance, it is sufficient to run the `setup_raspi_playbook.yml` playbook.
 It prepares your device to create a reverse ssh tunnel to a remote server and
@@ -172,6 +187,13 @@ maintenance machine (and starting a reverse ssh tunnel).
 .. note:: The public key will be copied to the local `keys` directory
           (``.../.ssh/id_ed25519.pub``) and must be copied to the maintenance
           servers ``authorized_keys`` file manually.
+
+
+Remote Maintenance Server Setup (optional)
+------------------------------------------
+
+The server setup makes no sense without one or more RaspberryPI devices to
+maintain over the server.
 
 The remote box has to be prepared as well for the new
 client. Therefore, on the remote box, we normally allow only creation
@@ -189,7 +211,12 @@ Here we have to provide an SSH password (``-k``) and a sudo password
 methods activated on your remote server.
 
 The playbook will create a user `reverse` that is only allowed to
-connect to create a reverse SSH tunnel back to itself.
+connect to create a reverse SSH tunnel back to itself. Issuing any commands is
+forbidden.
+
+Inside the new users home we create a `.ssh` directory that contains an empty
+`authorized_keys` file. The permissions of these files are set properly to ease
+later addition of real keys.
 
 
 Install `fpscan`_
