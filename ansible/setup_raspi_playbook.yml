@@ -127,6 +127,16 @@
         force: yes
     notify: restart lightdm
 
+  - name: Enable App Launching with Single Click
+    become: false
+    ini_file:
+        dest: "/home/{{ ansible_ssh_user }}/.config/libfm/libfm.conf"
+        section: "config"
+        option: "single_click"
+        value: "1"
+        backup: yes
+    notify: restart lightdm
+
   #
   # Remote maintenance: prepare reverse ssh connection
   #
