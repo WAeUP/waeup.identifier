@@ -17,14 +17,19 @@
 #
 import json
 import os
+import pkg_resources
 from kivy.config import ConfigParser
 
 
 #: A list of valid configuration keys.
 CONF_KEYS = ['fpscan_path', 'waeup_url']
 
-
 CONF_SETTINGS = [
+    {
+        "type": "title",
+        "title": "Version: %s" % pkg_resources.get_distribution(
+            'waeup.identifier').version,
+    },
     {
         "type": "title",
         "title": "Server",
