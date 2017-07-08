@@ -45,10 +45,6 @@ For people that only want to simply use the software::
 Afterwards the commandline tool (`waeup_identifier`) should be
 available.
 
-.. note:: The user install will be available after first
-          release. Until then, please use developer install (see
-          below).
-
 
 Developer Install
 -----------------
