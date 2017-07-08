@@ -2,7 +2,7 @@ graft doc
 prune docs/build
 graft waeup
 graft tests
-include *.rst *.cfg *.ini *.txt *.html *.sh htaccess
+include *.rst *.cfg *.ini *.txt *.html *.sh htaccess COPYRIGHT LICENSE.cc-sa LICENSE.gpl3+ 
 global-exclude *.pyc
 global-exclude *.pyo
 global-exclude __pycache__
