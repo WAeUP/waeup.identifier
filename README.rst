@@ -18,6 +18,8 @@ Full documentation is available at
 Requirements
 ------------
 
+`waeup.identifier` runs on Python 3.4.
+
 You need Kivy_ and fpscan_ installed.
 
 There are many ways to install `kivy` on your system. Please see the
