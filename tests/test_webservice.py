@@ -1,7 +1,7 @@
 import pytest
 try:
     import xmlrpc.client as xmlrpcclient   # Python 3.x
-except ImportError:
+except ImportError:                        # pragma: no cover
     import xmlrpclib as xmlrpcclient       # Python 2.x
 from waeup.identifier.testing import create_fake_fpm_file
 from waeup.identifier.webservice import (
