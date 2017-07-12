@@ -91,10 +91,13 @@ Of course you must have the respective Python versions installed
 
 Running the test coverage detector::
 
-  (py34) $ py.test --cov=waeup.identifier   # for cmdline results
-  (py34) $ py.test --cov=waeup.identifier --cov-report=html
+  (py34) $ KIVY_NO_ARGS=1 py.test --cov=waeup.identifier   # for cmdline results
+  (py34) $ KIVY_NO_ARGS=1 py.test --cov=waeup.identifier --cov-report=html
 
 The latter will generate HTML coverage reports in a subdirectory.
+
+The env var setting (`KIVY_NO_ARGS`) at the beginning keeps `kivy` from parsing
+command line arguments.
 
 
 Docs Install
