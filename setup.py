@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 import os
-import multiprocessing  # neccessary to keep setuptools quiet in tests
+import multiprocessing  # noqa: F401 keep setuptools quiet in tests
 
 # This is the authorative version number of this package
 #
