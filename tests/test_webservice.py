@@ -3,7 +3,6 @@ try:
     import xmlrpc.client as xmlrpcclient   # Python 3.x
 except ImportError:
     import xmlrpclib as xmlrpcclient       # Python 2.x
-from waeup.identifier.config import get_config
 from waeup.identifier.testing import create_fake_fpm_file
 from waeup.identifier.webservice import (
     store_fingerprint, get_fingerprints, get_url
