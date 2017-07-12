@@ -24,7 +24,7 @@ import unittest
 try:
     import xmlrpc.client as xmlrpc_client
 except ImportError:
-    import xmlrpclib as xmlrpcclient
+    import xmlrpclib as xmlrpcclient  # noqa: F401
 from base64 import b64decode
 try:                  # Python 3.x
     from xmlrpc.server import SimpleXMLRPCServer, SimpleXMLRPCRequestHandler
