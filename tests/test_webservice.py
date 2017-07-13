@@ -129,6 +129,13 @@ class TestWebservice(object):
             "http://localhost:61614", "AB123456", 1, fpm_file_path)
         assert result == "Error: 401 Unauthorized"
 
+    def test_store_fingerprint_faulty_request(self, waeup_proxy, tmpdir):
+        # We get an error message when a request fails, not a fault object
+        fpm_file_path = create_fake_fpm_file(str(tmpdir))
+        result = store_fingerprint(
+            "http://mgr:mgrpw@localhost:61614", "invalid-id", 1, fpm_file_path)
+        assert result.endswith("No such student: 'invalid-id'")
+
     def test_store_fingerprint_invalid_server(self, tmpdir):
         # trying to connect to invalid servers will raise socket errors.
         fpm_file_path = create_fake_fpm_file(str(tmpdir))
