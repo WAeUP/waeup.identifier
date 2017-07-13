@@ -23,12 +23,12 @@ import tempfile
 import unittest
 try:
     import xmlrpc.client as xmlrpc_client
-except ImportError:
+except ImportError:                   # pragma: no cover
     import xmlrpclib as xmlrpcclient  # noqa: F401
 from base64 import b64decode
 try:                  # Python 3.x
     from xmlrpc.server import SimpleXMLRPCServer, SimpleXMLRPCRequestHandler
-except ImportError:   # Python 2.x
+except ImportError:   # Python 2.x    # pragma: no cover
     from SimpleXMLRPCServer import (
         SimpleXMLRPCServer, SimpleXMLRPCRequestHandler)
 
