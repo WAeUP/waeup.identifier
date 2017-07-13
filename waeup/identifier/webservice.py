@@ -19,11 +19,11 @@
 """
 try:
     import xmlrpc.client as xmlrpcclient  # Python 3.x
-except ImportError:
+except ImportError:                       # pragma: no cover
     import xmlrpclib as xmlrpcclient      # Python 2.x
 try:
     from urllib import parse as urlparse  # Python 3.x
-except ImportError:
+except ImportError:                       # pragma: no cover
     from urlparse import urlparse         # Python 2.x
 
 
