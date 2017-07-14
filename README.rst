@@ -99,6 +99,14 @@ The latter will generate HTML coverage reports in a subdirectory.
 The env var setting (`KIVY_NO_ARGS`) at the beginning keeps `kivy` from parsing
 command line arguments.
 
+Alternatively, you may want to run `coverage` directly. First gather data::
+
+  (py34) $ coverage run ./py34/bin/py.test
+
+Then evaluate the data gathered::
+
+  (py34) $ coverage report --include='waeup/*,tests/*,setup.py' -m
+
 
 Docs Install
 ------------
