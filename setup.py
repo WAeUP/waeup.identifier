@@ -39,7 +39,7 @@ setup(
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Security",
     ],
-    keywords='fingerprint authentication identification security tcl tk ',
+    keywords='fingerprint authentication identification security',
     author='Uli Fouquet',
     author_email='uli at gnufix.de',
     url='http://pypi.python.org/pypi/waeup.identifier',
